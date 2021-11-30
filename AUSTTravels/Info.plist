@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SairaCondensed-Bold.ttf</string>
+		<string>SairaCondensed-Medium.ttf</string>
+		<string>SairaCondensed-Regular.ttf</string>
+		<string>SairaCondensed-SemiBold.ttf</string>
+		<string>SairaCondensed-Light.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

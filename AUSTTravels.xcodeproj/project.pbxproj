@@ -16,6 +16,15 @@
 		C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8052756797400F9D6FC /* SceneDelegate.swift */; };
 		C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8062756797400F9D6FC /* AppDelegate.swift */; };
 		C743A80B275679CE00F9D6FC /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C743A80A275679CE00F9D6FC /* Launch Screen.storyboard */; };
+		C743A8142756824800F9D6FC /* SairaCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C743A80F2756824700F9D6FC /* SairaCondensed-Regular.ttf */; };
+		C743A8152756824800F9D6FC /* SairaCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C743A8102756824800F9D6FC /* SairaCondensed-Medium.ttf */; };
+		C743A8162756824800F9D6FC /* SairaCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C743A8112756824800F9D6FC /* SairaCondensed-Light.ttf */; };
+		C743A8172756824800F9D6FC /* SairaCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C743A8122756824800F9D6FC /* SairaCondensed-SemiBold.ttf */; };
+		C743A8182756824800F9D6FC /* SairaCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C743A8132756824800F9D6FC /* SairaCondensed-Bold.ttf */; };
+		C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A819275682E300F9D6FC /* GenericFont.swift */; };
+		C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A81C275683E500F9D6FC /* Color+Ex.swift */; };
+		C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A81E2756843100F9D6FC /* View+Ex.swift */; };
+		C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8202756847600F9D6FC /* Int+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +58,15 @@
 		C743A8062756797400F9D6FC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C743A80A275679CE00F9D6FC /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C743A80C27567A1D00F9D6FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C743A80F2756824700F9D6FC /* SairaCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SairaCondensed-Regular.ttf"; sourceTree = "<group>"; };
+		C743A8102756824800F9D6FC /* SairaCondensed-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SairaCondensed-Medium.ttf"; sourceTree = "<group>"; };
+		C743A8112756824800F9D6FC /* SairaCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SairaCondensed-Light.ttf"; sourceTree = "<group>"; };
+		C743A8122756824800F9D6FC /* SairaCondensed-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SairaCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		C743A8132756824800F9D6FC /* SairaCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SairaCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		C743A819275682E300F9D6FC /* GenericFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFont.swift; sourceTree = "<group>"; };
+		C743A81C275683E500F9D6FC /* Color+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ex.swift"; sourceTree = "<group>"; };
+		C743A81E2756843100F9D6FC /* View+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ex.swift"; sourceTree = "<group>"; };
+		C743A8202756847600F9D6FC /* Int+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +117,8 @@
 		C743A7DA27566C6E00F9D6FC /* AUSTTravels */ = {
 			isa = PBXGroup;
 			children = (
+				C743A81B275683AD00F9D6FC /* Extension */,
+				C743A80E2756821A00F9D6FC /* Font */,
 				C743A80C27567A1D00F9D6FC /* Info.plist */,
 				C743A8092756797700F9D6FC /* App */,
 				C743A7DF27566C7200F9D6FC /* Assets.xcassets */,
@@ -141,6 +161,29 @@
 				C743A8052756797400F9D6FC /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		C743A80E2756821A00F9D6FC /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C743A8132756824800F9D6FC /* SairaCondensed-Bold.ttf */,
+				C743A8112756824800F9D6FC /* SairaCondensed-Light.ttf */,
+				C743A8102756824800F9D6FC /* SairaCondensed-Medium.ttf */,
+				C743A80F2756824700F9D6FC /* SairaCondensed-Regular.ttf */,
+				C743A8122756824800F9D6FC /* SairaCondensed-SemiBold.ttf */,
+				C743A819275682E300F9D6FC /* GenericFont.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		C743A81B275683AD00F9D6FC /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C743A81C275683E500F9D6FC /* Color+Ex.swift */,
+				C743A81E2756843100F9D6FC /* View+Ex.swift */,
+				C743A8202756847600F9D6FC /* Int+Ex.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,9 +291,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C743A8162756824800F9D6FC /* SairaCondensed-Light.ttf in Resources */,
+				C743A8142756824800F9D6FC /* SairaCondensed-Regular.ttf in Resources */,
 				C743A80B275679CE00F9D6FC /* Launch Screen.storyboard in Resources */,
 				C743A7E327566C7200F9D6FC /* Preview Assets.xcassets in Resources */,
+				C743A8182756824800F9D6FC /* SairaCondensed-Bold.ttf in Resources */,
+				C743A8172756824800F9D6FC /* SairaCondensed-SemiBold.ttf in Resources */,
 				C743A7E027566C7200F9D6FC /* Assets.xcassets in Resources */,
+				C743A8152756824800F9D6FC /* SairaCondensed-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +323,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */,
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
+				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
+				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
+				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
