@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */; };
+		C701D27A275AA1B200A0B1B8 /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D279275AA1B200A0B1B8 /* AuthState.swift */; };
+		C701D27C275AA20C00A0B1B8 /* AUSTTravel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D27B275AA20C00A0B1B8 /* AUSTTravel.swift */; };
+		C701D280275AA2E500A0B1B8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D27F275AA2E500A0B1B8 /* HomeView.swift */; };
+		C701D282275AA31800A0B1B8 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D281275AA31800A0B1B8 /* AuthView.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
@@ -29,7 +33,6 @@
 		C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A81E2756843100F9D6FC /* View+Ex.swift */; };
 		C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8202756847600F9D6FC /* Int+Ex.swift */; };
 		C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A82327569CAA00F9D6FC /* SignInView.swift */; };
-		C743A8362757AE4500F9D6FC /* iTextField in Frameworks */ = {isa = PBXBuildFile; productRef = C743A8352757AE4500F9D6FC /* iTextField */; };
 		C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8372757B15A00F9D6FC /* ABButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +55,10 @@
 
 /* Begin PBXFileReference section */
 		C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		C701D279275AA1B200A0B1B8 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
+		C701D27B275AA20C00A0B1B8 /* AUSTTravel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUSTTravel.swift; sourceTree = "<group>"; };
+		C701D27F275AA2E500A0B1B8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		C701D281275AA31800A0B1B8 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C743A8362757AE4500F9D6FC /* iTextField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +112,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C701D278275AA1A400A0B1B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C701D279275AA1B200A0B1B8 /* AuthState.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C701D27D275AA27C00A0B1B8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				C743A82327569CAA00F9D6FC /* SignInView.swift */,
+				C72032F8275A62E30046C48D /* SignUpView.swift */,
+				C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */,
+				C701D281275AA31800A0B1B8 /* AuthView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		C701D27E275AA2DC00A0B1B8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C701D27F275AA2E500A0B1B8 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		C743A7CF27566C6E00F9D6FC = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +162,7 @@
 		C743A7DA27566C6E00F9D6FC /* AUSTTravels */ = {
 			isa = PBXGroup;
 			children = (
+				C701D278275AA1A400A0B1B8 /* Model */,
 				C743A8282757A32100F9D6FC /* Components */,
 				C743A82227569C9200F9D6FC /* View */,
 				C743A81B275683AD00F9D6FC /* Extension */,
@@ -173,6 +207,7 @@
 				C743A7DD27566C6E00F9D6FC /* ContentView.swift */,
 				C743A8062756797400F9D6FC /* AppDelegate.swift */,
 				C743A8052756797400F9D6FC /* SceneDelegate.swift */,
+				C701D27B275AA20C00A0B1B8 /* AUSTTravel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -203,9 +238,8 @@
 		C743A82227569C9200F9D6FC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C743A82327569CAA00F9D6FC /* SignInView.swift */,
-				C72032F8275A62E30046C48D /* SignUpView.swift */,
-				C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */,
+				C701D27E275AA2DC00A0B1B8 /* Home */,
+				C701D27D275AA27C00A0B1B8 /* Auth */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -236,7 +270,6 @@
 			);
 			name = AUSTTravels;
 			packageProductDependencies = (
-				C743A8352757AE4500F9D6FC /* iTextField */,
 			);
 			productName = AUSTTravels;
 			productReference = C743A7D827566C6E00F9D6FC /* AUSTTravels.app */;
@@ -312,7 +345,6 @@
 			);
 			mainGroup = C743A7CF27566C6E00F9D6FC;
 			packageReferences = (
-				C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */,
 			);
 			productRefGroup = C743A7D927566C6E00F9D6FC /* Products */;
 			projectDirPath = "";
@@ -365,13 +397,17 @@
 				C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */,
 				C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */,
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
+				C701D280275AA2E500A0B1B8 /* HomeView.swift in Sources */,
 				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
+				C701D27C275AA20C00A0B1B8 /* AUSTTravel.swift in Sources */,
+				C701D282275AA31800A0B1B8 /* AuthView.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
 				C72032F9275A62E30046C48D /* SignUpView.swift in Sources */,
 				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
 				C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */,
+				C701D27A275AA1B200A0B1B8 /* AuthState.swift in Sources */,
 				C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */,
 				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
 			);
@@ -548,7 +584,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = snnafi.AUSTTravels;
+				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -578,7 +614,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = snnafi.AUSTTravels;
+				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -722,25 +758,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SNNafi/iTextField";
-			requirement = {
-				kind = revision;
-				revision = a329f3ccc1aa2d8618b440f384b82ffcd7edf153;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C743A8352757AE4500F9D6FC /* iTextField */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */;
-			productName = iTextField;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C743A7D027566C6E00F9D6FC /* Project object */;
 }

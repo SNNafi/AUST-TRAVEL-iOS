@@ -10,6 +10,8 @@ import SwiftUI
 
 struct SignInView: View {
     
+    @EnvironmentObject var austTravel: AUSTTravel
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var emailIsEditing: Bool = false
@@ -105,6 +107,10 @@ struct SignInView: View {
                         
                         Button {
                             
+                            withAnimation {
+                                austTravel.currentAuthPage = .forgetPassword
+                            }
+                        
                         } label: {
                             HStack {
                                 Spacer()
@@ -134,8 +140,10 @@ struct SignInView: View {
                         
                         ABButton(text: "SIGN UP WITH EMAIL", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedSemiBold) {
                             
+                            withAnimation {
+                                austTravel.currentAuthPage = .signUp
+                            }
                         }
-                        
                         
                         Spacer()
                         

@@ -9,11 +9,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var austTravel: AUSTTravel
+    
     var body: some View {
-//        Text("Aust Travels")
-//            .scaledFont(font: .sairaCondensedBold, dsize: 30)
-//            .padding()
-        SignInView()
+
+        if austTravel.currentAuthPage == .none {
+            HomeView()
+        } else {
+            AuthView()
+        }
+       
     }
 }
 

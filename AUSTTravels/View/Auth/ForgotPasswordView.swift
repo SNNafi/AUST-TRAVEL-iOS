@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     
+    @EnvironmentObject var austTravel: AUSTTravel
+    
     @State private var email: String = ""
     @State private var emailIsEditing: Bool = false
     
@@ -70,6 +72,10 @@ struct ForgotPasswordView: View {
                             }
                             
                             Button {
+                                
+                                withAnimation {
+                                    austTravel.currentAuthPage = .signIn
+                                }
                                 
                             } label: {
                                 Text("RETURN BACK")
