@@ -6,15 +6,22 @@
 //  Copyright © 2021 Shahriar Nasim Nafi. All rights reserved.
 //
 
-enum AuthState {
-    case logIn
-    case guest
+import Defaults
+
+enum AuthState: Int, Defaults.Serializable {
+    case logIn = 1
+    case guest = 0
 }
 
 
-enum AuthStatePage {
-    case none
-    case signIn
-    case signUp
-    case forgetPassword
+enum AuthStatePage: Int, Defaults.Serializable {
+    case none = 0
+    case signIn = 1
+    case signUp = 2
+    case forgetPassword = 3
+}
+
+extension Defaults.Keys {
+    static let authState  = Key<AuthState>("authState", default: .guest)
+    static let authStatePage  = Key<AuthStatePage>("authStatePage", default: .signIn)
 }

@@ -47,12 +47,9 @@ struct SignUpView: View {
                                 .foregroundColor(.clear)
                             
                             HStack {
-                                Image(systemName: "envelope")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .scaledToFit()
-                                    .foregroundColor(.black)
-                                    .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                                Icon(name: "envelope")
+                                    .systemImage()
+                                    .iconColor(.black)
                                 
                                 TextField("", text: $email)
                                     .keyboardType(.emailAddress)
@@ -69,14 +66,10 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image(systemName: "lock.fill")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .scaledToFit()
-                                    .foregroundColor(.black)
-                                    .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
-                                
-                                
+                                Icon(name: "lock.fill")
+                                    .systemImage()
+                                    .iconColor(.black)
+                            
                                 if isPasswordHIdden {
                                     SecureField("", text: $password)
                                         .keyboardType(.default)
@@ -116,15 +109,12 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .scaledToFit()
-                                    .foregroundColor(.black)
-                                    .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
-                                
+                                Icon(name: "person.circle.fill")
+                                    .systemImage()
+                                    .iconColor(.black)
+                               
                                 TextField("", text: $nickname)
-                                    .keyboardType(.emailAddress)
+                                    .keyboardType(.default)
                                     .placeholder(when: $nickname.wrappedValue.isEmpty) {
                                         Text("Enter your nickname")
                                     }
@@ -139,12 +129,8 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image("id-card")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .scaledToFit()
-                                    .foregroundColor(.black)
-                                    .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                                Icon(name: "id-card")
+                                    .iconColor(.black)
                                 
                                 TextField("", text: $uniId)
                                     .keyboardType(.default)

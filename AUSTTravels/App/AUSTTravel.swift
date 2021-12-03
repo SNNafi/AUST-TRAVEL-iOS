@@ -7,11 +7,16 @@
 //
 
 import SwiftUI
+import Defaults
+import FirebaseAuth
 
 class AUSTTravel: ObservableObject {
     
-    @Published var currentAuthState: AuthState = .guest
-    @Published var currentAuthPage: AuthStatePage = .signIn
-    
+    @Published var currentAuthState: AuthState = Defaults[.authState]
+    @Published var currentAuthPage: AuthStatePage = Defaults[.authStatePage]
+    let authViewModel = AuthViewModel()
+    var userId: String?
+    var currentFirebaseUser: User?
+    var currentUser: UserInfo?
 }
 

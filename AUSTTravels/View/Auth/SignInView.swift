@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Defaults
 
 struct SignInView: View {
     
@@ -30,13 +31,10 @@ struct SignInView: View {
                             .foregroundColor(.white)
                         
                         HStack {
-                            Image(systemName: "envelope")
-                                .resizable()
-                                .renderingMode(.template)
-                                .scaledToFit()
-                                .foregroundColor(.greenLight)
-                                .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
-                            
+                            Icon(name: "envelope")
+                                .systemImage()
+                                .iconColor(.greenLight)
+
                             TextField("", text: $email)
                                 .keyboardType(.emailAddress)
                                 .placeholder(when: $email.wrappedValue.isEmpty) {
@@ -53,14 +51,10 @@ struct SignInView: View {
                         .padding(.horizontal, 15.dHeight())
                         
                         HStack {
-                            Image(systemName: "lock.fill")
-                                .resizable()
-                                .renderingMode(.template)
-                                .scaledToFit()
-                                .foregroundColor(.greenLight)
-                                .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
-                            
-                            
+                            Icon(name: "lock.fill")
+                                .systemImage()
+                                .iconColor(.greenLight)
+
                             if isPasswordHIdden {
                                 SecureField("", text: $password)
                                     .keyboardType(.default)
@@ -84,6 +78,7 @@ struct SignInView: View {
                             Button {
                                 isPasswordHIdden.toggle()
                             } label: {
+                                
                                 Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
                                     .resizable()
                                     .renderingMode(.template)
@@ -101,7 +96,15 @@ struct SignInView: View {
                         
                         
                         ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
+                            austTravel.authViewModel.signIn(email: email, password: password) { isVerified, error in
+                                guard isVerified == true else {
+                                    return
+                                }
+                                austTravel.currentAuthPage = .none
+                                Defaults[.authStatePage] = .none
                             
+                                austTravel.currentFirebaseUser = austTravel.authViewModel.user
+                            }
                         }
                         
                         
