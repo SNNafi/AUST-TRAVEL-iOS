@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
+		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
 		C743A7E027566C7200F9D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7DF27566C7200F9D6FC /* Assets.xcassets */; };
 		C743A7E327566C7200F9D6FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7E227566C7200F9D6FC /* Preview Assets.xcassets */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
+		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C743A7DD27566C6E00F9D6FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C743A7DF27566C7200F9D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				C743A82327569CAA00F9D6FC /* SignInView.swift */,
+				C72032F8275A62E30046C48D /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
 				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
+				C72032F9275A62E30046C48D /* SignUpView.swift in Sources */,
 				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
@@ -720,8 +724,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SNNafi/iTextField";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = revision;
+				revision = a329f3ccc1aa2d8618b440f384b82ffcd7edf153;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -16,7 +16,6 @@ struct SignInView: View {
     @State private var emailIsEditing: Bool = false
     @State private var passwordIsEditing: Bool = false
     @State private var isPasswordHIdden: Bool = true
-    @State private var selectedItem: String = ""
     
     var body: some View {
         ZStack  {
@@ -34,17 +33,19 @@ struct SignInView: View {
                                 .resizable()
                                 .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                             
-                            iTextField("Enter your email", text: $email, isEditing: $emailIsEditing)
-                                .fontFromUIFont(GenericFont.loadDUIFont(font: .sairaCondensedRegular, size: 17))
+                            TextField("", text: $email)
                                 .keyboardType(.emailAddress)
-                                .returnKeyType(.next)
-                                .onReturn { passwordIsEditing = true }
-                                .foregroundColor(.white)
+                                .placeholder(when: $email.wrappedValue.isEmpty) {
+                                    Text("Enter your email")
+                                }
                                 .frame(height: 47.dHeight())
+                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
+                                .foregroundColor(.white)
+                            
                         }
                         .frame(width: dWidth * 0.85)
                         .padding(10.dHeight())
-                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.black : Color.white, lineWidth: 1.dWidth()))
+                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.black : Color.gray, lineWidth: 1.dWidth()))
                         .padding(.horizontal, 15.dHeight())
                         
                         HStack {
@@ -53,21 +54,32 @@ struct SignInView: View {
                                 .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                             
                             
-                            iTextField("Enter your password", text: $password, isEditing: $passwordIsEditing)
-                                .fontFromUIFont(GenericFont.loadDUIFont(font: .sairaCondensedRegular, size: 17))
-                                .keyboardType(.default)
-                                .returnKeyType(.done)
-                                .isSecure(isPasswordHIdden)
-                                .onReturn { passwordIsEditing = false }
-                                .foregroundColor(.white)
-                                .frame(height: 47.dHeight())
+                            if isPasswordHIdden {
+                                SecureField("", text: $password)
+                                    .keyboardType(.default)
+                                    .placeholder(when: $password.wrappedValue.isEmpty) {
+                                        Text("Enter your password")
+                                    }
+                                    .frame(height: 47.dHeight())
+                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
+                                    .foregroundColor(.white)
+                            } else {
+                                TextField("", text: $password)
+                                    .keyboardType(.default)
+                                    .placeholder(when: $password.wrappedValue.isEmpty) {
+                                        Text("Enter your password")
+                                    }
+                                    .frame(height: 47.dHeight())
+                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
+                                    .foregroundColor(.white)
+                            }
                             
                             Button {
                                 isPasswordHIdden.toggle()
                             } label: {
                                 Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
                                     .resizable()
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .scaledToFit()
                                     .frame(height: 14.dWidth(), alignment: .center)
                             }
@@ -75,14 +87,14 @@ struct SignInView: View {
                         }
                         .frame(width: dWidth * 0.85)
                         .padding(10.dHeight())
-                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(passwordIsEditing ? Color.black : Color.white, lineWidth: 1.dWidth()))
+                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(passwordIsEditing ? Color.black : Color.gray, lineWidth: 1.dWidth()))
                         .padding(.horizontal, 15.dHeight())
                         
                         
                         ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
                             
                         }
-                       
+                        
                         
                         Button {
                             
