@@ -28,8 +28,11 @@ struct SignInView: View {
                             .foregroundColor(.white)
                         
                         HStack {
-                            Image("user")
+                            Image(systemName: "envelope")
                                 .resizable()
+                                .renderingMode(.template)
+                                .scaledToFit()
+                                .foregroundColor(.greenLight)
                                 .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                             
                             TextField("", text: $email)
@@ -48,8 +51,11 @@ struct SignInView: View {
                         .padding(.horizontal, 15.dHeight())
                         
                         HStack {
-                            Image("user")
+                            Image(systemName: "lock.fill")
                                 .resizable()
+                                .renderingMode(.template)
+                                .scaledToFit()
+                                .foregroundColor(.greenLight)
                                 .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                             
                             
@@ -78,7 +84,9 @@ struct SignInView: View {
                             } label: {
                                 Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
                                     .resizable()
-                                    .foregroundColor(.black)
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.greenLight)
                                     .scaledToFit()
                                     .frame(height: 14.dWidth(), alignment: .center)
                             }

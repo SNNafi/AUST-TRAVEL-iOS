@@ -14,6 +14,7 @@ struct DropDown: View {
     let placeholder: String
     let itemList: [String]
     @Binding var selectedItem: String
+    var isSystemImage: Bool = false
     var itemTextColor: Color = .white
     var selectedBorderColor: Color = .black
     @State private var isDropDownListShow: Bool = false
@@ -26,9 +27,21 @@ struct DropDown: View {
                 }
             } label: {
                 HStack {
-                    Image("user")
-                        .resizable()
-                        .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                    if isSystemImage {
+                        Image(systemName: icon)
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFit()
+                            .foregroundColor(itemTextColor)
+                            .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                    } else {
+                        Image(icon)
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFit()
+                            .foregroundColor(itemTextColor)
+                            .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                    }
                     Text(selectedItem.isEmpty ? placeholder : selectedItem)
                         .scaledFont(font: .sairaCondensedRegular, dsize: 17)
                         .frame(height: 47.dHeight())
@@ -104,6 +117,12 @@ extension DropDown {
     func selectedBorderColor(_ color: Color) -> DropDown {
         var view = self
         view.selectedBorderColor = color
+        return view
+    }
+    
+    func systemImage() -> DropDown {
+        var view = self
+        view.isSystemImage = true
         return view
     }
     

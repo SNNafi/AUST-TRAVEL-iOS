@@ -47,8 +47,11 @@ struct SignUpView: View {
                                 .foregroundColor(.clear)
                             
                             HStack {
-                                Image("user")
+                                Image(systemName: "envelope")
                                     .resizable()
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.black)
                                     .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                                 
                                 TextField("", text: $email)
@@ -66,8 +69,11 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image("user")
+                                Image(systemName: "lock.fill")
                                     .resizable()
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.black)
                                     .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                                 
                                 
@@ -96,6 +102,8 @@ struct SignUpView: View {
                                 } label: {
                                     Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
                                         .resizable()
+                                        .renderingMode(.template)
+                                        .scaledToFit()
                                         .foregroundColor(.black)
                                         .scaledToFit()
                                         .frame(height: 14.dWidth(), alignment: .center)
@@ -108,8 +116,11 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image("user")
+                                Image(systemName: "person.circle.fill")
                                     .resizable()
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.black)
                                     .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                                 
                                 TextField("", text: $nickname)
@@ -128,8 +139,11 @@ struct SignUpView: View {
                             .padding(.horizontal, 15.dHeight())
                             
                             HStack {
-                                Image("user")
+                                Image("id-card")
                                     .resizable()
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.black)
                                     .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                                 
                                 TextField("", text: $uniId)
@@ -146,11 +160,11 @@ struct SignUpView: View {
                             .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
                             .padding(.horizontal, 15.dHeight())
                             
-                            DropDown(icon: "user", placeholder: "Select your semester", itemList: ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2"], selectedItem: $selectedSemester)
+                            DropDown(icon: "semester", placeholder: "Select your semester", itemList: ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2"], selectedItem: $selectedSemester)
                                 .itemTextColor(.black)
                                 .selectedBorderColor(.green)
                             
-                            DropDown(icon: "user", placeholder: "Select your department", itemList: ["CSE", "EEE", "CE", "TE", "MPE", "ARCH", "BBA"], selectedItem: $selectedDepartment)
+                            DropDown(icon: "department", placeholder: "Select your department", itemList: ["CSE", "EEE", "CE", "TE", "MPE", "ARCH", "BBA"], selectedItem: $selectedDepartment)
                                 .itemTextColor(.black)
                                 .selectedBorderColor(.green)
                             

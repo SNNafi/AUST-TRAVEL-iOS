@@ -44,8 +44,11 @@ struct ForgotPasswordView: View {
                                 .padding(.horizontal, 4.dWidth())
                             
                             HStack {
-                                Image("user")
+                                Image(systemName: "envelope")
                                     .resizable()
+                                    .renderingMode(.template)
+                                    .scaledToFit()
+                                    .foregroundColor(.black)
                                     .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
                                 
                                 TextField("", text: $email)

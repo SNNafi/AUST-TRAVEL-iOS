@@ -13,7 +13,7 @@ struct ContentView: View {
 //        Text("Aust Travels")
 //            .scaledFont(font: .sairaCondensedBold, dsize: 30)
 //            .padding()
-        ForgotPasswordView()
+        SignInView()
     }
 }
 
