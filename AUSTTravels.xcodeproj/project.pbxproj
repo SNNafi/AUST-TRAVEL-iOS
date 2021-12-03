@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
 		C743A7E027566C7200F9D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7DF27566C7200F9D6FC /* Assets.xcassets */; };
 		C743A7E327566C7200F9D6FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7E227566C7200F9D6FC /* Preview Assets.xcassets */; };
@@ -25,6 +26,9 @@
 		C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A81C275683E500F9D6FC /* Color+Ex.swift */; };
 		C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A81E2756843100F9D6FC /* View+Ex.swift */; };
 		C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8202756847600F9D6FC /* Int+Ex.swift */; };
+		C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A82327569CAA00F9D6FC /* SignInView.swift */; };
+		C743A8362757AE4500F9D6FC /* iTextField in Frameworks */ = {isa = PBXBuildFile; productRef = C743A8352757AE4500F9D6FC /* iTextField */; };
+		C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8372757B15A00F9D6FC /* ABButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C743A7DD27566C6E00F9D6FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C743A7DF27566C7200F9D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +72,8 @@
 		C743A81C275683E500F9D6FC /* Color+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ex.swift"; sourceTree = "<group>"; };
 		C743A81E2756843100F9D6FC /* View+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ex.swift"; sourceTree = "<group>"; };
 		C743A8202756847600F9D6FC /* Int+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ex.swift"; sourceTree = "<group>"; };
+		C743A82327569CAA00F9D6FC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		C743A8372757B15A00F9D6FC /* ABButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C743A8362757AE4500F9D6FC /* iTextField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +125,8 @@
 		C743A7DA27566C6E00F9D6FC /* AUSTTravels */ = {
 			isa = PBXGroup;
 			children = (
+				C743A8282757A32100F9D6FC /* Components */,
+				C743A82227569C9200F9D6FC /* View */,
 				C743A81B275683AD00F9D6FC /* Extension */,
 				C743A80E2756821A00F9D6FC /* Font */,
 				C743A80C27567A1D00F9D6FC /* Info.plist */,
@@ -186,6 +196,23 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		C743A82227569C9200F9D6FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C743A82327569CAA00F9D6FC /* SignInView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C743A8282757A32100F9D6FC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C743A8372757B15A00F9D6FC /* ABButton.swift */,
+				C72032F6275A4BBE0046C48D /* DropDown.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -202,6 +229,9 @@
 			dependencies = (
 			);
 			name = AUSTTravels;
+			packageProductDependencies = (
+				C743A8352757AE4500F9D6FC /* iTextField */,
+			);
 			productName = AUSTTravels;
 			productReference = C743A7D827566C6E00F9D6FC /* AUSTTravels.app */;
 			productType = "com.apple.product-type.application";
@@ -275,6 +305,9 @@
 				Base,
 			);
 			mainGroup = C743A7CF27566C6E00F9D6FC;
+			packageReferences = (
+				C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */,
+			);
 			productRefGroup = C743A7D927566C6E00F9D6FC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -323,12 +356,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */,
 				C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */,
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
 				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
+				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
+				C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */,
 				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,6 +714,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SNNafi/iTextField";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C743A8352757AE4500F9D6FC /* iTextField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C743A8342757AE4500F9D6FC /* XCRemoteSwiftPackageReference "iTextField" */;
+			productName = iTextField;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C743A7D027566C6E00F9D6FC /* Project object */;
 }

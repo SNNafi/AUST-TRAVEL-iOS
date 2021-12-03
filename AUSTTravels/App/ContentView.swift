@@ -10,9 +10,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Aust Travels")
-            .scaledFont(font: .sairaCondensedBold, dsize: 30)
-            .padding()
+//        Text("Aust Travels")
+//            .scaledFont(font: .sairaCondensedBold, dsize: 30)
+//            .padding()
+        SignInView()
     }
 }
 

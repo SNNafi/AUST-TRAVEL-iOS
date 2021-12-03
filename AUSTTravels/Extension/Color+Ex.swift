@@ -13,6 +13,15 @@ extension Color {
     init(hex: String) {
         self.init(UIColor(hex: hex))
     }
+    
+    static let green = Color(hex: "#2ABA7E")
+    static let greenLight = Color(hex: "#00FF94")
+    static let white = Color(hex: "#FFFFFF")
+    static let black = Color(hex: "#000000")
+    static let yellow = Color(hex: "#FFD856")
+    static let yellowLight = Color(hex: "#FCE8A7")
+    static let orange = Color(hex: "#E9896B")
+    static let ash = Color(hex: "#F0F0F0")
 }
 
 extension UIColor {

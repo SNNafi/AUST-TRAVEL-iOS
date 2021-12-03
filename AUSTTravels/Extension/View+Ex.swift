@@ -38,11 +38,11 @@ extension View {
     }
     
     
-    func scaledFont(font: Font, size: CGFloat) -> some View {
+    func scaledFont(font: GenericFont.Font, size: CGFloat) -> some View {
         return self.modifier(ScaledFont(name: font.rawValue, size: size))
     }
     
-    func scaledFont(font: Font, dsize: CGFloat) -> some View {
+    func scaledFont(font: GenericFont.Font, dsize: CGFloat) -> some View {
         return self.modifier(ScaledFont(name: font.rawValue, size: dynamicFontSize(size: Float(dsize))))
     }
     
@@ -74,5 +74,30 @@ extension View {
         let bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0
         print("Bottom \(bottom)")
         return bottom > 0
+    }
+}
+
+
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
+    }
+}
+
+
+extension View {
+    var dWidth: CGFloat {
+        UIScreen.main.bounds.width
+    }
+    
+    var dHeight: CGFloat {
+        UIScreen.main.bounds.height
     }
 }
