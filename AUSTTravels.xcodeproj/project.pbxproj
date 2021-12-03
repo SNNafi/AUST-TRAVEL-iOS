@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +205,7 @@
 			children = (
 				C743A82327569CAA00F9D6FC /* SignInView.swift */,
 				C72032F8275A62E30046C48D /* SignUpView.swift */,
+				C701D276275A923800A0B1B8 /* ForgotPasswordView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
 				C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */,
+				C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */,
 				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
