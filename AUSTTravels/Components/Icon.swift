@@ -23,7 +23,7 @@ struct Icon: View {
             } label: {
                 view
             }
-
+            
         } else {
             view
         }
@@ -46,7 +46,7 @@ struct Icon: View {
                 .foregroundColor(color)
                 .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
         }
-
+        
     }
 }
 
@@ -57,9 +57,9 @@ struct Icon_Previews: PreviewProvider {
 }
 
 extension Icon {
-    func systemImage() -> Icon {
+    func systemImage(_ systemImage: Bool = true) -> Icon {
         var view = self
-        view.isSystemImage = true
+        view.isSystemImage = systemImage
         return view
     }
     

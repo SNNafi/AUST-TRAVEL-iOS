@@ -10,6 +10,9 @@ import SwiftUI
 
 struct SignUpView: View {
     
+    @EnvironmentObject var austTravel: AUSTTravel
+    @ObservedObject var authViewModel = UIApplication.shared.authViewModel
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var nickname: String = ""
@@ -46,116 +49,64 @@ struct SignUpView: View {
                                 .frame(height: 15.dHeight())
                                 .foregroundColor(.clear)
                             
-                            HStack {
-                                Icon(name: "envelope")
-                                    .systemImage()
-                                    .iconColor(.black)
-                                
-                                TextField("", text: $email)
-                                    .keyboardType(.emailAddress)
-                                    .placeholder(when: $email.wrappedValue.isEmpty) {
-                                        Text("Enter your institutional email")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: dWidth * 0.85)
-                            .padding(10.dHeight())
-                            .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
-                            .padding(.horizontal, 15.dHeight())
+                            ABTextField(placeholder: "Enter your institutional email", text: $email)
+                                .keyboardType(.emailAddress)
+                                .rightIcon(Icon(name: "envelope")
+                                            .systemImage()
+                                            .iconColor(.black))
+                                .textColor(.black)
+                                .borderColor(.black)
+                                .addValidator(authViewModel.signUpValidator.emailErrorMessage)
                             
-                            HStack {
-                                Icon(name: "lock.fill")
-                                    .systemImage()
-                                    .iconColor(.black)
                             
-                                if isPasswordHIdden {
-                                    SecureField("", text: $password)
-                                        .keyboardType(.default)
-                                        .placeholder(when: $password.wrappedValue.isEmpty) {
-                                            Text("Enter your password")
-                                        }
-                                        .frame(height: 47.dHeight())
-                                        .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                        .foregroundColor(.black)
-                                } else {
-                                    TextField("", text: $password)
-                                        .keyboardType(.default)
-                                        .placeholder(when: $password.wrappedValue.isEmpty) {
-                                            Text("Enter your password")
-                                        }
-                                        .frame(height: 47.dHeight())
-                                        .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                        .foregroundColor(.black)
-                                }
-                                
-                                Button {
-                                    isPasswordHIdden.toggle()
-                                } label: {
-                                    Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .scaledToFit()
-                                        .foregroundColor(.black)
-                                        .scaledToFit()
-                                        .frame(height: 14.dWidth(), alignment: .center)
-                                }
-                                
-                            }
-                            .frame(width: dWidth * 0.85)
-                            .padding(10.dHeight())
-                            .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(passwordIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
-                            .padding(.horizontal, 15.dHeight())
+                            ABTextField(placeholder: "Enter your password", text: $password)
+                                .rightIcon(Icon(name: "lock.fill")
+                                            .systemImage()
+                                            .iconColor(.black))
+                                .textColor(.black)
+                                .borderColor(.black)
+                                .addValidator(authViewModel.signUpValidator.passwordErrorMessage)
+                                .secureField(true)
                             
-                            HStack {
-                                Icon(name: "person.circle.fill")
-                                    .systemImage()
-                                    .iconColor(.black)
-                               
-                                TextField("", text: $nickname)
-                                    .keyboardType(.default)
-                                    .placeholder(when: $nickname.wrappedValue.isEmpty) {
-                                        Text("Enter your nickname")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.black)
-                                
-                            }
-                            .frame(width: dWidth * 0.85)
-                            .padding(10.dHeight())
-                            .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
-                            .padding(.horizontal, 15.dHeight())
                             
-                            HStack {
-                                Icon(name: "id-card")
-                                    .iconColor(.black)
-                                
-                                TextField("", text: $uniId)
-                                    .keyboardType(.default)
-                                    .placeholder(when: $uniId.wrappedValue.isEmpty) {
-                                        Text("Enter your university ID")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: dWidth * 0.85)
-                            .padding(10.dHeight())
-                            .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
-                            .padding(.horizontal, 15.dHeight())
+                            ABTextField(placeholder: "Enter your nickname", text: $nickname)
+                                .rightIcon(Icon(name: "person.circle.fill")
+                                            .systemImage()
+                                            .iconColor(.black))
+                                .textColor(.black)
+                                .borderColor(.black)
+                                .addValidator(authViewModel.signUpValidator.nameErrorMessage)
+                            
+                            ABTextField(placeholder: "Enter your university ID", text: $uniId)
+                                .rightIcon( Icon(name: "id-card")
+                                                .iconColor(.black))
+                                .textColor(.black)
+                                .borderColor(.black)
+                                .addValidator(authViewModel.signUpValidator.uniIdErrorMessage)
                             
                             DropDown(icon: "semester", placeholder: "Select your semester", itemList: ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2"], selectedItem: $selectedSemester)
                                 .itemTextColor(.black)
                                 .selectedBorderColor(.green)
+                                .addValidator(authViewModel.signUpValidator.semesterErrorMessage)
                             
                             DropDown(icon: "department", placeholder: "Select your department", itemList: ["CSE", "EEE", "CE", "TE", "MPE", "ARCH", "BBA"], selectedItem: $selectedDepartment)
                                 .itemTextColor(.black)
                                 .selectedBorderColor(.green)
+                                .addValidator(authViewModel.signUpValidator.departmentErrorMessage)
                             
                             ABButton(text: "SIGN UP", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
+                                var userInfo = UserInfo()
+                                userInfo.email = email
+                                userInfo.userName = nickname
+                                userInfo.universityId = uniId
+                                userInfo.semester = selectedSemester
+                                userInfo.department = selectedDepartment
                                 
+                                if authViewModel.isValidSignUpInfo(userInfo: userInfo, password: password) {
+                                    
+                                } else {
+                                    HapticFeedback.warning.provide()
+                                }
                             }
                             
                             Spacer()

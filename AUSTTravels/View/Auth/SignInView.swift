@@ -40,7 +40,7 @@ struct SignInView: View {
                                         .iconColor(.greenLight))
                             .textColor(.white)
                             .addValidator(austTravel.authViewModel.signInValidator.emailErrorMessage)
-                       
+                        
                         ABTextField(placeholder: "Enter your password", text: $password)
                             .rightIcon(Icon(name: "lock.fill")
                                         .systemImage()
@@ -48,7 +48,7 @@ struct SignInView: View {
                             .textColor(.white)
                             .addValidator(authViewModel.signInValidator.passwordErrorMessage)
                             .secureField(true)
-                     
+                        
                         
                         ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
                             if authViewModel.isValidSignInInfo(email: email, password: password) {
@@ -73,16 +73,16 @@ struct SignInView: View {
                             
                         }
                         .spAlert(isPresent: $authError,
-                                title: "Error !",
-                                message: authErrorMessage ?? "",
-                                 duration: 1.2,
-                                dismissOnTap: true,
-                                preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
+                                 title: "Error !",
+                                 message: authErrorMessage ?? "",
+                                 duration: 2,
+                                 dismissOnTap: true,
+                                 preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
                                  haptic: .error,
-                                layout: .init(),
-                                completion: {
-                                   
-                                })
+                                 layout: .init(),
+                                 completion: {
+                            
+                        })
                         
                         
                         Button {

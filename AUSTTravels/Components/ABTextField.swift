@@ -19,7 +19,7 @@ struct ABTextField: View {
     var validator: String? = nil
     var isSecureField: Bool = false
     var keyboardType: UIKeyboardType = .default
-    @State private var isPasswordHIdden = false
+    @State private var isPasswordHIdden = true
     
     var body: some View {
         VStack {
@@ -27,7 +27,7 @@ struct ABTextField: View {
                 if icon != nil {
                     icon
                 }
-                 
+                
                 if isPasswordHIdden && isSecureField {
                     SecureField("", text: $text)
                         .keyboardType(keyboardType)

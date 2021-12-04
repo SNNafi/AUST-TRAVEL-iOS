@@ -17,7 +17,9 @@ struct DropDown: View {
     var isSystemImage: Bool = false
     var itemTextColor: Color = .white
     var selectedBorderColor: Color = .black
+    var errorTextColor: Color = .red
     @State private var isDropDownListShow: Bool = false
+    var validator: String? = nil
     
     var body: some View {
         ZStack {
@@ -26,40 +28,52 @@ struct DropDown: View {
                     isDropDownListShow.toggle()
                 }
             } label: {
-                HStack {
-                    if isSystemImage {
-                        Image(systemName: icon)
-                            .resizable()
-                            .renderingMode(.template)
-                            .scaledToFit()
+                
+                VStack {
+                    HStack {
+                        
+                        Icon(name: icon)
+                            .iconColor(itemTextColor)
+                            .systemImage(isSystemImage)
+                        
+                        Text(selectedItem.isEmpty ? placeholder : selectedItem)
+                            .scaledFont(font: .sairaCondensedRegular, dsize: 17)
+                            .frame(height: 47.dHeight())
                             .foregroundColor(itemTextColor)
-                            .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
-                    } else {
-                        Image(icon)
+                        Spacer()
+                        Image("downward-arrow")
                             .resizable()
-                            .renderingMode(.template)
-                            .scaledToFit()
-                            .foregroundColor(itemTextColor)
-                            .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
+                            .foregroundColor(isDropDownListShow ? selectedBorderColor : itemTextColor)
+                            .frame(width: 9.dWidth(), height: 9.dWidth(), alignment: .center)
+                            .rotationEffect(isDropDownListShow ? .degrees(-180) : .degrees(0))
+                            .transition(.scale)
+                        
+                        
                     }
-                    Text(selectedItem.isEmpty ? placeholder : selectedItem)
-                        .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                        .frame(height: 47.dHeight())
-                        .foregroundColor(itemTextColor)
-                    Spacer()
-                    Image("downward-arrow")
-                        .resizable()
-                        .foregroundColor(isDropDownListShow ? selectedBorderColor : itemTextColor)
-                        .frame(width: 9.dWidth(), height: 9.dWidth(), alignment: .center)
-                        .rotationEffect(isDropDownListShow ? .degrees(-180) : .degrees(0))
-                        .transition(.scale)
+                    .frame(width: dWidth * 0.85)
+                    .padding(10.dHeight())
+                    .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(isDropDownListShow ? selectedBorderColor : itemTextColor, lineWidth: 1.dWidth()))
+                    .padding(.horizontal, 15.dWidth())
                     
-                    
+                    if validator != nil {
+                        
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .scaledFont(font: .sairaCondensedSemiBold, dsize: 14)
+                                .foregroundColor(errorTextColor)
+                            
+                            Text(validator ?? "")
+                                .fontWeight(.light)
+                                .scaledFont(font: .sairaCondensedSemiBold, dsize: 14)
+                                .foregroundColor(errorTextColor)
+                            
+                            Spacer()
+                            
+                        }
+                        .padding(10.dHeight())
+                        .padding(.horizontal, 15.dHeight())
+                    }
                 }
-                .frame(width: dWidth * 0.85)
-                .padding(10.dHeight())
-                .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(isDropDownListShow ? selectedBorderColor : itemTextColor, lineWidth: 1.dWidth()))
-                .padding(.horizontal, 15.dWidth())
             }
             
             if isDropDownListShow {
@@ -123,6 +137,18 @@ extension DropDown {
     func systemImage() -> DropDown {
         var view = self
         view.isSystemImage = true
+        return view
+    }
+    
+    func errorTextColor(_ color: Color) -> DropDown {
+        var view = self
+        view.errorTextColor = color
+        return view
+    }
+    
+    func addValidator(_ message: String?) -> DropDown {
+        var view = self
+        view.validator = message
         return view
     }
     

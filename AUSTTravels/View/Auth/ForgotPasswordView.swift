@@ -58,17 +58,15 @@ struct ForgotPasswordView: View {
                             
                             ABButton(text: "SEND", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
                                 if authViewModel.isValidForgetPasswordInfo(email: email) {
-                                    print("true")
+                                    
                                 } else {
-                                    print("false")
-//                                    authErrorMessage =  austTravel.authViewModel.forgetPasswordValidator.emailErrorMessage
-//                                    authError = true
+                                    HapticFeedback.warning.provide()
                                 }
                             }
                             .spAlert(isPresent: $authError,
                                      title: "Error !",
                                      message: authErrorMessage ?? "",
-                                     duration: 1.2,
+                                     duration: 2,
                                      dismissOnTap: true,
                                      preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
                                      haptic: .error,

@@ -17,39 +17,78 @@ class AuthViewModel: ObservableObject {
     var user: User?
     @Published var signInValidator = SignInValidator()
     @Published var forgetPasswordValidator = ForgetPasswordValidator()
+    @Published var signUpValidator = SignUpValidator()
     
     func isValidSignInInfo(email: String, password: String) -> Bool {
-        var success = true
-        if signInValidator.isEmail(email) {
+        if isEmail(email) {
             signInValidator = SignInValidator(emailErrorMessage: nil, passwordErrorMessage: nil)
-            if !signInValidator.isAustEmail(email) {
+            if !isAustEmail(email) {
                 signInValidator = SignInValidator(emailErrorMessage: "You must enter your institutional mail", passwordErrorMessage: nil)
-                success = false
+                return false
             }
             if password.isEmpty {
                 signInValidator = SignInValidator(emailErrorMessage: nil, passwordErrorMessage: "Password cannot be empty")
-                success = false
+                return false
             }
         } else {
             signInValidator = SignInValidator(emailErrorMessage: "Please enter a valid email", passwordErrorMessage: nil)
-            success = false
+            return false
         }
-        return success
+        return true
     }
     
     func isValidForgetPasswordInfo(email: String) -> Bool {
-        var success = true
-        if forgetPasswordValidator.isEmail(email) {
+        if isEmail(email) {
             forgetPasswordValidator = ForgetPasswordValidator(emailErrorMessage: nil)
-            if !forgetPasswordValidator.isAustEmail(email) {
+            if !isAustEmail(email) {
                 forgetPasswordValidator = ForgetPasswordValidator(emailErrorMessage: "You must enter your institutional mail")
-                success = false
+                return false
             }
         } else {
             forgetPasswordValidator = ForgetPasswordValidator(emailErrorMessage: "Please enter a valid email")
-            success = false
+            return false
         }
-        return success
+        return true
+    }
+    
+    func isValidSignUpInfo(userInfo: UserInfo, password: String) -> Bool {
+        if isEmail(userInfo.email) {
+            signUpValidator = SignUpValidator(emailErrorMessage: nil, passwordErrorMessage: nil, nameErrorMessage: nil, uniIdErrorMessage: nil, semesterErrorMessage: nil, departmentErrorMessage: nil)
+            if !isAustEmail(userInfo.email) {
+                signUpValidator = SignUpValidator(emailErrorMessage: "You must enter your institutional mail")
+                return false
+            }
+        } else {
+            signUpValidator = SignUpValidator(emailErrorMessage: "Please enter a valid email")
+            return false
+        }
+        
+        if password.isEmpty {
+            signUpValidator = SignUpValidator(passwordErrorMessage: "Password cannot be empty")
+            return false
+        }
+        
+        if !signUpValidator.validateName(userInfo.userName) {
+            signUpValidator = SignUpValidator(nameErrorMessage: "Please enter a name of 20 characters")
+            return false
+        }
+        
+        if userInfo.universityId.isEmpty {
+            signUpValidator = SignUpValidator(emailErrorMessage: nil, nameErrorMessage: nil, uniIdErrorMessage: "Please enter your university ID")
+            return false
+        }
+        
+        if userInfo.semester.isEmpty {
+            signUpValidator = SignUpValidator(semesterErrorMessage: "Please enter your semester")
+            return false
+        }
+        
+        if userInfo.department.isEmpty {
+            signUpValidator = SignUpValidator(departmentErrorMessage: "Please enter your department")
+            return false
+        }
+        
+        return true
     }
     
     func signUp(userInfo: UserInfo, password: String, completion: @escaping (Bool?, Error?) -> Void) {
@@ -113,49 +152,45 @@ class AuthViewModel: ObservableObject {
 
 
 struct SignInValidator {
-     var emailErrorMessage: String?
-     var passwordErrorMessage: String?
-  
+    var emailErrorMessage: String?
+    var passwordErrorMessage: String?
+}
 
-    func isEmail(_ email: String) -> Bool {
-        let pattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-        if NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: email) {
-            return true
-        } else {
-            return false
-        }
-            
-    }
+struct ForgetPasswordValidator{
+    var emailErrorMessage: String?
+}
+
+struct SignUpValidator {
+    var emailErrorMessage: String?
+    var passwordErrorMessage: String?
+    var nameErrorMessage: String?
+    var uniIdErrorMessage: String?
+    var semesterErrorMessage: String?
+    var departmentErrorMessage: String?
     
-    func isAustEmail(_ email: String) -> Bool {
-        if  email.split(separator: "@")[1] == "aust.edu" {
-            return true
-        } else {
-            return false
-        }
-            
+    func validateName(_ name: String) -> Bool {
+        !name.isEmpty && !(name.count > 20)
     }
 }
-struct ForgetPasswordValidator{
-    
-    var emailErrorMessage: String?
-   
-    func isEmail(_ email: String) -> Bool {
+
+
+extension AuthViewModel {
+    private func isEmail(_ email: String) -> Bool {
         let pattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         if NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: email) {
             return true
         } else {
             return false
         }
-            
+        
     }
     
-    func isAustEmail(_ email: String) -> Bool {
+    private func isAustEmail(_ email: String) -> Bool {
         if  email.split(separator: "@")[1] == "aust.edu" {
             return true
         } else {
             return false
         }
-            
+        
     }
 }
