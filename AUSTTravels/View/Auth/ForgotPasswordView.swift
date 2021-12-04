@@ -11,9 +11,11 @@ import SwiftUI
 struct ForgotPasswordView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
-    
+    @ObservedObject var authViewModel = UIApplication.shared.authViewModel
     @State private var email: String = ""
     @State private var emailIsEditing: Bool = false
+    @State private var authError: Bool = false
+    @State private var authErrorMessage: String? = nil
     
     var body: some View {
         ZStack  {
@@ -45,28 +47,35 @@ struct ForgotPasswordView: View {
                                 .padding(.bottom, 2.dHeight())
                                 .padding(.horizontal, 4.dWidth())
                             
-                            HStack {
-                                Icon(name: "envelope")
-                                    .systemImage()
-                                    .iconColor(.black)
-                                
-                                TextField("", text: $email)
-                                    .keyboardType(.emailAddress)
-                                    .placeholder(when: $email.wrappedValue.isEmpty) {
-                                        Text("Enter your institutional email")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: dWidth * 0.85)
-                            .padding(10.dHeight())
-                            .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.green : Color.black, lineWidth: 1.dWidth()))
-                            .padding(.horizontal, 15.dHeight())
-                        
+                            ABTextField(placeholder: "Enter your institutional email", text: $email)
+                                .keyboardType(.emailAddress)
+                                .rightIcon(Icon(name: "envelope")
+                                            .systemImage()
+                                            .iconColor(.black))
+                                .textColor(.black)
+                                .borderColor(.green)
+                                .addValidator(authViewModel.forgetPasswordValidator.emailErrorMessage)
+                            
                             ABButton(text: "SEND", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
-                                
+                                if authViewModel.isValidForgetPasswordInfo(email: email) {
+                                    print("true")
+                                } else {
+                                    print("false")
+//                                    authErrorMessage =  austTravel.authViewModel.forgetPasswordValidator.emailErrorMessage
+//                                    authError = true
+                                }
                             }
+                            .spAlert(isPresent: $authError,
+                                     title: "Error !",
+                                     message: authErrorMessage ?? "",
+                                     duration: 1.2,
+                                     dismissOnTap: true,
+                                     preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
+                                     haptic: .error,
+                                     layout: .init(),
+                                     completion: {
+                                
+                            })
                             
                             Button {
                                 
@@ -81,7 +90,7 @@ struct ForgotPasswordView: View {
                             }
                             .padding(.vertical, 3.dHeight())
                             .padding(.horizontal, 5.dWidth())
-
+                            
                             
                             Spacer()
                         }

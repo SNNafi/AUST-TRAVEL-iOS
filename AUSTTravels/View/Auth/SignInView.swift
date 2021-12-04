@@ -8,16 +8,19 @@
 
 import SwiftUI
 import Defaults
+import SPAlert
 
 struct SignInView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
-    
+    @ObservedObject var authViewModel = UIApplication.shared.authViewModel
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var emailIsEditing: Bool = false
     @State private var passwordIsEditing: Bool = false
     @State private var isPasswordHIdden: Bool = true
+    @State private var authError: Bool = false
+    @State private var authErrorMessage: String? = ""
     
     var body: some View {
         ZStack  {
@@ -30,82 +33,56 @@ struct SignInView: View {
                             .scaledFont(font: .sairaCondensedBold, dsize: 51)
                             .foregroundColor(.white)
                         
-                        HStack {
-                            Icon(name: "envelope")
-                                .systemImage()
-                                .iconColor(.greenLight)
-
-                            TextField("", text: $email)
-                                .keyboardType(.emailAddress)
-                                .placeholder(when: $email.wrappedValue.isEmpty) {
-                                    Text("Enter your email")
-                                }
-                                .frame(height: 47.dHeight())
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.white)
-                            
-                        }
-                        .frame(width: dWidth * 0.85)
-                        .padding(10.dHeight())
-                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(emailIsEditing ? Color.black : Color.gray, lineWidth: 1.dWidth()))
-                        .padding(.horizontal, 15.dHeight())
-                        
-                        HStack {
-                            Icon(name: "lock.fill")
-                                .systemImage()
-                                .iconColor(.greenLight)
-
-                            if isPasswordHIdden {
-                                SecureField("", text: $password)
-                                    .keyboardType(.default)
-                                    .placeholder(when: $password.wrappedValue.isEmpty) {
-                                        Text("Enter your password")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.white)
-                            } else {
-                                TextField("", text: $password)
-                                    .keyboardType(.default)
-                                    .placeholder(when: $password.wrappedValue.isEmpty) {
-                                        Text("Enter your password")
-                                    }
-                                    .frame(height: 47.dHeight())
-                                    .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Button {
-                                isPasswordHIdden.toggle()
-                            } label: {
-                                
-                                Image(systemName: isPasswordHIdden ? "eye.fill" : "eye.slash.fill")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .scaledToFit()
-                                    .foregroundColor(.greenLight)
-                                    .scaledToFit()
-                                    .frame(height: 14.dWidth(), alignment: .center)
-                            }
-                            
-                        }
-                        .frame(width: dWidth * 0.85)
-                        .padding(10.dHeight())
-                        .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(passwordIsEditing ? Color.black : Color.gray, lineWidth: 1.dWidth()))
-                        .padding(.horizontal, 15.dHeight())
-                        
+                        ABTextField(placeholder: "Enter your email", text: $email)
+                            .keyboardType(.emailAddress)
+                            .rightIcon(Icon(name: "envelope")
+                                        .systemImage()
+                                        .iconColor(.greenLight))
+                            .textColor(.white)
+                            .addValidator(austTravel.authViewModel.signInValidator.emailErrorMessage)
+                       
+                        ABTextField(placeholder: "Enter your password", text: $password)
+                            .rightIcon(Icon(name: "lock.fill")
+                                        .systemImage()
+                                        .iconColor(.greenLight))
+                            .textColor(.white)
+                            .addValidator(authViewModel.signInValidator.passwordErrorMessage)
+                            .secureField(true)
+                     
                         
                         ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
-                            austTravel.authViewModel.signIn(email: email, password: password) { isVerified, error in
-                                guard isVerified == true else {
-                                    return
+                            if authViewModel.isValidSignInInfo(email: email, password: password) {
+                                authViewModel.signIn(email: email, password: password) { isVerified, error in
+                                    if error != nil {
+                                        HapticFeedback.error.provide()
+                                        authErrorMessage =  error?.localizedDescription
+                                        authError = true
+                                        return
+                                    }
+                                    guard isVerified == true else {
+                                        return
+                                    }
+                                    austTravel.currentAuthPage = .none
+                                    Defaults[.authStatePage] = .none
+                                    
+                                    austTravel.currentFirebaseUser = authViewModel.user
                                 }
-                                austTravel.currentAuthPage = .none
-                                Defaults[.authStatePage] = .none
-                            
-                                austTravel.currentFirebaseUser = austTravel.authViewModel.user
+                            } else {
+                                HapticFeedback.warning.provide()
                             }
+                            
                         }
+                        .spAlert(isPresent: $authError,
+                                title: "Error !",
+                                message: authErrorMessage ?? "",
+                                 duration: 1.2,
+                                dismissOnTap: true,
+                                preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
+                                 haptic: .error,
+                                layout: .init(),
+                                completion: {
+                                   
+                                })
                         
                         
                         Button {
@@ -113,7 +90,7 @@ struct SignInView: View {
                             withAnimation {
                                 austTravel.currentAuthPage = .forgetPassword
                             }
-                        
+                            
                         } label: {
                             HStack {
                                 Spacer()
@@ -147,10 +124,7 @@ struct SignInView: View {
                                 austTravel.currentAuthPage = .signUp
                             }
                         }
-                        
                         Spacer()
-                        
-                        
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     

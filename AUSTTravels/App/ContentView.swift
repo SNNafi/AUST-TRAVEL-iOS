@@ -14,11 +14,12 @@ struct ContentView: View {
     
     var body: some View {
 
-        if austTravel.currentAuthPage == .none {
-            HomeView()
-        } else {
-            AuthView()
-        }
+//        if austTravel.currentAuthPage == .none {
+//            HomeView()
+//        } else {
+//            AuthView()
+//        }
+        SignInView()
     }
 }
 
