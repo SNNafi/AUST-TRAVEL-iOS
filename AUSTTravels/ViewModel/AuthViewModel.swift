@@ -9,6 +9,7 @@
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseCore
+import Defaults
 
 class AuthViewModel: ObservableObject {
     
@@ -147,6 +148,10 @@ class AuthViewModel: ObservableObject {
                 completion(user.isEmailVerified, nil)
             }
         }
+    }
+    
+    func logOut() {
+        try? Auth.auth().signOut()
     }
 }
 

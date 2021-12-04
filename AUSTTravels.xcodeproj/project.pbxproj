@@ -31,6 +31,10 @@
 		C701D2AC275B7C7600A0B1B8 /* ABTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2AB275B7C7600A0B1B8 /* ABTextField.swift */; };
 		C701D2AE275BAACC00A0B1B8 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2AD275BAACC00A0B1B8 /* HapticFeedback.swift */; };
 		C701D2B0275BBA7400A0B1B8 /* UIApplication+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2AF275BBA7400A0B1B8 /* UIApplication+Ex.swift */; };
+		C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2B4275BDE3200A0B1B8 /* ABURLImage.swift */; };
+		C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */; };
+		C701D2B9275BF23900A0B1B8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */; };
+		C701D2BB275BF31600A0B1B8 /* Volunteer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BA275BF31600A0B1B8 /* Volunteer.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
@@ -85,6 +89,10 @@
 		C701D2AB275B7C7600A0B1B8 /* ABTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABTextField.swift; sourceTree = "<group>"; };
 		C701D2AD275BAACC00A0B1B8 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		C701D2AF275BBA7400A0B1B8 /* UIApplication+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ex.swift"; sourceTree = "<group>"; };
+		C701D2B4275BDE3200A0B1B8 /* ABURLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABURLImage.swift; sourceTree = "<group>"; };
+		C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Ex.swift"; sourceTree = "<group>"; };
+		C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		C701D2BA275BF31600A0B1B8 /* Volunteer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volunteer.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +164,7 @@
 				C701D279275AA1B200A0B1B8 /* AuthState.swift */,
 				C701D29A275AA6F300A0B1B8 /* UserInfo.swift */,
 				C701D2AD275BAACC00A0B1B8 /* HapticFeedback.swift */,
+				C701D2BA275BF31600A0B1B8 /* Volunteer.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				C701D29D275AA93000A0B1B8 /* AuthViewModel.swift */,
+				C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -282,6 +292,7 @@
 				C743A81E2756843100F9D6FC /* View+Ex.swift */,
 				C743A8202756847600F9D6FC /* Int+Ex.swift */,
 				C701D2AF275BBA7400A0B1B8 /* UIApplication+Ex.swift */,
+				C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -302,6 +313,7 @@
 				C72032F6275A4BBE0046C48D /* DropDown.swift */,
 				C701D2A5275ABCC200A0B1B8 /* Icon.swift */,
 				C701D2AB275B7C7600A0B1B8 /* ABTextField.swift */,
+				C701D2B4275BDE3200A0B1B8 /* ABURLImage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -463,17 +475,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C701D2BB275BF31600A0B1B8 /* Volunteer.swift in Sources */,
 				C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */,
 				C701D2B0275BBA7400A0B1B8 /* UIApplication+Ex.swift in Sources */,
 				C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */,
+				C701D2B9275BF23900A0B1B8 /* HomeViewModel.swift in Sources */,
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
 				C701D280275AA2E500A0B1B8 /* HomeView.swift in Sources */,
 				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
 				C701D27C275AA20C00A0B1B8 /* AUSTTravel.swift in Sources */,
 				C701D282275AA31800A0B1B8 /* AuthView.swift in Sources */,
 				C701D29B275AA6F300A0B1B8 /* UserInfo.swift in Sources */,
+				C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */,
 				C701D2AE275BAACC00A0B1B8 /* HapticFeedback.swift in Sources */,
 				C701D29E275AA93000A0B1B8 /* AuthViewModel.swift in Sources */,
+				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
 				C72032F9275A62E30046C48D /* SignUpView.swift in Sources */,

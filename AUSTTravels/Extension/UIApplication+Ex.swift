@@ -9,11 +9,20 @@
 import UIKit
 
 extension UIApplication {
+    
+    var appDelegate: AppDelegate {
+        (UIApplication.shared.delegate as! AppDelegate)
+    }
+    
     var sceneDelegate: SceneDelegate {
        UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
     }
     
     var authViewModel: AuthViewModel {
         sceneDelegate.austTravel.authViewModel
+    }
+    
+    var homeViewModel: HomeViewModel {
+        sceneDelegate.austTravel.homeViewModel
     }
 }

@@ -9,6 +9,7 @@
 import SwiftUI
 import Defaults
 import SPAlert
+import Defaults
 
 struct SignInView: View {
     
@@ -60,11 +61,12 @@ struct SignInView: View {
                                         return
                                     }
                                     guard isVerified == true else {
+                                        HapticFeedback.warning.provide()
+                                        authErrorMessage =  "Please verify you email"
+                                        authError = true
                                         return
                                     }
                                     austTravel.currentAuthPage = .none
-                                    Defaults[.authStatePage] = .none
-                                    
                                     austTravel.currentFirebaseUser = authViewModel.user
                                 }
                             } else {
@@ -78,7 +80,7 @@ struct SignInView: View {
                                  duration: 2,
                                  dismissOnTap: true,
                                  preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
-                                 haptic: .error,
+                                 haptic: .none,
                                  layout: .init(),
                                  completion: {
                             

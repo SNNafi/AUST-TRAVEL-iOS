@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Defaults
 
-struct UserInfo {
+struct UserInfo: Codable, Defaults.Serializable {
     var email: String = ""
     var userName: String = ""
     var semester: String = ""
@@ -17,4 +18,8 @@ struct UserInfo {
     
     var userImage: String { "https://avatars.dicebear.com/api/bottts/\(userName).svg" }
 
+}
+
+extension Defaults.Keys {
+    static let userInfo = Key<UserInfo>("userInfo", default: .init(email: "", userName: "", semester: "", department: "", universityId: ""))
 }

@@ -22,6 +22,7 @@ extension Color {
     static let yellowLight = Color(hex: "#FCE8A7")
     static let orange = Color(hex: "#E9896B")
     static let ash = Color(hex: "#F0F0F0")
+    static let redAsh = Color(hex: "#E9896B")
 }
 
 extension UIColor {
