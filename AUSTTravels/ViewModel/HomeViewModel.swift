@@ -11,11 +11,23 @@ import FirebaseAuth
 import FirebaseDatabase
 import UIKit
 import Defaults
+import CoreLocation.CLLocation
 
 class HomeViewModel: ObservableObject {
     
     var database = Database.database()
     let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    
+    func updateLocationSharing() {
+        
+        if austTravel.isLocationSharing {
+            austTravel.locationManager.stopUpdatingLocation()
+        } else {
+            austTravel.locationManager.startUpdatingLocation()
+        }
+        
+        austTravel.isLocationSharing.toggle()
+    }
     
     func getVolunteerInfo(completion: @escaping (Volunteer?, Error?) -> ()) {
         
@@ -54,6 +66,18 @@ class HomeViewModel: ObservableObject {
                 completion(volunteer, nil)
             }
         }
+    }
+    
+    func updateBusLocation(selectedBusName: String, selectedBusTime: String, _ currentCoordinate: CLLocationCoordinate2D) {
+        
+        var dict = [String: String]()
+        dict["lat"] = String(currentCoordinate.latitude)
+        dict["long"] = String(currentCoordinate.longitude)
+        dict["lastUpdatedTime"] = String(Int(Date().timeIntervalSince1970 * 1000))
+        dict["lastUpdatedVolunteer"] = austTravel.currentUserUID!
+    
+        database.reference(withPath: "bus/\(selectedBusName)/\(selectedBusTime)/location")
+            .setValue(dict)
     }
 }
 

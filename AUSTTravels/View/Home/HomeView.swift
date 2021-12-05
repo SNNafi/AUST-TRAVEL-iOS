@@ -80,14 +80,7 @@ struct HomeView: View {
                         if isUserVolunteer {
                             ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
                                 
-                                
-                                if austTravel.isLocationSharing {
-                                    locationManager.stopUpdatingLocation()
-                                } else {
-                                    locationManager.startUpdatingLocation()
-                                }
-                                
-                                austTravel.isLocationSharing.toggle()
+                                homeViewModel.updateLocationSharing()
                             }
                             .rightIcon(Icon(name: "map-location").iconColor(.black))
                         }
@@ -118,7 +111,7 @@ struct HomeView: View {
                             Spacer()
                         }
                         .frame(height: 85.dHeight(), alignment: .center)
-                        .background(Color.gray.opacity(0.5))
+                        .background(Color.gray.opacity(0.3))
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     
@@ -141,6 +134,8 @@ struct HomeView: View {
         .onReceive(locationManager.$currentCoordinate) { currentCoordinate in
             if austTravel.isLocationSharing {
                 print(currentCoordinate)
+                
+                // homeViewModel.updateBusLocation(selectedBusName: "Jamuna", selectedBusTime: "6:30AM", currentCoordinate)
             }
         }
     }
