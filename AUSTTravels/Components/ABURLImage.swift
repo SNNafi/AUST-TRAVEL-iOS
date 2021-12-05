@@ -21,7 +21,6 @@ struct ABURLImage: View {
        Image(uiImage: image)
             .resizable()
             .scaledToFit()
-            .frame(width: 19.dWidth(), height: 19.dWidth(), alignment: .center)
             .onReceive(imageFetcher.didLoad) { data in
                 self.image = UIImage(data: data) ??  UIImage(named: "user")!
             }

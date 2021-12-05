@@ -12,6 +12,8 @@ struct HomeView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
     @ObservedObject var homeViewModel = UIApplication.shared.homeViewModel
+    @State var isUserVolunteer: Bool = false
+    @State var volunteer: Volunteer? = nil
     
     var body: some View {
         
@@ -65,7 +67,7 @@ struct HomeView: View {
                             Spacer()
                             Rectangle()
                                 .frame(width: dWidth * 0.3, height: 1.dWidth())
-                           
+                            
                             Text("CONTRIBUTE")
                                 .scaledFont(font: .sairaCondensedLight, dsize: 15)
                             Rectangle()
@@ -74,12 +76,12 @@ struct HomeView: View {
                         }
                         .foregroundColor(.black)
                         .frame(width: dWidth * 0.9)
-                        
-                        ABButton(text: "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
-                            
+                        if isUserVolunteer {
+                            ABButton(text: "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
+                                
+                            }
+                            .rightIcon(Icon(name: "map-location").iconColor(.black))
                         }
-                        .rightIcon(Icon(name: "map-location").iconColor(.black))
-                        
                         ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
                             
                         }
@@ -88,13 +90,15 @@ struct HomeView: View {
                         
                         HStack {
                             Spacer()
-//                            if let url = austTravel.currentUserPhotoUrl {
-
-                                ABURLImage(imageURL: URL(string: "https://avatars.dicebear.com/api/bottts/Shahriar%20Nasim%20Nafi.png")!)
-                                    .padding(.horizontal, 3.dWidth())
-                           // }
                             
-                            Text(austTravel.currentUserEmail ?? "")
+                            if let volunteer = volunteer, let urlString = volunteer.userInfo.userImagePNG.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url =  URL(string: urlString) {
+                                
+                                ABURLImage(imageURL: url)
+                                    .frame(width: 23.dWidth(), height: 23.dWidth(), alignment: .center)
+                                    .padding(.trailing, 3.dWidth())
+                            }
+                            
+                            Text(volunteer?.userInfo.email ?? "")
                                 .foregroundColor(.black)
                                 .scaledFont(font: .sairaCondensedBold, dsize: 17)
                                 .padding(.trailing, 3.dWidth())
@@ -109,10 +113,13 @@ struct HomeView: View {
             }
             .onAppear {
                 homeViewModel.getVolunteerInfo { volunteer, error in
-                    
-                }
+                    self.volunteer = volunteer
+                    if let status = volunteer?.status {
+                        isUserVolunteer = status
+                        print(austTravel.currentUser?.userImagePNG)
+                    }
+                 }
             }
-            
         }
         .edgesIgnoringSafeArea(.all)
     }

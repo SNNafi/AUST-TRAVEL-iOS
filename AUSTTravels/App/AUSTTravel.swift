@@ -38,7 +38,9 @@ class AUSTTravel: ObservableObject {
             
         }
     }
-    var currentUser: UserInfo?
+  
+    @Published var currentUser: UserInfo?
+    @Published var currentVolunteer: Volunteer?
     
     func logOut() {
         authViewModel.logOut()

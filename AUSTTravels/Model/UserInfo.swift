@@ -17,6 +17,7 @@ struct UserInfo: Codable, Defaults.Serializable {
     var universityId: String = ""
     
     var userImage: String { "https://avatars.dicebear.com/api/bottts/\(userName).svg" }
+    var userImagePNG: String { "https://avatars.dicebear.com/api/bottts/\(userName).png" }
 
 }
 

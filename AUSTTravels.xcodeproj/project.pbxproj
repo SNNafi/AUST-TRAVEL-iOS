@@ -35,6 +35,8 @@
 		C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */; };
 		C701D2B9275BF23900A0B1B8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */; };
 		C701D2BB275BF31600A0B1B8 /* Volunteer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BA275BF31600A0B1B8 /* Volunteer.swift */; };
+		C701D2BD275D2C2500A0B1B8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */; };
+		C701D2C0275D306E00A0B1B8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BF275D306E00A0B1B8 /* LocationManager.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
@@ -93,6 +95,8 @@
 		C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Ex.swift"; sourceTree = "<group>"; };
 		C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C701D2BA275BF31600A0B1B8 /* Volunteer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volunteer.swift; sourceTree = "<group>"; };
+		C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C701D2BF275D306E00A0B1B8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +201,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C701D2BE275D305800A0B1B8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C701D2BF275D306E00A0B1B8 /* LocationManager.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		C743A7CF27566C6E00F9D6FC = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +232,7 @@
 		C743A7DA27566C6E00F9D6FC /* AUSTTravels */ = {
 			isa = PBXGroup;
 			children = (
+				C701D2BE275D305800A0B1B8 /* Utils */,
 				C701D29C275AA91700A0B1B8 /* ViewModel */,
 				C701D283275AA55000A0B1B8 /* GoogleService-Info.plist */,
 				C701D278275AA1A400A0B1B8 /* Model */,
@@ -302,6 +315,7 @@
 			children = (
 				C701D27E275AA2DC00A0B1B8 /* Home */,
 				C701D27D275AA27C00A0B1B8 /* Auth */,
+				C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -496,8 +510,10 @@
 				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
+				C701D2BD275D2C2500A0B1B8 /* SettingsView.swift in Sources */,
 				C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */,
 				C701D2AC275B7C7600A0B1B8 /* ABTextField.swift in Sources */,
+				C701D2C0275D306E00A0B1B8 /* LocationManager.swift in Sources */,
 				C701D27A275AA1B200A0B1B8 /* AuthState.swift in Sources */,
 				C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */,
 				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
@@ -670,7 +686,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -701,7 +717,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
