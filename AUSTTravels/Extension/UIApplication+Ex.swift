@@ -25,4 +25,10 @@ extension UIApplication {
     var homeViewModel: HomeViewModel {
         sceneDelegate.austTravel.homeViewModel
     }
+    
+    var locationManager: LocationManager {
+        sceneDelegate.austTravel.locationManager
+    }
+    
+    
 }

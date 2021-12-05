@@ -682,6 +682,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AUSTTravels/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aust Travels";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -713,6 +714,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AUSTTravels/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aust Travels";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -12,6 +12,7 @@ struct HomeView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
     @ObservedObject var homeViewModel = UIApplication.shared.homeViewModel
+    @ObservedObject var locationManager = UIApplication.shared.locationManager
     @State var isUserVolunteer: Bool = false
     @State var volunteer: Volunteer? = nil
     
@@ -77,11 +78,23 @@ struct HomeView: View {
                         .foregroundColor(.black)
                         .frame(width: dWidth * 0.9)
                         if isUserVolunteer {
-                            ABButton(text: "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
+                            ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
                                 
+                                
+                                if austTravel.isLocationSharing {
+                                    locationManager.stopUpdatingLocation()
+                                } else {
+                                    locationManager.startUpdatingLocation()
+                                }
+                                
+                                austTravel.isLocationSharing.toggle()
                             }
                             .rightIcon(Icon(name: "map-location").iconColor(.black))
                         }
+                        if austTravel.isLocationSharing {
+                            Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
+                        }
+                      
                         ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
                             
                         }
@@ -116,12 +129,20 @@ struct HomeView: View {
                     self.volunteer = volunteer
                     if let status = volunteer?.status {
                         isUserVolunteer = status
-                        print(austTravel.currentUser?.userImagePNG)
                     }
                  }
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+            print("App in background")
+            // stop sharing location
+        }
+        .onReceive(locationManager.$currentCoordinate) { currentCoordinate in
+            if austTravel.isLocationSharing {
+                print(currentCoordinate)
+            }
+        }
     }
 }
 
