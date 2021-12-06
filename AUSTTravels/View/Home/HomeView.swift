@@ -59,12 +59,7 @@ struct HomeView: View {
                         .rightIcon(Icon(name: "bus").iconColor(.black))
                         
                         ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                            
-//                            if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
-//                                UIApplication.shared.open(URL(string:
-//                                    "comgooglemaps://?saddr=\(23.774369833506437),\(90.40742601550414)&daddr=\(23.763879),\(90.406258)&directionsmode=driving&views=traffic")!)
-//                            }
-                           
+    
                         }
                         .rightIcon(Icon(name: "view-routes").iconColor(.black))
                         

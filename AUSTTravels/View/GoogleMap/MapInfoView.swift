@@ -12,20 +12,23 @@ struct MapInfoView: View {
     var route: Route
     var body: some View {
         VStack(alignment: .leading) {
-            Text(route.place)
-                .scaledFont(font: .sairaCondensedBold, dsize: 8)
+            
+            Text(route.mapPlaceName)
+                .lineLimit(nil)
+                .scaledFont(font: .sairaCondensedBold, dsize: 20)
                 .foregroundColor(.black)
+            // .fixedSize()
             Text("Est. Time: \(route.estTime)")
-                .scaledFont(font: .sairaCondensedLight, dsize: 7)
+                .scaledFont(font: .sairaCondensedLight, dsize: 15)
                 .foregroundColor(.black)
             Text("Tap here to view directions")
-                .scaledFont(font: .sairaCondensedSemiBold, dsize: 4)
+                .scaledFont(font: .sairaCondensedSemiBold, dsize: 14)
                 .foregroundColor(.redAsh)
+            
         }
         .padding(2.dWidth())
         .background(Color.white)
-        .frame(width: 200, height: 100, alignment: .center)
-        .shadow(color: Color.gray.opacity(0.4), radius: 2, x: 1, y: 1)
+        .offset(x: 0, y: 20)
     }
 }
 

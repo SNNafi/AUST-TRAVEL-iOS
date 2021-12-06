@@ -54,10 +54,11 @@ class LiveTrackViewModel: ObservableObject {
             let marker = GMSMarker(position: route.coordinate)
             marker.title = route.place
             
-            marker.icon = UIHostingController(rootView: MapInfoView(route: route)).view.asImage()
+           // marker.icon = UIHostingController(rootView: MapInfoView(route: route)).view.asImage()
+            marker.icon = nil
             marker.userData = route
-            marker.tracksViewChanges = true
-            marker.tracksInfoWindowChanges = true
+            marker.tracksViewChanges = false
+            marker.tracksInfoWindowChanges = false
             marker.infoWindowAnchor = CGPoint(x: 0, y: 0)
             marker.iconView = UIHostingController(rootView: Image("traffic-right-turn").resizable().scaledToFit()).view
             marker.iconView?.frame = CGRect(x: 0, y: 0, width: 35.dWidth() , height: 35.dWidth())

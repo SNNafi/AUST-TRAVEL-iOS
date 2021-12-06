@@ -36,27 +36,26 @@ struct GoogleMapView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        uiViewController.map.selectedMarker = selectedMarker
+        //        uiViewController.map.selectedMarker = selectedMarker
         busLatestMarker?.map = uiViewController.map
         markers.forEach { $0.map = uiViewController.map }
+        // center to bus location
+        if let busLatestMarker = busLatestMarker {
+            var zoomLevel = approximateLocationZoomLevel
+            if #available(iOS 14.0, *) {
+                zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+            }
+            let camera = GMSCameraPosition.camera(withLatitude: busLatestMarker.position.latitude,
+                                                  longitude: busLatestMarker.position.longitude,
+                                                  zoom: zoomLevel)
+            if mapViewController.map.isHidden {
+                mapViewController.map.isHidden = false
+                mapViewController.map.camera = camera
+            } else {
+                mapViewController.map.animate(to: camera)
+            }
+        }
         
-//        // center to bus location
-//        if let busLatestMarker = busLatestMarker {
-//            var zoomLevel = approximateLocationZoomLevel
-//            if #available(iOS 14.0, *) {
-//                zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
-//            }
-//            let camera = GMSCameraPosition.camera(withLatitude: busLatestMarker.position.latitude,
-//                                                  longitude: busLatestMarker.position.longitude,
-//                                                  zoom: zoomLevel)
-//            if mapViewController.map.isHidden {
-//                mapViewController.map.isHidden = false
-//                mapViewController.map.camera = camera
-//            } else {
-//                mapViewController.map.animate(to: camera)
-//            }
-//        }
-       
     }
     
     
@@ -81,20 +80,27 @@ struct GoogleMapView: UIViewControllerRepresentable {
             return self.googleMapView.didTap(marker)
         }
         
-//        func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-//            if let route = marker.userData as? Route {
-//                return UIHostingController(rootView: MapInfoView(route: route)).view
-//            }
-//            return nil
-//        }
-        
         func mapView(_ mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
             if let route = marker.userData as? Route {
-                let view = UIHostingController(rootView: MapInfoView(route: route)).view
-                view?.frame =  CGRect(x: 0, y: 0, width: 200.dWidth() , height: 100.dWidth())
-                return view
+                let infoWindow = UIHostingController(rootView: MapInfoView(route: route)).view!
+                infoWindow.frame = CGRect(x: 0, y: 0, width: 200.dWidth() , height: 150.dWidth())
+                infoWindow.backgroundColor = UIColor.clear
+                return infoWindow
             }
             return nil
+        }
+        
+        func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+            if let route = marker.userData as? Route {
+                print(#function, route.place, route.coordinate)
+                if let busLatestCoodinate = googleMapView.busLatestMarker?.position {
+                    if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
+                        UIApplication.shared.open(URL(string:
+                                                        "comgooglemaps://?saddr=\(busLatestCoodinate.latitude),\(busLatestCoodinate.longitude)&daddr=\(route.coordinate.latitude),\(route.coordinate.longitude)&directionsmode=driving&views=traffic")!)
+                    }
+                }
+                
+            }
         }
         
         // MARK: CLLocationManagerDelegate

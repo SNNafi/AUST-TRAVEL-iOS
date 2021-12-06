@@ -28,8 +28,6 @@ struct LiveTrackView: View {
                 Spacer()
                 GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers: $busRoutes, currentLocation: $currentLocation) { marker in
                     if (marker.userData as? Route) != nil {
-                        selectedMarker = marker
-                        print("CLICKED")
                         return false
                     }
                     return true
