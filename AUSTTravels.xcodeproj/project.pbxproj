@@ -62,6 +62,7 @@
 		C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8202756847600F9D6FC /* Int+Ex.swift */; };
 		C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A82327569CAA00F9D6FC /* SignInView.swift */; };
 		C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8372757B15A00F9D6FC /* ABButton.swift */; };
+		C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F69275E887300CA29EF /* UIImage+Ex.swift */; };
 		C7CC3405275E053700343026 /* LiveTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3404275E053700343026 /* LiveTrackView.swift */; };
 		C7CC3408275E199900343026 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3407275E199900343026 /* MapViewController.swift */; };
 		C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3409275E1A2100343026 /* GoogleMapView.swift */; };
@@ -70,6 +71,7 @@
 		C7CC3410275E22B700343026 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC340F275E22B700343026 /* Route.swift */; };
 		C7CC3412275E232800343026 /* LiveTrackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3411275E232800343026 /* LiveTrackViewModel.swift */; };
 		C7CC3414275E44E100343026 /* ABRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3413275E44E100343026 /* ABRoundedCorner.swift */; };
+		C7CC3416275E7B1700343026 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3415275E7B1700343026 /* MapInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,7 @@
 		C743A8202756847600F9D6FC /* Int+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ex.swift"; sourceTree = "<group>"; };
 		C743A82327569CAA00F9D6FC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C743A8372757B15A00F9D6FC /* ABButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABButton.swift; sourceTree = "<group>"; };
+		C75E5F69275E887300CA29EF /* UIImage+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ex.swift"; sourceTree = "<group>"; };
 		C7CC3404275E053700343026 /* LiveTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackView.swift; sourceTree = "<group>"; };
 		C7CC3407275E199900343026 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C7CC3409275E1A2100343026 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 		C7CC340F275E22B700343026 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C7CC3411275E232800343026 /* LiveTrackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackViewModel.swift; sourceTree = "<group>"; };
 		C7CC3413275E44E100343026 /* ABRoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABRoundedCorner.swift; sourceTree = "<group>"; };
+		C7CC3415275E7B1700343026 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		C7DB251647C5DCE50B6F1F43 /* Pods_AUSTTravelsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AUSTTravelsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF3A4C4AFEDD7256BD2BE1DD /* Pods-AUSTTravels-AUSTTravelsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AUSTTravels-AUSTTravelsUITests.release.xcconfig"; path = "Target Support Files/Pods-AUSTTravels-AUSTTravelsUITests/Pods-AUSTTravels-AUSTTravelsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E783E6F1C1B6124D89EAB407 /* Pods-AUSTTravelsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AUSTTravelsTests.debug.xcconfig"; path = "Target Support Files/Pods-AUSTTravelsTests/Pods-AUSTTravelsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -366,6 +370,7 @@
 				C743A8202756847600F9D6FC /* Int+Ex.swift */,
 				C701D2AF275BBA7400A0B1B8 /* UIApplication+Ex.swift */,
 				C701D2B6275BE4AF00A0B1B8 /* Defaults+Ex.swift */,
+				C75E5F69275E887300CA29EF /* UIImage+Ex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 			children = (
 				C7CC3407275E199900343026 /* MapViewController.swift */,
 				C7CC3409275E1A2100343026 /* GoogleMapView.swift */,
+				C7CC3415275E7B1700343026 /* MapInfoView.swift */,
 			);
 			path = GoogleMap;
 			sourceTree = "<group>";
@@ -731,10 +737,12 @@
 				C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */,
 				C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */,
 				C7CC3408275E199900343026 /* MapViewController.swift in Sources */,
+				C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */,
 				C701D2AE275BAACC00A0B1B8 /* HapticFeedback.swift in Sources */,
 				C701D29E275AA93000A0B1B8 /* AuthViewModel.swift in Sources */,
 				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
+				C7CC3416275E7B1700343026 /* MapInfoView.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
 				C72032F9275A62E30046C48D /* SignUpView.swift in Sources */,
 				C7CC3412275E232800343026 /* LiveTrackViewModel.swift in Sources */,

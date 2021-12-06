@@ -13,35 +13,55 @@ import Defaults
 
 struct GoogleMapView: UIViewControllerRepresentable {
     
+    @Binding var selectedMarker: GMSMarker?
     @Binding var busLatestMarker: GMSMarker?
     @Binding var markers: [GMSMarker]
     @Binding var currentLocation: CLLocation?
     var didTap: (GMSMarker) -> (Bool)
     var locationManager = CLLocationManager()
     let mapViewController = MapViewController()
+    let preciseLocationZoomLevel: Float = 15.0
+    let approximateLocationZoomLevel: Float = 10.0
     
     func makeUIViewController(context: Context) -> MapViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = 10
-        locationManager.startUpdatingLocation()
         locationManager.delegate = context.coordinator
+        locationManager.requestLocation()
         mapViewController.map.selectedMarker = nil
         mapViewController.map.delegate = context.coordinator
         return mapViewController
     }
     
     func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
+        uiViewController.map.selectedMarker = selectedMarker
         busLatestMarker?.map = uiViewController.map
         markers.forEach { $0.map = uiViewController.map }
+        
+//        // center to bus location
+//        if let busLatestMarker = busLatestMarker {
+//            var zoomLevel = approximateLocationZoomLevel
+//            if #available(iOS 14.0, *) {
+//                zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+//            }
+//            let camera = GMSCameraPosition.camera(withLatitude: busLatestMarker.position.latitude,
+//                                                  longitude: busLatestMarker.position.longitude,
+//                                                  zoom: zoomLevel)
+//            if mapViewController.map.isHidden {
+//                mapViewController.map.isHidden = false
+//                mapViewController.map.camera = camera
+//            } else {
+//                mapViewController.map.animate(to: camera)
+//            }
+//        }
+       
     }
     
     
     final class MapViewCoordinator: NSObject, GMSMapViewDelegate, CLLocationManagerDelegate {
         var googleMapView: GoogleMapView
-        var preciseLocationZoomLevel: Float = 15.0
-        var approximateLocationZoomLevel: Float = 10.0
         
         init(_ mapViewControllerBridge: GoogleMapView) {
             self.googleMapView = mapViewControllerBridge
@@ -61,14 +81,30 @@ struct GoogleMapView: UIViewControllerRepresentable {
             return self.googleMapView.didTap(marker)
         }
         
+//        func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+//            if let route = marker.userData as? Route {
+//                return UIHostingController(rootView: MapInfoView(route: route)).view
+//            }
+//            return nil
+//        }
+        
+        func mapView(_ mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
+            if let route = marker.userData as? Route {
+                let view = UIHostingController(rootView: MapInfoView(route: route)).view
+                view?.frame =  CGRect(x: 0, y: 0, width: 200.dWidth() , height: 100.dWidth())
+                return view
+            }
+            return nil
+        }
+        
         // MARK: CLLocationManagerDelegate
         
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             let location: CLLocation = locations.last!
             print("Location: \(location)")
-            var zoomLevel = approximateLocationZoomLevel
+            var zoomLevel = googleMapView.approximateLocationZoomLevel
             if #available(iOS 14.0, *) {
-                zoomLevel = manager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+                zoomLevel = manager.accuracyAuthorization == .fullAccuracy ? googleMapView.preciseLocationZoomLevel : googleMapView.approximateLocationZoomLevel
             }
             let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                                   longitude: location.coordinate.longitude,
@@ -106,7 +142,7 @@ struct GoogleMapView: UIViewControllerRepresentable {
             case .authorizedAlways: fallthrough
             case .authorizedWhenInUse:
                 print("Location status is OK.")
-                manager.startUpdatingLocation()
+                manager.requestLocation()
             @unknown default:
                 fatalError()
             }

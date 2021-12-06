@@ -15,6 +15,8 @@ struct Route {
     var mapPlaceName: String = ""
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
+    init() { }
+    
     init(snapshot: DataSnapshot) {
         guard let dict = snapshot.value as? NSDictionary else {
                 return
@@ -22,9 +24,9 @@ struct Route {
         place = dict["place"] as? String ?? ""
         mapPlaceName = dict["mapPlaceName"] as? String ?? ""
         estTime = dict["estTime"] as? String ?? ""
-        let latitude = dict["latitude"] as? Double ?? 0
-        let longitude = dict["longitude"] as? Double ?? 0
-        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let latitude = dict["latitude"] as? String ?? ""
+        let longitude = dict["longitude"] as? String ?? ""
+        coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude) ?? 0, longitude: CLLocationDegrees(longitude) ?? 0)
     }
     
     

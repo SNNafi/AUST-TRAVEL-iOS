@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         
         map.camera = camera
-        map.settings.myLocationButton = true
+        map.settings.myLocationButton = false
         map.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         map.isMyLocationEnabled = true
     }

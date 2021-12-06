@@ -107,3 +107,15 @@ extension View {
         clipShape(ABRoundedCorner(radius: radius, corners: corners))
     }
 }
+
+extension UIView {
+    func asImage() -> UIImage {
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        return UIGraphicsImageRenderer(size: self.layer.frame.size, format: format).image { context in
+            self.drawHierarchy(in: self.layer.bounds, afterScreenUpdates: true)
+            //layer.render(in: context.cgContext)
+
+        }
+    }
+} 
