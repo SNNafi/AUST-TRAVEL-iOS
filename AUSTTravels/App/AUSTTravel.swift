@@ -27,6 +27,7 @@ class AUSTTravel: ObservableObject {
     // We need to declare them as lazy otherwise, it will initialize while `SceneDelegate` doesn't exist causing crash !
     lazy var authViewModel = AuthViewModel()
     lazy var homeViewModel = HomeViewModel()
+    lazy var liveTrackViewModel = LiveTrackViewModel()
     
     @Published var isLocationSharing: Bool = false
     

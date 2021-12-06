@@ -30,5 +30,7 @@ extension UIApplication {
         sceneDelegate.austTravel.locationManager
     }
     
-    
+    var liveTrackViewModel: LiveTrackViewModel {
+        sceneDelegate.austTravel.liveTrackViewModel
+    }
 }
