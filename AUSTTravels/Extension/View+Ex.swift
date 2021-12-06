@@ -101,3 +101,9 @@ extension View {
         UIScreen.main.bounds.height
     }
 }
+
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(ABRoundedCorner(radius: radius, corners: corners))
+    }
+}
