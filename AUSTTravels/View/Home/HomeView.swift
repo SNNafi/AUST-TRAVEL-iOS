@@ -113,7 +113,6 @@ struct HomeView: View {
                         .background(Color.gray.opacity(0.3))
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    
                 }
             }
             .onAppear {

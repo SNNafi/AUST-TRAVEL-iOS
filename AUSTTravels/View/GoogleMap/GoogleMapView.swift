@@ -11,12 +11,22 @@ import GoogleMaps
 import GoogleMapsUtils
 import Defaults
 
+enum MapBinding {
+    case busLatestMarker
+    case markers
+    case selectedMarker
+    case currentLocation
+    case centerToBus
+    case multiple
+}
+
 struct GoogleMapView: UIViewControllerRepresentable {
     
     @Binding var selectedMarker: GMSMarker?
     @Binding var busLatestMarker: GMSMarker?
     @Binding var markers: [GMSMarker]
     @Binding var currentLocation: CLLocation?
+    @Binding var mapBinding: MapBinding
     var didTap: (GMSMarker) -> (Bool)
     var didTapInfoWindowOf: (GMSMarker) -> ()
     var locationManager = CLLocationManager()
@@ -37,27 +47,41 @@ struct GoogleMapView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        //        uiViewController.map.selectedMarker = selectedMarker
-        busLatestMarker?.map = uiViewController.map
-        markers.forEach { $0.map = uiViewController.map }
-        
-        // center to bus location
-        if let busLatestMarker = busLatestMarker {
-            var zoomLevel = approximateLocationZoomLevel
-            if #available(iOS 14.0, *) {
-                zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+        switch mapBinding {
+        case .busLatestMarker:
+            print("busLatestMarker")
+            busLatestMarker?.map = uiViewController.map
+        case .markers:
+            print("markers")
+            markers.forEach { $0.map = uiViewController.map }
+        case .selectedMarker:
+            print("selectedMarker")
+            uiViewController.map.selectedMarker = selectedMarker
+        case .currentLocation:
+            break
+        case .centerToBus:
+            print("centerToBus")
+            if let busLatestMarker = busLatestMarker {
+                var zoomLevel = approximateLocationZoomLevel
+                if #available(iOS 14.0, *) {
+                    zoomLevel = locationManager.accuracyAuthorization == .fullAccuracy ? preciseLocationZoomLevel : approximateLocationZoomLevel
+                }
+                let camera = GMSCameraPosition.camera(withLatitude: busLatestMarker.position.latitude,
+                                                      longitude: busLatestMarker.position.longitude,
+                                                      zoom: zoomLevel)
+                if mapViewController.map.isHidden {
+                    mapViewController.map.isHidden = false
+                    mapViewController.map.camera = camera
+                } else {
+                    mapViewController.map.animate(to: camera)
+                }
             }
-            let camera = GMSCameraPosition.camera(withLatitude: busLatestMarker.position.latitude,
-                                                  longitude: busLatestMarker.position.longitude,
-                                                  zoom: zoomLevel)
-            if mapViewController.map.isHidden {
-                mapViewController.map.isHidden = false
-                mapViewController.map.camera = camera
-            } else {
-                mapViewController.map.animate(to: camera)
-            }
+        case .multiple:
+            print("multiple")
+            //        uiViewController.map.selectedMarker = selectedMarker
+            busLatestMarker?.map = uiViewController.map
+            markers.forEach { $0.map = uiViewController.map }
         }
-        
     }
     
     

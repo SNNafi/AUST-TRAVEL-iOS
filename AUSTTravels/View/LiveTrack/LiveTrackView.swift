@@ -19,6 +19,7 @@ struct LiveTrackView: View {
     @State private var selectedMarker: GMSMarker?
     @State private var busLatestMarker: GMSMarker?
     @State private var busRoutes = [GMSMarker]()
+    @State private var mapBinding: MapBinding = .multiple
     @State private var mapError: Bool = false
     var selectedBus: String = "Jamuna"
     var selectedBusTime: String = "6:30AM"
@@ -28,26 +29,39 @@ struct LiveTrackView: View {
         ZStack {
             VStack {
                 Spacer()
-                GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers:
-                    $busRoutes, currentLocation: $currentLocation) { marker in
+                ZStack {
+                    GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers:
+                                    $busRoutes, currentLocation: $currentLocation, mapBinding: $mapBinding) { marker in
                         if (marker.userData as? Route) != nil {
                             return false
                         }
                         return true
-                    
-                } didTapInfoWindowOf: { marker in
-                    if let route = marker.userData as? Route {
-                        if let busLatestCoordinate = busLatestMarker?.position {
-                            if !liveTrackViewModel.openDirectionOnGoogleMap(busLatestCoordinate: busLatestCoordinate, route: route) {
-                                mapError = true
-                                HapticFeedback.error.provide()
-                            }
-                        }
                         
+                    } didTapInfoWindowOf: { marker in
+                        if let route = marker.userData as? Route {
+                            if let busLatestCoordinate = busLatestMarker?.position {
+                                if !liveTrackViewModel.openDirectionOnGoogleMap(busLatestCoordinate: busLatestCoordinate, route: route) {
+                                    mapError = true
+                                    HapticFeedback.error.provide()
+                                }
+                            }
+                            
+                        }
+                    }
+                    .frame(width: dWidth, height: dHeight * 0.68, alignment: .center)
+                    .offset(y: -12.dHeight())
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            ABFloatingButton(name: "bus") {
+                                mapBinding = .centerToBus
+                            }
+                            .padding(10.dWidth())
+                            .offset(x: 0, y: (dHeight * 0.25))
+                        }
                     }
                 }
-                .frame(width: dWidth, height: dHeight * 0.68, alignment: .center)
-                .offset(y: -12.dHeight())
                 Spacer()
                 Spacer()
             }
@@ -78,7 +92,6 @@ struct LiveTrackView: View {
                             .systemImage()
                             .iconColor(.white)
                             .clickable {
-                                
                             }
                             .padding(.horizontal, 15.dWidth())
                         
@@ -107,7 +120,6 @@ struct LiveTrackView: View {
                         
                         Spacer()
                         Button {
-                            
                         } label: {
                             Text("PING")
                                 .scaledFont(font: .sairaCondensedBold, dsize: 21)
@@ -151,7 +163,7 @@ struct LiveTrackView: View {
         
         .edgesIgnoringSafeArea(.all)
         .onAppear {
-    
+            
             busLatestMarker = liveTrackViewModel.initialBusMarker()
             
             liveTrackViewModel.fetchBusRoutes(busName: "Jamuna", busTime: "6:30AM") { routes in
