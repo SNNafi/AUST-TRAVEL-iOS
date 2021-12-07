@@ -80,4 +80,33 @@ class LiveTrackViewModel: ObservableObject {
             return false
         }        
     }
+    
+    func observeBusLatestLocation(busName: String, busTime: String, completion: @escaping (GMSMarker) -> ()) {
+        database.reference(withPath: "bus/\(busName)/\(busTime)/location").observe(.value) { [weak self] snapshot in
+            guard let dict = snapshot.value as? [String: Any] else {
+                self!.removeObserver(busName: busName, busTime: busTime)
+                completion(self!.initialBusMarker())
+                return
+            }
+            
+            let latitude = dict["lat"] as? String ?? ""
+            let longitude = dict["long"] as? String ?? ""
+            let busCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude) ?? 0, longitude: CLLocationDegrees(longitude) ?? 0)
+            
+            let marker = GMSMarker(position: busCoordinate)
+            marker.title = nil
+            marker.userData = nil
+            marker.tracksViewChanges = false
+            marker.iconView = UIHostingController(rootView: Image("bus-marker").resizable().scaledToFit()).view
+            marker.iconView?.frame = CGRect(x: 0, y: 0, width: 80.dWidth() , height: 80.dWidth())
+            marker.iconView?.backgroundColor = UIColor.clear
+            print(#function, busCoordinate)
+            completion(marker)
+        }
+    }
+    
+    func removeObserver(busName: String, busTime: String) {
+        print(#function)
+        database.reference(withPath: "bus/\(busName)/\(busTime)/location").removeAllObservers()
+    }
 }

@@ -164,12 +164,19 @@ struct LiveTrackView: View {
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             
+            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker in
+                busLatestMarker = busLatestMarker
+                mapBinding = .centerToBus
+            }
             busLatestMarker = liveTrackViewModel.initialBusMarker()
             
             liveTrackViewModel.fetchBusRoutes(busName: "Jamuna", busTime: "6:30AM") { routes in
                 routes.forEach { print($0.coordinate) }
                 busRoutes = liveTrackViewModel.createRouteMarkers(routes)
             }
+        }
+        .onDisappear {
+            liveTrackViewModel.removeObserver(busName: "Jamuna", busTime: "6:30AM")
         }
         .spAlert(isPresent: $mapError,
                  title: "Cannot open map !",
@@ -183,7 +190,7 @@ struct LiveTrackView: View {
             
         })
         
-    }
+    }    
 }
 
 struct LiveTrackView_Previews: PreviewProvider {
