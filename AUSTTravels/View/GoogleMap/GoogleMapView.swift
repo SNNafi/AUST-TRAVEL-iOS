@@ -18,6 +18,7 @@ struct GoogleMapView: UIViewControllerRepresentable {
     @Binding var markers: [GMSMarker]
     @Binding var currentLocation: CLLocation?
     var didTap: (GMSMarker) -> (Bool)
+    var didTapInfoWindowOf: (GMSMarker) -> ()
     var locationManager = CLLocationManager()
     let mapViewController = MapViewController()
     let preciseLocationZoomLevel: Float = 15.0
@@ -39,6 +40,7 @@ struct GoogleMapView: UIViewControllerRepresentable {
         //        uiViewController.map.selectedMarker = selectedMarker
         busLatestMarker?.map = uiViewController.map
         markers.forEach { $0.map = uiViewController.map }
+        
         // center to bus location
         if let busLatestMarker = busLatestMarker {
             var zoomLevel = approximateLocationZoomLevel
@@ -91,16 +93,7 @@ struct GoogleMapView: UIViewControllerRepresentable {
         }
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-            if let route = marker.userData as? Route {
-                print(#function, route.place, route.coordinate)
-                if let busLatestCoodinate = googleMapView.busLatestMarker?.position {
-                    if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
-                        UIApplication.shared.open(URL(string:
-                                                        "comgooglemaps://?saddr=\(busLatestCoodinate.latitude),\(busLatestCoodinate.longitude)&daddr=\(route.coordinate.latitude),\(route.coordinate.longitude)&directionsmode=driving&views=traffic")!)
-                    }
-                }
-                
-            }
+            self.googleMapView.didTapInfoWindowOf(marker)
         }
         
         // MARK: CLLocationManagerDelegate

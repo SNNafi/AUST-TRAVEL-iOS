@@ -54,7 +54,7 @@ class LiveTrackViewModel: ObservableObject {
             let marker = GMSMarker(position: route.coordinate)
             marker.title = route.place
             
-           // marker.icon = UIHostingController(rootView: MapInfoView(route: route)).view.asImage()
+            // marker.icon = UIHostingController(rootView: MapInfoView(route: route)).view.asImage()
             marker.icon = nil
             marker.userData = route
             marker.tracksViewChanges = false
@@ -65,8 +65,19 @@ class LiveTrackViewModel: ObservableObject {
             marker.iconView?.backgroundColor = UIColor.clear
             markers.append(marker)
         }
-       
+        
         return markers
     }
     
+    func openDirectionOnGoogleMap(busLatestCoordinate: CLLocationCoordinate2D, route: Route) -> Bool {
+        print(#function, route.place, route.coordinate)
+        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
+            UIApplication.shared.open(URL(string:
+                                            "comgooglemaps://?saddr=\(busLatestCoordinate.latitude),\(busLatestCoordinate.longitude)&daddr=\(route.coordinate.latitude),\(route.coordinate.longitude)&directionsmode=driving&views=traffic")!)
+            
+            return true
+        } else {
+            return false
+        }        
+    }
 }

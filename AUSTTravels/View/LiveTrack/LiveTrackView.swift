@@ -7,7 +7,8 @@
 //
 
 import SwiftUI
-import GoogleMaps
+import GoogleMaps.GMSMarker
+import SPAlert
 
 struct LiveTrackView: View {
     
@@ -18,6 +19,7 @@ struct LiveTrackView: View {
     @State private var selectedMarker: GMSMarker?
     @State private var busLatestMarker: GMSMarker?
     @State private var busRoutes = [GMSMarker]()
+    @State private var mapError: Bool = false
     var selectedBus: String = "Jamuna"
     var selectedBusTime: String = "6:30AM"
     
@@ -26,11 +28,23 @@ struct LiveTrackView: View {
         ZStack {
             VStack {
                 Spacer()
-                GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers: $busRoutes, currentLocation: $currentLocation) { marker in
-                    if (marker.userData as? Route) != nil {
-                        return false
+                GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers:
+                    $busRoutes, currentLocation: $currentLocation) { marker in
+                        if (marker.userData as? Route) != nil {
+                            return false
+                        }
+                        return true
+                    
+                } didTapInfoWindowOf: { marker in
+                    if let route = marker.userData as? Route {
+                        if let busLatestCoordinate = busLatestMarker?.position {
+                            if !liveTrackViewModel.openDirectionOnGoogleMap(busLatestCoordinate: busLatestCoordinate, route: route) {
+                                mapError = true
+                                HapticFeedback.error.provide()
+                            }
+                        }
+                        
                     }
-                    return true
                 }
                 .frame(width: dWidth, height: dHeight * 0.68, alignment: .center)
                 .offset(y: -12.dHeight())
@@ -145,6 +159,17 @@ struct LiveTrackView: View {
                 busRoutes = liveTrackViewModel.createRouteMarkers(routes)
             }
         }
+        .spAlert(isPresent: $mapError,
+                 title: "Cannot open map !",
+                 message: "Couldn't open the map. Do you have the latest version of Google Maps installed ?",
+                 duration: 2,
+                 dismissOnTap: true,
+                 preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
+                 haptic: .none,
+                 layout: .init(),
+                 completion: {
+            
+        })
         
     }
 }
