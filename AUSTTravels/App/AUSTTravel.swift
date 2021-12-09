@@ -15,7 +15,7 @@ class AUSTTravel: ObservableObject {
     @Published var currentAuthState: AuthState = Defaults[.authState]
     @Published var currentAuthPage: AuthStatePage = Defaults[.authStatePage] {
         didSet {
-            if currentAuthPage != .signUp && currentAuthPage != .forgetPassword {
+            if currentAuthPage != .forgetPassword {
                 Defaults[.authStatePage] = currentAuthPage
             }
         }

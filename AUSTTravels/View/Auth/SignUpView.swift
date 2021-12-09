@@ -27,18 +27,32 @@ struct SignUpView: View {
     
     var body: some View {
         ZStack  {
-            Color.white
-            
+            Color.white            
             VStack {
                 VStack {
                     Spacer()
                     Spacer()
-                    Text("SIGN UP")
-                        .scaledFont(font: .sairaCondensedBold, dsize: 25)
-                        .foregroundColor(.white)
+                    HStack {
+                        Icon(name: "back")
+                            .iconColor(.white)
+                            .clickable {
+                                withAnimation {
+                                    austTravel.currentAuthPage = .signIn
+                                }
+                            }
+                            .padding(.horizontal, 15.dWidth())
+                            .padding(.trailing, 3.dWidth())
+                    
+                        Text("SIGN UP")
+                            .scaledFont(font: .sairaCondensedBold, dsize: 25)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 15.dWidth())
+                       
+                        Spacer()
+                    }
+                    
                     Spacer()
                 }
-                
                 .frame(width: dWidth, height: 120.dHeight())
                 .background(Color.green)
                 
@@ -57,8 +71,7 @@ struct SignUpView: View {
                                 .textColor(.black)
                                 .borderColor(.black)
                                 .addValidator(authViewModel.signUpValidator.emailErrorMessage)
-                            
-                            
+                                                        
                             ABTextField(placeholder: "Enter your password", text: $password)
                                 .rightIcon(Icon(name: "lock.fill")
                                             .systemImage()
@@ -67,7 +80,6 @@ struct SignUpView: View {
                                 .borderColor(.black)
                                 .addValidator(authViewModel.signUpValidator.passwordErrorMessage)
                                 .secureField(true)
-                            
                             
                             ABTextField(placeholder: "Enter your nickname", text: $nickname)
                                 .rightIcon(Icon(name: "person.circle.fill")
@@ -112,7 +124,6 @@ struct SignUpView: View {
                             Spacer()
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
-                        
                     }
                 }
             }

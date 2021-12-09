@@ -124,6 +124,7 @@ struct HomeView: View {
                  }
             }
         }
+        .background(Color.white)
         .edgesIgnoringSafeArea(.all)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
             print("App in background")

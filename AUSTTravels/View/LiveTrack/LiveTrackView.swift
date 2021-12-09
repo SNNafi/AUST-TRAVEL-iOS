@@ -88,7 +88,7 @@ struct LiveTrackView: View {
                             .clickable {
                                 
                             }
-                            .padding(.horizontal, 10.dWidth())
+                            .padding(.horizontal, 15.dWidth())
                             .padding(.trailing, 3.dWidth())
                         
                         Text("LIVE TRACKING")
