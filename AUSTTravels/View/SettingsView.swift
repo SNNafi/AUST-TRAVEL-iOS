@@ -12,10 +12,16 @@ import Defaults
 struct SettingsView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
+    @ObservedObject var settingsViewModel = UIApplication.shared.settingsViewModel
+    
     
     @Default(.pingNotification) var pingNotification
     @Default(.locationNotification) var locationNotification
     @Default(.primaryBus) var primaryBus
+    
+    @State var buses = [Bus]()
+    @State var selectedBusTime: String = ""
+    @State var showBusSelect: Bool = false
     
     var body: some View {
         ZStack  {
@@ -101,7 +107,9 @@ struct SettingsView: View {
                                 .foregroundColor(.black)
                                 Spacer()
                                 Button {
-                                    
+                                    withAnimation(.easeIn) {
+                                        showBusSelect.toggle()
+                                    }
                                 } label: {
                                     Text("CHANGE")
                                         .scaledFont(font: .sairaCondensedSemiBold, dsize: 20)
@@ -169,8 +177,17 @@ struct SettingsView: View {
                     }
                 }
             }
+            if showBusSelect {
+                SelectBusDailogue(buses: $buses, selectedBusName: $primaryBus, selectedBusTime: $selectedBusTime, display: $showBusSelect)
+                    .transition(.scale)
+            }
         }
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            settingsViewModel.fetchBusInfo { busList in
+                buses = busList
+            }
+        }
     }
 }
 

@@ -15,10 +15,10 @@ import CoreLocation.CLLocation
 
 class HomeViewModel: ObservableObject {
     
-    var database = Database.database()
+    private var database = Database.database()
     let austTravel = UIApplication.shared.sceneDelegate.austTravel
     
-    func updateLocationSharing() {
+    func updateLocationSharing() -> Bool {
         
         if austTravel.isLocationSharing {
             austTravel.locationManager.stopUpdatingLocation()
@@ -27,6 +27,7 @@ class HomeViewModel: ObservableObject {
         }
         
         austTravel.isLocationSharing.toggle()
+        return austTravel.isLocationSharing
     }
     
     func getVolunteerInfo(completion: @escaping (Volunteer?, Error?) -> ()) {
@@ -78,6 +79,28 @@ class HomeViewModel: ObservableObject {
     
         database.reference(withPath: "bus/\(selectedBusName)/\(selectedBusTime)/location")
             .setValue(dict)
+    }
+    
+    func fetchBusInfo(completion: @escaping ([Bus]) -> ()) {
+        var buses = [Bus]()
+        
+        database.reference(withPath: "availableBusInfo").getData { error, snapshot in
+            if error != nil {
+                completion(buses)
+                return
+            }
+           
+            snapshot.children.forEach { dict in
+                let snap = dict as! DataSnapshot
+                var bus = Bus()
+                bus.name = String(snap.key)
+                snap.children.forEach { dict in
+                    bus.timing.append(BusTiming(snapshot: dict as! DataSnapshot))
+                }
+                buses.append(bus)
+            }
+            completion(buses)
+        }
     }
 }
 

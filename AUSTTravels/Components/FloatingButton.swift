@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ABFloatingButton: View {
+struct FloatingButton: View {
     
     var name: String
     var action: () -> ()
@@ -49,27 +49,27 @@ struct ABFloatingButton: View {
     }
 }
 
-//struct ABFloatingButton_Previews: PreviewProvider {
+//struct FloatingButton_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ABFloatingButton()
+//        FloatingButton()
 //    }
 //}
 
-extension ABFloatingButton {
+extension FloatingButton {
     
-    func systemImage(_ systemImage: Bool = true) -> ABFloatingButton {
+    func systemImage(_ systemImage: Bool = true) -> FloatingButton {
         var view = self
         view.isSystemImage = systemImage
         return view
     }
     
-    func iconColor(_ color: Color) -> ABFloatingButton {
+    func iconColor(_ color: Color) -> FloatingButton {
         var view = self
         view.iconColor = color
         return view
     }
     
-    func backgroundColor(_ color: Color) -> ABFloatingButton {
+    func backgroundColor(_ color: Color) -> FloatingButton {
         var view = self
         view.backgroundColor = color
         return view

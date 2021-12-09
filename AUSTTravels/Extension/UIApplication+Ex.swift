@@ -33,4 +33,8 @@ extension UIApplication {
     var liveTrackViewModel: LiveTrackViewModel {
         sceneDelegate.austTravel.liveTrackViewModel
     }
+    
+    var settingsViewModel: SettingsViewModel {
+        sceneDelegate.austTravel.settingsViewModel
+    }
 }

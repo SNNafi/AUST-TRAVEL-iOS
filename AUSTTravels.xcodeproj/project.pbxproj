@@ -40,6 +40,9 @@
 		C701D2BB275BF31600A0B1B8 /* Volunteer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BA275BF31600A0B1B8 /* Volunteer.swift */; };
 		C701D2BD275D2C2500A0B1B8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */; };
 		C701D2C0275D306E00A0B1B8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C701D2BF275D306E00A0B1B8 /* LocationManager.swift */; };
+		C715161D27628F17008B4E35 /* SelectBusDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715161C27628F17008B4E35 /* SelectBusDailogue.swift */; };
+		C715161F27629652008B4E35 /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715161E27629652008B4E35 /* Bus.swift */; };
+		C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715162027629722008B4E35 /* SettingsViewModel.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
@@ -63,7 +66,7 @@
 		C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A82327569CAA00F9D6FC /* SignInView.swift */; };
 		C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8372757B15A00F9D6FC /* ABButton.swift */; };
 		C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F69275E887300CA29EF /* UIImage+Ex.swift */; };
-		C75E5F6C275F9A4700CA29EF /* ABFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F6B275F9A4700CA29EF /* ABFloatingButton.swift */; };
+		C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */; };
 		C7CC3405275E053700343026 /* LiveTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3404275E053700343026 /* LiveTrackView.swift */; };
 		C7CC3408275E199900343026 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3407275E199900343026 /* MapViewController.swift */; };
 		C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3409275E1A2100343026 /* GoogleMapView.swift */; };
@@ -115,6 +118,9 @@
 		C701D2BA275BF31600A0B1B8 /* Volunteer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volunteer.swift; sourceTree = "<group>"; };
 		C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C701D2BF275D306E00A0B1B8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		C715161C27628F17008B4E35 /* SelectBusDailogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBusDailogue.swift; sourceTree = "<group>"; };
+		C715161E27629652008B4E35 /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		C715162027629722008B4E35 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,7 +148,7 @@
 		C743A82327569CAA00F9D6FC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C743A8372757B15A00F9D6FC /* ABButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABButton.swift; sourceTree = "<group>"; };
 		C75E5F69275E887300CA29EF /* UIImage+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ex.swift"; sourceTree = "<group>"; };
-		C75E5F6B275F9A4700CA29EF /* ABFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABFloatingButton.swift; sourceTree = "<group>"; };
+		C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		C7CC3404275E053700343026 /* LiveTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackView.swift; sourceTree = "<group>"; };
 		C7CC3407275E199900343026 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C7CC3409275E1A2100343026 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
@@ -230,6 +236,7 @@
 				C701D2AD275BAACC00A0B1B8 /* HapticFeedback.swift */,
 				C701D2BA275BF31600A0B1B8 /* Volunteer.swift */,
 				C7CC340F275E22B700343026 /* Route.swift */,
+				C715161E27629652008B4E35 /* Bus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,6 +266,7 @@
 				C701D29D275AA93000A0B1B8 /* AuthViewModel.swift */,
 				C701D2B8275BF23900A0B1B8 /* HomeViewModel.swift */,
 				C7CC3411275E232800343026 /* LiveTrackViewModel.swift */,
+				C715162027629722008B4E35 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -398,7 +406,8 @@
 				C701D2AB275B7C7600A0B1B8 /* ABTextField.swift */,
 				C701D2B4275BDE3200A0B1B8 /* ABURLImage.swift */,
 				C7CC3413275E44E100343026 /* ABRoundedCorner.swift */,
-				C75E5F6B275F9A4700CA29EF /* ABFloatingButton.swift */,
+				C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */,
+				C715161C27628F17008B4E35 /* SelectBusDailogue.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -735,19 +744,22 @@
 				C701D27C275AA20C00A0B1B8 /* AUSTTravel.swift in Sources */,
 				C701D282275AA31800A0B1B8 /* AuthView.swift in Sources */,
 				C7CC3414275E44E100343026 /* ABRoundedCorner.swift in Sources */,
+				C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */,
 				C7CC340E275E1E7900343026 /* PlistReader.swift in Sources */,
 				C701D29B275AA6F300A0B1B8 /* UserInfo.swift in Sources */,
+				C715161F27629652008B4E35 /* Bus.swift in Sources */,
 				C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */,
 				C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */,
 				C7CC3408275E199900343026 /* MapViewController.swift in Sources */,
 				C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */,
 				C701D2AE275BAACC00A0B1B8 /* HapticFeedback.swift in Sources */,
 				C701D29E275AA93000A0B1B8 /* AuthViewModel.swift in Sources */,
+				C715161D27628F17008B4E35 /* SelectBusDailogue.swift in Sources */,
 				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
 				C7CC3416275E7B1700343026 /* MapInfoView.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
-				C75E5F6C275F9A4700CA29EF /* ABFloatingButton.swift in Sources */,
+				C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */,
 				C72032F9275A62E30046C48D /* SignUpView.swift in Sources */,
 				C7CC3412275E232800343026 /* LiveTrackViewModel.swift in Sources */,
 				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,

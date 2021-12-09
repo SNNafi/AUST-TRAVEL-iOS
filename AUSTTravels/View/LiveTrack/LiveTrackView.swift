@@ -21,8 +21,6 @@ struct LiveTrackView: View {
     @State private var busRoutes = [GMSMarker]()
     @State private var mapBinding: MapBinding = .multiple
     @State private var mapError: Bool = false
-    var selectedBus: String = "Jamuna"
-    var selectedBusTime: String = "6:30AM"
     
     
     var body: some View {
@@ -54,7 +52,7 @@ struct LiveTrackView: View {
                     VStack {
                         HStack {
                             Spacer()
-                            ABFloatingButton(name: "bus") {
+                            FloatingButton(name: "bus") {
                                 if let busLatestMarker = busLatestMarker {
                                     let coordinator = CLLocationCoordinate2D(latitude: busLatestMarker.position.latitude, longitude: busLatestMarker.position.longitude)
                                     selectedCoordinater = coordinator
@@ -123,7 +121,7 @@ struct LiveTrackView: View {
                             .scaledFont(font: .sairaCondensedBold, dsize: 21)
                             .foregroundColor(.white)
                         
-                        Text(selectedBus)
+                        Text(austTravel.selectedBusName)
                             .scaledFont(font: .sairaCondensedSemiBold, dsize: 21)
                             .foregroundColor(.white)
                         
@@ -185,7 +183,7 @@ struct LiveTrackView: View {
             }
         }
         .onDisappear {
-            liveTrackViewModel.removeObserver(busName: "Jamuna", busTime: "6:30AM")
+            liveTrackViewModel.removeObserver(busName: austTravel.selectedBusName, busTime: austTravel.selectedBusTime)
         }
         .spAlert(isPresent: $mapError,
                  title: "Cannot open map !",

@@ -18,6 +18,8 @@ struct DropDown: View {
     var itemTextColor: Color = .white
     var selectedBorderColor: Color = .black
     var errorTextColor: Color = .red
+    var frameWidth = UIScreen.main.bounds.width * 0.85
+    var expandedListHeight: CGFloat = 150
     @State private var isDropDownListShow: Bool = false
     var validator: String? = nil
     
@@ -50,7 +52,7 @@ struct DropDown: View {
                         
                         
                     }
-                    .frame(width: dWidth * 0.85)
+                    .frame(width: frameWidth)
                     .padding(10.dHeight())
                     .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(isDropDownListShow ? selectedBorderColor : itemTextColor, lineWidth: 1.dWidth()))
                     .padding(.horizontal, 15.dWidth())
@@ -91,7 +93,7 @@ struct DropDown: View {
                                     .scaledFont(font: .sairaCondensedRegular, dsize: 17)
                                     .foregroundColor(itemTextColor)
                                     .padding(.vertical, 3.dHeight())
-                                    .frame(width: dWidth * 0.85)
+                                    .frame(width: frameWidth)
                                     .background(Color.white)
                             }
                             
@@ -103,8 +105,8 @@ struct DropDown: View {
                 .padding(3.dHeight())
                 .background(Color.white)
                 .shadow(color: .gray.opacity(0.4), radius: 5)
-                .offset(y: -110.dHeight())
-                .frame(height: 150.dHeight())
+                .offset(y: -(expandedListHeight - 40).dHeight())
+                .frame(height: expandedListHeight.dHeight())
                 
             }
         }
@@ -149,6 +151,18 @@ extension DropDown {
     func addValidator(_ message: String?) -> DropDown {
         var view = self
         view.validator = message
+        return view
+    }
+    
+    func width(_ width: CGFloat) -> DropDown {
+        var view = self
+        view.frameWidth = width
+        return view
+    }
+    
+    func expandedList(dheight: CGFloat) -> DropDown {
+        var view = self
+        view.expandedListHeight = dheight
         return view
     }
     

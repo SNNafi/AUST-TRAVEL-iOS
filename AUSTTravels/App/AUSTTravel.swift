@@ -30,8 +30,12 @@ class AUSTTravel: ObservableObject {
     lazy var authViewModel = AuthViewModel()
     lazy var homeViewModel = HomeViewModel()
     lazy var liveTrackViewModel = LiveTrackViewModel()
+    lazy var settingsViewModel = SettingsViewModel()
     
     @Published var isLocationSharing: Bool = false
+    
+    var selectedBusName: String = ""
+    var selectedBusTime: String = ""
     
     var userId: String?
     var currentFirebaseUser: User? {
