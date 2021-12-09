@@ -16,9 +16,15 @@ enum AuthState: Int, Defaults.Serializable {
 
 enum AuthStatePage: Int, Defaults.Serializable {
     case none = 0
-    case signIn = 1
-    case signUp = 2
-    case forgetPassword = 3
+    case signIn
+    case signUp
+    case forgetPassword
+}
+
+enum PageRoute: Int {
+    case home = 1
+    case liveTrack
+    case settings
 }
 
 extension Defaults.Keys {

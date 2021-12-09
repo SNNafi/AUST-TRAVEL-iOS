@@ -37,8 +37,9 @@ struct HomeView: View {
                         .systemImage()
                         .iconColor(.white)
                         .clickable {
-                            print("HomeView")
-                            austTravel.logOut()
+                            withAnimation {
+                                austTravel.currentPage = .settings
+                            }
                         }
                         .padding(.horizontal, 15.dWidth())
                     
@@ -54,7 +55,9 @@ struct HomeView: View {
                     VStack {
                         
                         ABButton(text: "LIVE TRACK BUS", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                            
+                            withAnimation {
+                                austTravel.currentPage = .liveTrack
+                            }
                         }
                         .rightIcon(Icon(name: "bus").iconColor(.black))
                         

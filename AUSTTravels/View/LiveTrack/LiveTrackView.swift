@@ -86,7 +86,9 @@ struct LiveTrackView: View {
                         Icon(name: "back")
                             .iconColor(.white)
                             .clickable {
-                                
+                                withAnimation {
+                                    austTravel.currentPage = .home
+                                }
                             }
                             .padding(.horizontal, 15.dWidth())
                             .padding(.trailing, 3.dWidth())
@@ -97,12 +99,12 @@ struct LiveTrackView: View {
                             .padding(.horizontal, 15.dWidth())
                         Spacer()
                         
-                        Icon(name: "gearshape.fill")
-                            .systemImage()
-                            .iconColor(.white)
-                            .clickable {
-                            }
-                            .padding(.horizontal, 15.dWidth())
+//                        Icon(name: "gearshape.fill")
+//                            .systemImage()
+//                            .iconColor(.white)
+//                            .clickable {
+//                            }
+//                            .padding(.horizontal, 15.dWidth())
                     }
                     Spacer()
                 }

@@ -21,6 +21,8 @@ class AUSTTravel: ObservableObject {
         }
     }
     
+    @Published var currentPage: PageRoute = .home
+    
     // MARK: - VIEW MODEL
     
     lazy var locationManager = LocationManager()

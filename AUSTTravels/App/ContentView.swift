@@ -15,12 +15,19 @@ struct ContentView: View {
     var body: some View {
 
         if austTravel.currentAuthPage == .none {
-            HomeView()
+            if austTravel.currentPage == .home {
+                HomeView()
+                    .transition(.move(edge: .trailing))
+            } else  if austTravel.currentPage == .liveTrack {
+                LiveTrackView()
+                    .transition(.move(edge: .trailing))
+            } else  if austTravel.currentPage == .settings {
+                SettingsView()
+                    .transition(.move(edge: .trailing))
+            }
         } else {
             AuthView()
         }
-       // LiveTrackView()
-        
     }
 }
 
