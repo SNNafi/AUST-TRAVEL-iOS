@@ -16,7 +16,7 @@ struct LiveTrackView: View {
     @ObservedObject var liveTrackViewModel = UIApplication.shared.liveTrackViewModel
     
     @State private var currentLocation: CLLocation?
-    @State private var selectedMarker: GMSMarker?
+    @State private var selectedCoordinater: CLLocationCoordinate2D?
     @State private var busLatestMarker: GMSMarker?
     @State private var busRoutes = [GMSMarker]()
     @State private var mapBinding: MapBinding = .multiple
@@ -30,7 +30,7 @@ struct LiveTrackView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    GoogleMapView(selectedMarker: $selectedMarker, busLatestMarker: $busLatestMarker, markers:
+                    GoogleMapView(selectedCoordinater: $selectedCoordinater, busLatestMarker: $busLatestMarker, markers:
                                     $busRoutes, currentLocation: $currentLocation, mapBinding: $mapBinding) { marker in
                         if (marker.userData as? Route) != nil {
                             return false
@@ -55,7 +55,17 @@ struct LiveTrackView: View {
                         HStack {
                             Spacer()
                             ABFloatingButton(name: "bus") {
-                                mapBinding = .centerToBus
+                                if let busLatestMarker = busLatestMarker {
+                                    let coordinator = CLLocationCoordinate2D(latitude: busLatestMarker.position.latitude, longitude: busLatestMarker.position.longitude)
+                                    selectedCoordinater = coordinator
+                                    if mapBinding == .selectedMarker {
+                                        mapBinding = .selectedMarker2
+                                    } else if mapBinding == .selectedMarker2 {
+                                        mapBinding = .selectedMarker
+                                    } else {
+                                        mapBinding = .selectedMarker
+                                    }
+                                }
                             }
                             .padding(10.dWidth())
                             .offset(x: 0, y: (dHeight * 0.25))
@@ -81,7 +91,6 @@ struct LiveTrackView: View {
                             .padding(.horizontal, 10.dWidth())
                             .padding(.trailing, 3.dWidth())
                         
-                        
                         Text("LIVE TRACKING")
                             .scaledFont(font: .sairaCondensedBold, dsize: 20)
                             .foregroundColor(.white)
@@ -94,8 +103,6 @@ struct LiveTrackView: View {
                             .clickable {
                             }
                             .padding(.horizontal, 15.dWidth())
-                        
-                        
                     }
                     Spacer()
                 }
@@ -125,7 +132,6 @@ struct LiveTrackView: View {
                                 .scaledFont(font: .sairaCondensedBold, dsize: 21)
                                 .foregroundColor(.yellow)
                         }
-                        
                     }
                     .padding(.horizontal, 15.dWidth())
                     .padding(.top, 2.dWidth())
@@ -151,7 +157,6 @@ struct LiveTrackView: View {
                     .padding(.horizontal, 15.dWidth())
                     .frame(width: dWidth, height: dHeight * 0.13)
                     
-                    
                     Spacer()
                     
                 }
@@ -164,15 +169,17 @@ struct LiveTrackView: View {
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             
-            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker in
-                busLatestMarker = busLatestMarker
-                mapBinding = .centerToBus
-            }
             busLatestMarker = liveTrackViewModel.initialBusMarker()
             
             liveTrackViewModel.fetchBusRoutes(busName: "Jamuna", busTime: "6:30AM") { routes in
                 routes.forEach { print($0.coordinate) }
                 busRoutes = liveTrackViewModel.createRouteMarkers(routes)
+            }
+            
+            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker in
+                busLatestMarker?.map = nil
+                busLatestMarker = marker
+                mapBinding = .centerToBus
             }
         }
         .onDisappear {
@@ -189,8 +196,7 @@ struct LiveTrackView: View {
                  completion: {
             
         })
-        
-    }    
+    }
 }
 
 struct LiveTrackView_Previews: PreviewProvider {

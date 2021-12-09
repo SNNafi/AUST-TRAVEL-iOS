@@ -17,6 +17,7 @@ class MapViewController: UIViewController {
     var clusterManager: GMUClusterManager!
     var isAnimating: Bool = false
     let camera = GMSCameraPosition.camera(withLatitude: 23.763879, longitude:  90.406258, zoom: 12.5)
+    var cbounds: GMSCoordinateBounds = GMSCoordinateBounds()
     
     override func viewDidLoad() {
         
@@ -24,6 +25,7 @@ class MapViewController: UIViewController {
         map.settings.myLocationButton = false
         map.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         map.isMyLocationEnabled = true
+        map.setMinZoom(10, maxZoom: 16)
     }
     
     override func loadView() {
