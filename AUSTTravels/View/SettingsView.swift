@@ -29,7 +29,7 @@ struct SettingsView: View {
                             .iconColor(.white)
                             .clickable {
                                 withAnimation {
-                                    //  austTravel.currentAuthPage = .signIn
+                                    austTravel.currentPage = .home
                                 }
                             }
                             .padding(.horizontal, 15.dWidth())
@@ -45,21 +45,23 @@ struct SettingsView: View {
                     
                     Spacer()
                 }
-                .frame(width: dWidth, height: 120.dHeight())
+                .frame(width: dWidth, height: 90.dHeight())
                 .background(Color.green)
                 
                 GeometryReader { geometry in
                     ScrollView {
-                        VStack {
+                        VStack(alignment: .leading) {
                             HStack {
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text("Ping Notification")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
                                     Text("If you don’t want to receive any ping notifications, turn this off")
                                         .lineLimit(nil)
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 14)
+                                        .scaledFont(font: .sairaCondensedRegular, dsize: 18)
                                     
                                 }
+                                .foregroundColor(.black)
+                                Spacer()
                                 Toggle("", isOn: $pingNotification)
                                     .fixedSize()
                             }
@@ -69,15 +71,17 @@ struct SettingsView: View {
                                 .foregroundColor(.black)
                             
                             HStack {
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text("Location Notification")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
                                     Text("If you don’t want to receive any notifications when someone is sharing their location, turn this off")
                                         .lineLimit(nil)
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 14)
+                                        .scaledFont(font: .sairaCondensedRegular, dsize: 18)
                                     
                                 }
-                                Toggle("", isOn: $pingNotification)
+                                .foregroundColor(.black)
+                                Spacer()
+                                Toggle("", isOn: $locationNotification)
                                     .fixedSize()
                             }
                             .padding(3.dHeight())
@@ -85,12 +89,38 @@ struct SettingsView: View {
                             Divider()
                                 .foregroundColor(.black)
                             
-                            VStack {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Primary Bus")
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
+                                    Text("Currently set to: \(primaryBus)")
+                                        .lineLimit(nil)
+                                        .scaledFont(font: .sairaCondensedRegular, dsize: 18)
+                                    
+                                }
+                                .foregroundColor(.black)
+                                Spacer()
+                                Button {
+                                    
+                                } label: {
+                                    Text("CHANGE")
+                                        .scaledFont(font: .sairaCondensedSemiBold, dsize: 20)
+                                        .foregroundColor(.green)
+                                }
+                                
+                            }
+                            .padding(3.dHeight())
+                            
+                            Divider()
+                                .foregroundColor(.black)
+                            
+                            VStack(alignment: .leading) {
                                 Button {
                                     
                                 } label: {
                                     Text("Privacy & Policy")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
+                                        .foregroundColor(.black)
                                 }
                                 .padding(3.dHeight())
                                 
@@ -101,7 +131,8 @@ struct SettingsView: View {
                                     
                                 } label: {
                                     Text("Contributors")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
+                                        .foregroundColor(.black)
                                 }
                                 .padding(3.dHeight())
                                 
@@ -112,7 +143,7 @@ struct SettingsView: View {
                                     
                                 } label: {
                                     Text("Delete Account")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
                                         .foregroundColor(.redAsh)
                                 }
                                 .padding(3.dHeight())
@@ -124,14 +155,16 @@ struct SettingsView: View {
                                     austTravel.logOut()
                                 } label: {
                                     Text("Log Out")
-                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 23)
                                         .foregroundColor(.greenLight)
                                 }
                                 .padding(3.dHeight())
                             }
                             
-                            
+                            Spacer()
                         }
+                        .padding(10)
+                        .padding(.horizontal, 10)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                     }
                 }
