@@ -18,6 +18,7 @@ class HomeViewModel: ObservableObject {
     private var database = Database.database()
     let austTravel = UIApplication.shared.sceneDelegate.austTravel
     
+    @discardableResult
     func updateLocationSharing() -> Bool {
         
         if austTravel.isLocationSharing {

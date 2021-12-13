@@ -39,4 +39,51 @@ class SettingsViewModel: ObservableObject {
             completion(buses)
         }
     }
+    
+    func deleteAccount(password: String) {
+        
+    }
+    
+    func getUserSeetings(completion: @escaping (UserSettings?, Error?) -> Void) {
+        database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings").getData { error, snapshot in
+            if error != nil {
+                completion(nil, error)
+                return
+            }
+            if snapshot.exists() {
+                let userSettings = UserSettings(snapshot: snapshot)
+                print(userSettings)
+                Defaults[.userSettings] = userSettings
+                completion(userSettings, nil)
+                return
+            }
+        }
+    }
+    
+    func updatePrimaryBus(_ primaryBus: String) {
+        do {
+            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/primaryBus").setValue(primaryBus)
+        } catch {
+            
+        }
+        
+    }
+    
+    func updatePingNotificationStatus(_ isPingNotification: Bool) {
+        do {
+            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isPingNotification").setValue(isPingNotification)
+        } catch {
+            
+        }
+       
+    }
+    
+    func updateLocationNotificationStatus(_ isLocationNotification: Bool) {
+        do {
+            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isLocationNotification").setValue(isLocationNotification)
+        } catch {
+            
+        }
+        
+    }
 }

@@ -23,6 +23,8 @@ extension Color {
     static let orange = Color(hex: "#E9896B")
     static let ash = Color(hex: "#F0F0F0")
     static let redAsh = Color(hex: "#E9896B")
+    static let deepAsh = Color(hex: "#C4C4C4")
+    static let lightAsh = Color(hex: "#F0F0F0")
 }
 
 extension UIColor {

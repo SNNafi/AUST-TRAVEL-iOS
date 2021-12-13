@@ -65,6 +65,9 @@
 		C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8202756847600F9D6FC /* Int+Ex.swift */; };
 		C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A82327569CAA00F9D6FC /* SignInView.swift */; };
 		C743A8382757B15A00F9D6FC /* ABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A8372757B15A00F9D6FC /* ABButton.swift */; };
+		C74728F22767A51B00E618E8 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F12767A51B00E618E8 /* UserSettings.swift */; };
+		C74728F42767AF7800E618E8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F32767AF7800E618E8 /* WebView.swift */; };
+		C74728F72767AFB700E618E8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F62767AFB700E618E8 /* PrivacyPolicyView.swift */; };
 		C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F69275E887300CA29EF /* UIImage+Ex.swift */; };
 		C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */; };
 		C7CC3405275E053700343026 /* LiveTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3404275E053700343026 /* LiveTrackView.swift */; };
@@ -147,6 +150,9 @@
 		C743A8202756847600F9D6FC /* Int+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ex.swift"; sourceTree = "<group>"; };
 		C743A82327569CAA00F9D6FC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C743A8372757B15A00F9D6FC /* ABButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABButton.swift; sourceTree = "<group>"; };
+		C74728F12767A51B00E618E8 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		C74728F32767AF7800E618E8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		C74728F62767AFB700E618E8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		C75E5F69275E887300CA29EF /* UIImage+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ex.swift"; sourceTree = "<group>"; };
 		C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		C7CC3404275E053700343026 /* LiveTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackView.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 				C701D2BA275BF31600A0B1B8 /* Volunteer.swift */,
 				C7CC340F275E22B700343026 /* Route.swift */,
 				C715161E27629652008B4E35 /* Bus.swift */,
+				C74728F12767A51B00E618E8 /* UserSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -388,11 +395,11 @@
 		C743A82227569C9200F9D6FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C74728F52767AF9400E618E8 /* Settings */,
 				C7CC3406275E198000343026 /* GoogleMap */,
 				C7CC3401275E040000343026 /* LiveTrack */,
 				C701D27E275AA2DC00A0B1B8 /* Home */,
 				C701D27D275AA27C00A0B1B8 /* Auth */,
-				C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -410,6 +417,16 @@
 				C715161C27628F17008B4E35 /* SelectBusDailogue.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		C74728F52767AF9400E618E8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C701D2BC275D2C2500A0B1B8 /* SettingsView.swift */,
+				C74728F32767AF7800E618E8 /* WebView.swift */,
+				C74728F62767AFB700E618E8 /* PrivacyPolicyView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		C7CC3401275E040000343026 /* LiveTrack */ = {
@@ -747,6 +764,7 @@
 				C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */,
 				C7CC340E275E1E7900343026 /* PlistReader.swift in Sources */,
 				C701D29B275AA6F300A0B1B8 /* UserInfo.swift in Sources */,
+				C74728F72767AFB700E618E8 /* PrivacyPolicyView.swift in Sources */,
 				C715161F27629652008B4E35 /* Bus.swift in Sources */,
 				C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */,
 				C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */,
@@ -756,7 +774,9 @@
 				C701D29E275AA93000A0B1B8 /* AuthViewModel.swift in Sources */,
 				C715161D27628F17008B4E35 /* SelectBusDailogue.swift in Sources */,
 				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
+				C74728F42767AF7800E618E8 /* WebView.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
+				C74728F22767A51B00E618E8 /* UserSettings.swift in Sources */,
 				C7CC3416275E7B1700343026 /* MapInfoView.swift in Sources */,
 				C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */,
 				C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */,

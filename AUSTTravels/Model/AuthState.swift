@@ -25,6 +25,7 @@ enum PageRoute: Int {
     case home = 1
     case liveTrack
     case settings
+    case privacyPolicy
 }
 
 extension Defaults.Keys {

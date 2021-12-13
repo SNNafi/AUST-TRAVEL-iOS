@@ -124,7 +124,9 @@ struct SettingsView: View {
                             
                             VStack(alignment: .leading) {
                                 Button {
-                                    
+                                    withAnimation {
+                                        austTravel.currentPage = .privacyPolicy
+                                    }
                                 } label: {
                                     Text("Privacy & Policy")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
@@ -183,9 +185,25 @@ struct SettingsView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .valueChanged(value: pingNotification) { _ in
+            settingsViewModel.updatePingNotificationStatus(pingNotification)
+        }
+        .valueChanged(value: locationNotification) { _ in
+            settingsViewModel.updateLocationNotificationStatus(locationNotification)
+        }
+        .valueChanged(value: primaryBus) { _ in
+            settingsViewModel.updatePrimaryBus(primaryBus)
+        }
         .onAppear {
             settingsViewModel.fetchBusInfo { busList in
                 buses = busList
+            }
+            settingsViewModel.getUserSeetings { userSettings, _ in
+                if let userSettings = userSettings {
+                    pingNotification = userSettings.isPingNotification
+                    locationNotification = userSettings.isLocationNotification
+                    primaryBus = userSettings.primaryBus
+                }
             }
         }
     }

@@ -24,6 +24,9 @@ struct ContentView: View {
             } else  if austTravel.currentPage == .settings {
                 SettingsView()
                     .transition(.move(edge: .trailing))
+            } else if austTravel.currentPage == .privacyPolicy {
+                PrivacyPolicyView()
+                    .transition(.move(edge: .trailing))
             }
         } else {
             AuthView()

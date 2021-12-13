@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SPAlert
 
 enum SelectionType {
     case liveTrack
@@ -18,15 +19,18 @@ struct HomeView: View {
     @EnvironmentObject var austTravel: AUSTTravel
     @ObservedObject var homeViewModel = UIApplication.shared.homeViewModel
     @ObservedObject var locationManager = UIApplication.shared.locationManager
-    @State var isUserVolunteer: Bool = false
-    @State var volunteer: Volunteer? = nil
-    @State var selectionType: SelectionType = .liveTrack
+    @State private var isUserVolunteer: Bool = false
+    @State private var volunteer: Volunteer? = nil
+    @State private var selectionType: SelectionType = .liveTrack
     
     // LiveTrackView
-    @State var buses = [Bus]()
-    @State var selectedBusName: String = ""
-    @State var selectedBusTime: String = ""
-    @State var showBusSelect: Bool = false
+    @State private var buses = [Bus]()
+    @State private var selectedBusName: String = ""
+    @State private var selectedBusTime: String = ""
+    @State private var showBusSelect: Bool = false
+    
+    @State private var selectionError: Bool = false
+    @State private var selectionErrorMessage: String = ""
     
     var body: some View {
         
@@ -93,14 +97,40 @@ struct HomeView: View {
                             .frame(width: dWidth * 0.9)
                             if isUserVolunteer {
                                 ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
-                                    selectionType = .shareLocation
+                                    if !austTravel.isLocationSharing {
+                                        selectionType = .shareLocation
+                                        showBusSelect.toggle()
+                                    } else {
+                                        homeViewModel.updateLocationSharing()
+                                    }
                                     
-                                    showBusSelect = homeViewModel.updateLocationSharing()
                                 }
                                 .rightIcon(Icon(name: "map-location").iconColor(.black))
                             }
                             if austTravel.isLocationSharing {
-                                Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
+//                                Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
+                                ZStack {
+                                        RoundedRectangle(cornerRadius: 20.dHeight())
+                                        .foregroundColor(.deepAsh)
+                                    VStack {
+                                        GeometryReader { gReader in
+                                            VStack {
+                                                Rectangle()
+                                                    .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
+                                                    .foregroundColor(.lightAsh)
+                                                    .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
+                                                    .overlay(Text("You are currently sharing your location for ").scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black))
+                                                Text("Bus: \(selectedBusName)")
+                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 16).foregroundColor(.black)
+                                                Text("Time: \(selectedBusTime)")
+                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 16).foregroundColor(.black)
+                                            }
+                                        }
+                                    }
+                                }
+                                .frame(width: dWidth * 0.9, height: 140.dHeight())
+                                .padding(10.dHeight())
+                                .padding(.horizontal, 15.dHeight())
                             }
                             
                             ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
@@ -150,17 +180,24 @@ struct HomeView: View {
             
             if showBusSelect {
                 SelectBusDailogue(isBusTimeDropDownShown: true, buses: $buses, selectedBusName: $selectedBusName, selectedBusTime: $selectedBusTime, display: $showBusSelect) {
-                    if selectionType == .liveTrack {
+                    if selectedBusTime.isEmpty {
+                        selectionErrorMessage = "Ahh, you must select a time dear!"
+                        selectionError = true
+                    } else if selectionType == .liveTrack {
                         withAnimation {
                             austTravel.selectedBusName = selectedBusName
                             austTravel.selectedBusTime = selectedBusTime
                             austTravel.currentPage = .liveTrack
                         }
+                        
+                    } else if selectionType == .shareLocation{
+                        homeViewModel.updateLocationSharing()
                     }
                 }
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .spAlert(isPresent: $selectionError, message: selectionErrorMessage, duration: 1.0, dismissOnTap: true, haptic: .error)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
             print("App in background")
             // stop sharing location
@@ -170,6 +207,9 @@ struct HomeView: View {
                 print(currentCoordinate)
                 homeViewModel.updateBusLocation(selectedBusName: austTravel.selectedBusName, selectedBusTime: austTravel.selectedBusTime, currentCoordinate)
             }
+        }
+        .valueChanged(value: selectedBusName) { _ in
+            selectedBusTime = ""
         }
     }
 }

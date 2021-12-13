@@ -66,5 +66,9 @@ class AUSTTravel: ObservableObject {
     var currentUserPhotoUrl: URL? {
        URL(string:  Defaults[.userPhotoURL] ?? "")
     }
+    
+    var currentUserSettings: UserSettings? {
+        Defaults[.userSettings]
+    }
 }
 
