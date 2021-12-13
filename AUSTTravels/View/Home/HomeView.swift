@@ -32,6 +32,8 @@ struct HomeView: View {
     @State private var selectionError: Bool = false
     @State private var selectionErrorMessage: String = ""
     
+    @ObservedObject var stopWatch = StopWatch()
+    
     var body: some View {
         
         ZStack {
@@ -101,6 +103,7 @@ struct HomeView: View {
                                         selectionType = .shareLocation
                                         showBusSelect.toggle()
                                     } else {
+                                        stopWatch.resetTimer()
                                         homeViewModel.updateLocationSharing()
                                     }
                                     
@@ -119,7 +122,7 @@ struct HomeView: View {
                                                     .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
                                                     .foregroundColor(.lightAsh)
                                                     .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                                    .overlay(Text("You are currently sharing your location for ").scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black))
+                                                    .overlay(Text("You are currently sharing your location for \(stopWatch.minute) : \(stopWatch.second)").scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black))
                                                 Text("Bus: \(selectedBusName)")
                                                     .scaledFont(font: .sairaCondensedSemiBold, dsize: 16).foregroundColor(.black)
                                                 Text("Time: \(selectedBusTime)")
@@ -192,6 +195,7 @@ struct HomeView: View {
                         
                     } else if selectionType == .shareLocation{
                         homeViewModel.updateLocationSharing()
+                        stopWatch.startTimer()
                     }
                 }
             }

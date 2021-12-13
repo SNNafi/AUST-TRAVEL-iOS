@@ -68,6 +68,7 @@
 		C74728F22767A51B00E618E8 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F12767A51B00E618E8 /* UserSettings.swift */; };
 		C74728F42767AF7800E618E8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F32767AF7800E618E8 /* WebView.swift */; };
 		C74728F72767AFB700E618E8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F62767AFB700E618E8 /* PrivacyPolicyView.swift */; };
+		C74728F92767CAB300E618E8 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74728F82767CAB300E618E8 /* StopWatch.swift */; };
 		C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F69275E887300CA29EF /* UIImage+Ex.swift */; };
 		C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */; };
 		C7CC3405275E053700343026 /* LiveTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3404275E053700343026 /* LiveTrackView.swift */; };
@@ -153,6 +154,7 @@
 		C74728F12767A51B00E618E8 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		C74728F32767AF7800E618E8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C74728F62767AFB700E618E8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		C74728F82767CAB300E618E8 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 		C75E5F69275E887300CA29EF /* UIImage+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ex.swift"; sourceTree = "<group>"; };
 		C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		C7CC3404275E053700343026 /* LiveTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackView.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 			children = (
 				C701D2BF275D306E00A0B1B8 /* LocationManager.swift */,
 				C7CC340D275E1E7800343026 /* PlistReader.swift */,
+				C74728F82767CAB300E618E8 /* StopWatch.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				C701D2AC275B7C7600A0B1B8 /* ABTextField.swift in Sources */,
 				C701D2C0275D306E00A0B1B8 /* LocationManager.swift in Sources */,
 				C701D27A275AA1B200A0B1B8 /* AuthState.swift in Sources */,
+				C74728F92767CAB300E618E8 /* StopWatch.swift in Sources */,
 				C701D277275A923800A0B1B8 /* ForgotPasswordView.swift in Sources */,
 				C743A81F2756843100F9D6FC /* View+Ex.swift in Sources */,
 			);
