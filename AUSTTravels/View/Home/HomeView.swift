@@ -32,7 +32,23 @@ struct HomeView: View {
     @State private var selectionError: Bool = false
     @State private var selectionErrorMessage: String = ""
     
-    @ObservedObject var stopWatch = StopWatch()
+    // StopWatch
+    @State private var timer: Timer?
+    @State private var progressTime = 0
+    @State private var isRunning = false
+    
+    var hour: Int {
+        progressTime / 3600
+    }
+    
+    var minute: Int {
+        (progressTime % 3600) / 60
+    }
+    
+    var second: Int {
+        progressTime % 60
+    }
+    
     
     var body: some View {
         
@@ -103,7 +119,7 @@ struct HomeView: View {
                                         selectionType = .shareLocation
                                         showBusSelect.toggle()
                                     } else {
-                                        stopWatch.resetTimer()
+                                        updateTimer()
                                         homeViewModel.updateLocationSharing()
                                     }
                                     
@@ -111,9 +127,9 @@ struct HomeView: View {
                                 .rightIcon(Icon(name: "map-location").iconColor(.black))
                             }
                             if austTravel.isLocationSharing {
-//                                Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
+                                //                                Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
                                 ZStack {
-                                        RoundedRectangle(cornerRadius: 20.dHeight())
+                                    RoundedRectangle(cornerRadius: 20.dHeight())
                                         .foregroundColor(.deepAsh)
                                     VStack {
                                         GeometryReader { gReader in
@@ -122,11 +138,12 @@ struct HomeView: View {
                                                     .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
                                                     .foregroundColor(.lightAsh)
                                                     .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                                    .overlay(Text("You are currently sharing your location for \(stopWatch.minute) : \(stopWatch.second)").scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black))
+                                                    .overlay(Text("You are currently sharing your location for \(hour) : \(minute) : \(second)").scaledFont(font: .sairaCondensedSemiBold, dsize: 19).foregroundColor(.black))
+                                                    .offset(y: -3.dHeight())
                                                 Text("Bus: \(selectedBusName)")
-                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 16).foregroundColor(.black)
+                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
                                                 Text("Time: \(selectedBusTime)")
-                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 16).foregroundColor(.black)
+                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
                                             }
                                         }
                                     }
@@ -195,7 +212,7 @@ struct HomeView: View {
                         
                     } else if selectionType == .shareLocation{
                         homeViewModel.updateLocationSharing()
-                        stopWatch.startTimer()
+                        updateTimer()
                     }
                 }
             }
@@ -209,12 +226,25 @@ struct HomeView: View {
         .onReceive(locationManager.$currentCoordinate) { currentCoordinate in
             if austTravel.isLocationSharing {
                 print(currentCoordinate)
-                homeViewModel.updateBusLocation(selectedBusName: austTravel.selectedBusName, selectedBusTime: austTravel.selectedBusTime, currentCoordinate)
+                // homeViewModel.updateBusLocation(selectedBusName: austTravel.selectedBusName, selectedBusTime: austTravel.selectedBusTime, currentCoordinate)
             }
         }
         .valueChanged(value: selectedBusName) { _ in
             selectedBusTime = ""
         }
+    }
+    
+    func updateTimer() {
+        if isRunning{
+            timer?.invalidate()
+            homeViewModel.updateContribution(elapsedTime: progressTime)
+            progressTime = 0
+        } else {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+                progressTime += 1
+            })
+        }
+        isRunning.toggle()
     }
 }
 

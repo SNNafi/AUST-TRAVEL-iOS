@@ -103,6 +103,28 @@ class HomeViewModel: ObservableObject {
             completion(buses)
         }
     }
+    
+    func updateContribution(elapsedTime: Int) {
+        database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)/totalContribution").keepSynced(true)
+         var previousContribution = 0
+        database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)/totalContribution").getData { [weak self] error, snapshot in
+            guard let self = self else {  return }
+            if error != nil {
+                return
+            }
+            
+            if snapshot.exists() {
+                previousContribution = (snapshot.value as! Int)
+                print("previousContribution", previousContribution)
+            }
+            
+            // NEED TO CHECK THE UNIT
+            let totalTimeElapsed = previousContribution + elapsedTime
+            print("totalTimeElapsed", totalTimeElapsed)
+            self.database.reference(withPath: "volunteers/\(self.austTravel.currentUserUID!)/totalContribution").setValue(totalTimeElapsed)
+        }
+        
+    }
 }
 
 
