@@ -31,27 +31,23 @@ class HomeViewModel: ObservableObject {
         return austTravel.isLocationSharing
     }
     
-    func getVolunteerInfo(completion: @escaping (Volunteer?, Error?) -> ()) {
+    func getVolunteerInfo() async {
         
-        database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)").getData { [weak self] error, snapshot in
-            guard let self = self else { return }
-            if error != nil {
-                completion(nil, error)
-                return
+        do {
+            let vSnapshot = try await database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)").getData()
+            if vSnapshot.exists() {
+                if let dict = vSnapshot.value as? NSDictionary  {
+                    var volunteer = Volunteer()
+                    volunteer.contact = dict["contact"] as? String ?? ""
+                    volunteer.status = dict["status"] as? Bool ?? false
+                    volunteer.totalContribution = dict["totalContribution"] as? Int ?? 0
+                    Defaults[.volunteer] = volunteer
+                }
             }
             
-            var volunteer = Volunteer()
-            guard let dict = snapshot.value as? NSDictionary else { return }
-            volunteer.contact = dict["contact"] as? String ?? ""
-            volunteer.status = dict["status"] as? Bool ?? false
-            volunteer.totalContribution = dict["totalContribution"] as? Int ?? 0
+            let uSnapshot = try await database.reference(withPath: "users/\(self.austTravel.currentUserUID!)").getData()
             
-            self.database.reference(withPath: "users/\(self.austTravel.currentUserUID!)").getData { error, snapshot in
-                if error != nil {
-                    completion(nil, error)
-                    return
-                }
-                guard let dict = snapshot.value as? NSDictionary else { return }
+            if let dict = uSnapshot.value as? NSDictionary {
                 var userInfo = UserInfo()
                 userInfo.department = dict["department"] as? String ?? ""
                 userInfo.email = dict["email"] as? String ?? ""
@@ -59,14 +55,12 @@ class HomeViewModel: ObservableObject {
                 userInfo.semester = dict["semester"] as? String ?? ""
                 userInfo.universityId = dict["universityId"] as? String ?? ""
                 
-                volunteer.userInfo = userInfo
+                Defaults[.volunteer].userInfo = userInfo
                 Defaults[.userInfo] = userInfo
-                
-                Defaults[.volunteer] = volunteer
-                Defaults[.userInfo] = userInfo
-                
-                completion(volunteer, nil)
             }
+            
+        } catch {
+            
         }
     }
     
@@ -77,7 +71,7 @@ class HomeViewModel: ObservableObject {
         dict["long"] = String(currentCoordinate.longitude)
         dict["lastUpdatedTime"] = String(Int(Date().timeIntervalSince1970 * 1000))
         dict["lastUpdatedVolunteer"] = austTravel.currentUserUID!
-    
+        dict["universityId"] = austTravel.currentUser!.universityId
         database.reference(withPath: "bus/\(selectedBusName)/\(selectedBusTime)/location")
             .setValue(dict)
     }
@@ -90,7 +84,7 @@ class HomeViewModel: ObservableObject {
                 completion(buses)
                 return
             }
-           
+            
             snapshot.children.forEach { dict in
                 let snap = dict as! DataSnapshot
                 var bus = Bus()
@@ -106,7 +100,7 @@ class HomeViewModel: ObservableObject {
     
     func updateContribution(elapsedTime: Int) {
         database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)/totalContribution").keepSynced(true)
-         var previousContribution = 0
+        var previousContribution = 0
         database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)/totalContribution").getData { [weak self] error, snapshot in
             guard let self = self else {  return }
             if error != nil {

@@ -25,6 +25,7 @@ struct SettingsView: View {
     @State private var showBusSelect: Bool = false
     @State private var phoneNumber: String = ""
     @State private var showbecomeVolunteer: Bool = false
+    
     @State private var task: Task<Void, Error>? = nil
     @State private var isLoading: Bool = false
     @State private var settingsError: Bool = false
@@ -217,7 +218,7 @@ struct SettingsView: View {
                 BecomeVolunteerDailogue(display: $showbecomeVolunteer, buses: $buses, selectedBusName: $primaryBus, phoneNumber: $phoneNumber, isLoading: $isLoading) {
                     if settingsViewModel.isValidBecomeVolunteer(busName: primaryBus, phonNumber: phoneNumber) {
                         
-                        Task {
+                        task = Task {
                             isLoading = true
                             settingsErrorMessage = await settingsViewModel.createVolunteer(busName: primaryBus, phonNumber: phoneNumber)
                             isLoading = false
@@ -252,6 +253,10 @@ struct SettingsView: View {
                 }
             }
         }
+        .onDisappear {
+            task?.cancel()
+        }
+        
     }
 }
 

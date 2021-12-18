@@ -14,6 +14,9 @@ struct ForgotPasswordView: View {
     @ObservedObject var authViewModel = UIApplication.shared.authViewModel
     @State private var email: String = ""
     @State private var emailIsEditing: Bool = false
+    
+    @State private var task: Task<Void, Error>? = nil
+    @State private var isLoading: Bool = false
     @State private var authError: Bool = false
     @State private var authErrorMessage: String? = nil
     
@@ -55,25 +58,26 @@ struct ForgotPasswordView: View {
                                 .textColor(.black)
                                 .borderColor(.green)
                                 .addValidator(authViewModel.forgetPasswordValidator.emailErrorMessage)
-                            
-                            ABButton(text: "SEND", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
-                                if authViewModel.isValidForgetPasswordInfo(email: email) {
-                                    
-                                } else {
-                                    HapticFeedback.warning.provide()
+                            if isLoading {
+                                ActivityIndicator(isAnimating: isLoading)
+                                    .configure { $0.color = .green }
+                                    .background(Color.white)
+                                    .padding(15.dWidth())
+                            } else {
+                                
+                                ABButton(text: "SEND", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
+                                    if authViewModel.isValidForgetPasswordInfo(email: email) {
+                                        task = Task {
+                                            isLoading = true
+                                            authErrorMessage = await authViewModel.forgetPassword(email: email)
+                                            authError = true
+                                            isLoading = false
+                                        }
+                                    } else {
+                                        HapticFeedback.warning.provide()
+                                    }
                                 }
                             }
-                            .spAlert(isPresent: $authError,
-                                     title: "Error !",
-                                     message: authErrorMessage ?? "",
-                                     duration: 2,
-                                     dismissOnTap: true,
-                                     preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
-                                     haptic: .error,
-                                     layout: .init(),
-                                     completion: {
-                                
-                            })
                             
                             Button {
                                 
@@ -98,7 +102,21 @@ struct ForgotPasswordView: View {
                 }
             }
         }
+        .spAlert(isPresent: $authError,
+                 title: authErrorMessage ?? "",
+                 message: nil,
+                 duration: 2,
+                 dismissOnTap: true,
+                 preset: authErrorMessage == "Something went wrong" ? .error : .done,
+                 haptic: authErrorMessage == "Something went wrong" ? .error : .success,
+                 layout: .init(),
+                 completion: {
+            
+        })
         .edgesIgnoringSafeArea(.all)
+        .onDisappear {
+            task?.cancel()
+        }
     }
 }
 

@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseCore
 import Defaults
+import UIKit
 
 class AuthViewModel: ObservableObject {
     
@@ -19,6 +20,9 @@ class AuthViewModel: ObservableObject {
     @Published var signInValidator = SignInValidator()
     @Published var forgetPasswordValidator = ForgetPasswordValidator()
     @Published var signUpValidator = SignUpValidator()
+    
+    private let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    private let auth =  Auth.auth()
     
     func isValidSignInInfo(email: String, password: String) -> Bool {
         if isEmail(email) {
@@ -88,65 +92,70 @@ class AuthViewModel: ObservableObject {
             signUpValidator = SignUpValidator(departmentErrorMessage: "Please enter your department")
             return false
         }
-        
         return true
     }
     
-    func signUp(userInfo: UserInfo, password: String, completion: @escaping (Bool?, Error?) -> Void) {
-        let auth =  Auth.auth()
-        auth.createUser(withEmail: userInfo.email, password: password) { [weak self] authResult, error in
-            if error != nil {
-                completion(nil, error)
-                return
-            }
-            if let self = self, let user = auth.currentUser {
-                self.userUID = user.uid
-                self.saveNewUserInfo(for: userInfo, user: user)
-                completion(self.sendVerificationEmail(), nil)
-            }
+    func signUp(userInfo: UserInfo, password: String) async -> Bool {
+        do {
+
+            let authDataResulr = try await auth.createUser(withEmail: userInfo.email, password: password)
+            user = authDataResulr.user
+            austTravel.currentFirebaseUser = authDataResulr.user
+            try await saveNewUserInfo(for: userInfo, user: authDataResulr.user)
+            try await sendVerificationEmail()
+            return true
+        } catch {
+            return false
         }
     }
     
     @discardableResult
-    private func saveNewUserInfo(for userInfo: UserInfo, user: User) -> Bool {
-        var success = false
-        let database = Database.database()
+    private func saveNewUserInfo(for userInfo: UserInfo, user: User) async throws -> Bool {
         let changeRequest = user.createProfileChangeRequest()
         changeRequest.displayName = userInfo.userName
         if let photoURL =  URL(string: userInfo.userImage) {
             changeRequest.photoURL = photoURL
         }
-        changeRequest.commitChanges { error in
-            guard error == nil else { print("saveNewUserInfo", error!.localizedDescription); return }
-            database.reference(withPath: "users/\(user.uid)").setValue(userInfo)
-            success = true
-        }
-        return success
+        try await changeRequest.commitChanges()
+        var dict = [String: Any]()
+        dict["department"] = userInfo.department
+        dict["email"] = userInfo.email
+        dict["name"] = userInfo.userName
+        dict["semester"] = userInfo.semester
+        dict["universityId"] = userInfo.universityId
+        dict["userImage"] = userInfo.userImage
+        try await Database.database().reference(withPath: "users/\(austTravel.currentUserUID!)").setValue(dict)
+        return true
     }
     
-    private func sendVerificationEmail() -> Bool {
-        var success = false
-        guard let user = Auth.auth().currentUser else { return false }
-        user.sendEmailVerification { error in
-            if error == nil  {
-                success = true
-                try? Auth.auth().signOut()
-            }
-        }
-        return success
+    @discardableResult
+    private func sendVerificationEmail() async throws -> Bool {
+        guard let user = auth.currentUser else { return false }
+        try await user.sendEmailVerification()
+        try Auth.auth().signOut()
+        return true
     }
     
-    func signIn(email: String, password: String, completion: @escaping (Bool?, Error?) -> Void) {
-        let auth =  Auth.auth()
-        auth.signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            if error != nil {
-                completion(nil, error)
-                return
+    func signIn(email: String, password: String) async -> String {
+        do {
+            let authDataResult = try await auth.signIn(withEmail: email, password: password)
+            user = authDataResult.user
+            if authDataResult.user.isEmailVerified {
+                return "OK"
+            } else {
+                return "Please verify your email"
             }
-            if let self = self, let user = auth.currentUser {
-                self.user = user
-                completion(user.isEmailVerified, nil)
-            }
+        } catch {
+            return "Something went wrong"
+        }
+    }
+    
+    func forgetPassword(email: String) async -> String {
+        do {
+        try await auth.sendPasswordReset(withEmail: email)
+            return "An email is sent to your institutional email"
+        } catch {
+            return "Something went wrong"
         }
     }
     

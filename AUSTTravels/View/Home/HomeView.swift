@@ -182,18 +182,18 @@ struct HomeView: View {
                     }
                 }
                 .onAppear {
+                    print(austTravel.currentUserUID!)
                     
                     homeViewModel.fetchBusInfo { busList in
                         buses = busList
                     }
                     
-                    homeViewModel.getVolunteerInfo { volunteer, error in
-                        self.volunteer = volunteer
-                        if let status = volunteer?.status {
-                            isUserVolunteer = status
-                        }
+                    Task {
+                        await homeViewModel.getVolunteerInfo()
+                        volunteer = austTravel.currentVolunteer
+                        print(austTravel.currentVolunteer.status)
+                        isUserVolunteer = austTravel.currentVolunteer.status
                     }
-                    
                 }
             }
             .background(Color.white)
@@ -226,7 +226,7 @@ struct HomeView: View {
         .onReceive(locationManager.$currentCoordinate) { currentCoordinate in
             if austTravel.isLocationSharing {
                 print(currentCoordinate)
-                // homeViewModel.updateBusLocation(selectedBusName: austTravel.selectedBusName, selectedBusTime: austTravel.selectedBusTime, currentCoordinate)
+                homeViewModel.updateBusLocation(selectedBusName: selectedBusName, selectedBusTime: selectedBusTime, currentCoordinate)
             }
         }
         .valueChanged(value: selectedBusName) { _ in

@@ -117,6 +117,7 @@ struct BecomeVolunteerDailogue: View {
                                     ActivityIndicator(isAnimating: isLoading)
                                         .configure { $0.color = .green }
                                         .background(Color.white)
+                                        .padding(15.dWidth())
                                 } else {
                                     Button {
                                         action()

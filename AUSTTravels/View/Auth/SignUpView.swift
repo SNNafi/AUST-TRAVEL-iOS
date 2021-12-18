@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SPAlert
 
 struct SignUpView: View {
     
@@ -25,9 +26,14 @@ struct SignUpView: View {
     @State private var uniIdIsEditing: Bool = false
     @State private var isPasswordHIdden: Bool = true
     
+    @State private var task: Task<Void, Error>? = nil
+    @State private var isLoading: Bool = false
+    @State private var authError: Bool = false
+    @State private var authErrorMessage: String? = ""
+    
     var body: some View {
         ZStack  {
-            Color.white            
+            Color.white
             VStack {
                 VStack {
                     Spacer()
@@ -42,12 +48,12 @@ struct SignUpView: View {
                             }
                             .padding(.horizontal, 15.dWidth())
                             .padding(.trailing, 3.dWidth())
-                    
+                        
                         Text("SIGN UP")
                             .scaledFont(font: .sairaCondensedBold, dsize: 25)
                             .foregroundColor(.white)
                             .padding(.horizontal, 15.dWidth())
-                       
+                        
                         Spacer()
                     }
                     
@@ -71,7 +77,7 @@ struct SignUpView: View {
                                 .textColor(.black)
                                 .borderColor(.black)
                                 .addValidator(authViewModel.signUpValidator.emailErrorMessage)
-                                                        
+                            
                             ABTextField(placeholder: "Enter your password", text: $password)
                                 .rightIcon(Icon(name: "lock.fill")
                                             .systemImage()
@@ -106,29 +112,62 @@ struct SignUpView: View {
                                 .selectedBorderColor(.green)
                                 .addValidator(authViewModel.signUpValidator.departmentErrorMessage)
                             
-                            ABButton(text: "SIGN UP", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
-                                var userInfo = UserInfo()
-                                userInfo.email = email
-                                userInfo.userName = nickname
-                                userInfo.universityId = uniId
-                                userInfo.semester = selectedSemester
-                                userInfo.department = selectedDepartment
+                            
+                            if isLoading {
+                                ActivityIndicator(isAnimating: isLoading)
+                                    .configure { $0.color = .green }
+                                    .background(Color.white)
+                                    .padding(15.dWidth())
+                            } else {
                                 
-                                if authViewModel.isValidSignUpInfo(userInfo: userInfo, password: password) {
+                                ABButton(text: "SIGN UP", textColor: .black, backgroundColor: .yellowLight, font: .sairaCondensedSemiBold) {
+                                    var _userInfo = UserInfo()
+                                    _userInfo.email = email
+                                    _userInfo.userName = nickname
+                                    _userInfo.universityId = uniId
+                                    _userInfo.semester = selectedSemester
+                                    _userInfo.department = selectedDepartment
                                     
-                                } else {
-                                    HapticFeedback.warning.provide()
+                                    let userInfo = _userInfo
+                                    
+                                    if authViewModel.isValidSignUpInfo(userInfo: userInfo, password: password) {
+                                        task = Task {
+                                            isLoading = true
+                                            if await authViewModel.signUp(userInfo: userInfo, password: password) {
+                                                authErrorMessage = "Email verification link sent to your email"
+                                            } else {
+                                                authErrorMessage = "Something went wrong"
+                                            }
+                                            authError = true
+                                            isLoading = false
+                                        }
+                                    } else {
+                                        HapticFeedback.warning.provide()
+                                    }
                                 }
                             }
-                            
                             Spacer()
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
+                        .spAlert(isPresent: $authError,
+                                 title: authErrorMessage ?? "",
+                                 message: nil,
+                                 duration: 2,
+                                 dismissOnTap: true,
+                                 preset: authErrorMessage == "Something went wrong" ? .error : .done,
+                                 haptic: authErrorMessage == "Something went wrong" ? .error : .success,
+                                 layout: .init()) {
+                            
+                            austTravel.currentAuthPage = .signIn
+                        }
                     }
                 }
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .onDisappear {
+            task?.cancel()
+        }
     }
 }
 

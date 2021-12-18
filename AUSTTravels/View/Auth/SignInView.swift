@@ -20,6 +20,9 @@ struct SignInView: View {
     @State private var emailIsEditing: Bool = false
     @State private var passwordIsEditing: Bool = false
     @State private var isPasswordHIdden: Bool = true
+    
+    @State private var task: Task<Void, Error>? = nil
+    @State private var isLoading: Bool = false
     @State private var authError: Bool = false
     @State private var authErrorMessage: String? = ""
     
@@ -50,42 +53,46 @@ struct SignInView: View {
                             .addValidator(authViewModel.signInValidator.passwordErrorMessage)
                             .secureField(true)
                         
-                        
-                        ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
-                            if authViewModel.isValidSignInInfo(email: email, password: password) {
-                                authViewModel.signIn(email: email, password: password) { isVerified, error in
-                                    if error != nil {
-                                        HapticFeedback.error.provide()
-                                        authErrorMessage =  error?.localizedDescription
-                                        authError = true
-                                        return
+                        if isLoading {
+                            ActivityIndicator(isAnimating: isLoading)
+                                .configure { $0.color = .yellow }
+                                .background(Color.green)
+                                .padding(15.dWidth())
+                        } else {
+                            
+                            ABButton(text: "SIGN IN", textColor: .black, backgroundColor: .white, font: .sairaCondensedSemiBold) {
+                                if authViewModel.isValidSignInInfo(email: email, password: password) {
+                                    task = Task {
+                                        isLoading = true
+                                        let status = await authViewModel.signIn(email: email, password: password)
+                                        if status == "Something went wrong" {
+                                            HapticFeedback.error.provide()
+                                            authErrorMessage = status
+                                            authError = true
+                                            isLoading = false
+                                            return
+                                        }
+                                        guard status == "OK" else {
+                                            HapticFeedback.warning.provide()
+                                            authErrorMessage = status
+                                            authError = true
+                                            isLoading = false
+                                            return
+                                        }
+                                        
+                                        isLoading = false
+                                        HapticFeedback.success.provide()
+                                        
+                                        austTravel.currentFirebaseUser = authViewModel.user
+                                        austTravel.currentAuthPage = .none
+                                        
                                     }
-                                    guard isVerified == true else {
-                                        HapticFeedback.warning.provide()
-                                        authErrorMessage =  "Please verify you email"
-                                        authError = true
-                                        return
-                                    }
-                                    austTravel.currentAuthPage = .none
-                                    austTravel.currentFirebaseUser = authViewModel.user
+                                } else {
+                                    HapticFeedback.warning.provide()
                                 }
-                            } else {
-                                HapticFeedback.warning.provide()
+                                
                             }
-                            
                         }
-                        .spAlert(isPresent: $authError,
-                                 title: "Error !",
-                                 message: authErrorMessage ?? "",
-                                 duration: 2,
-                                 dismissOnTap: true,
-                                 preset: .custom(UIImage(systemName: "exclamationmark.triangle.fill")!),
-                                 haptic: .none,
-                                 layout: .init(),
-                                 completion: {
-                            
-                        })
-                        
                         
                         Button {
                             
@@ -104,9 +111,7 @@ struct SignInView: View {
                             .frame(width: dWidth * 0.9)
                             .padding(0)
                         }
-                        
-                        
-                        
+    
                         HStack {
                             Rectangle()
                                 .frame(width: dWidth * 0.4, height: 2.dWidth())
@@ -133,7 +138,21 @@ struct SignInView: View {
                 }
             }
         }
+        .spAlert(isPresent: $authError,
+                 title: authErrorMessage ?? "",
+                 message: nil,
+                 duration: 2,
+                 dismissOnTap: true,
+                 preset: authErrorMessage == "OK" ? .done : .error,
+                 haptic: .none,
+                 layout: .init(),
+                 completion: {
+            
+        })
         .edgesIgnoringSafeArea(.all)
+        .onDisappear {
+            task?.cancel()
+        }
     }
 }
 
