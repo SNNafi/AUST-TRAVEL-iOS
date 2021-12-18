@@ -135,10 +135,10 @@ struct HomeView: View {
                                         GeometryReader { gReader in
                                             VStack {
                                                 Rectangle()
-                                                    .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
+                                                    .frame(width: gReader.size.width, height: 70.dHeight(), alignment: .center)
                                                     .foregroundColor(.lightAsh)
                                                     .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                                    .overlay(Text("You are currently sharing your location for \(hour) : \(minute) : \(second)").scaledFont(font: .sairaCondensedSemiBold, dsize: 19).foregroundColor(.black))
+                                                    .overlay(Text("You are currently sharing your location for\n \(hour) : \(minute) : \(second)").lineLimit(nil).multilineTextAlignment(.center).scaledFont(font: .sairaCondensedSemiBold, dsize: 19).foregroundColor(.black).fixedSize().padding(5.dHeight()))
                                                     .offset(y: -3.dHeight())
                                                 Text("Bus: \(selectedBusName)")
                                                     .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
@@ -148,7 +148,7 @@ struct HomeView: View {
                                         }
                                     }
                                 }
-                                .frame(width: dWidth * 0.9, height: 140.dHeight())
+                                .frame(width: dWidth * 0.9, height: 150.dHeight())
                                 .padding(10.dHeight())
                                 .padding(.horizontal, 15.dHeight())
                             }

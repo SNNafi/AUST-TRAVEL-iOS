@@ -118,8 +118,7 @@ class HomeViewModel: ObservableObject {
                 print("previousContribution", previousContribution)
             }
             
-            // NEED TO CHECK THE UNIT
-            let totalTimeElapsed = previousContribution + elapsedTime
+            let totalTimeElapsed = previousContribution + (elapsedTime * 1000)
             print("totalTimeElapsed", totalTimeElapsed)
             self.database.reference(withPath: "volunteers/\(self.austTravel.currentUserUID!)/totalContribution").setValue(totalTimeElapsed)
         }
