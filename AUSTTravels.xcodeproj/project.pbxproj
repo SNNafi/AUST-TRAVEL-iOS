@@ -43,11 +43,13 @@
 		C715161D27628F17008B4E35 /* SelectBusDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715161C27628F17008B4E35 /* SelectBusDailogue.swift */; };
 		C715161F27629652008B4E35 /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715161E27629652008B4E35 /* Bus.swift */; };
 		C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715162027629722008B4E35 /* SettingsViewModel.swift */; };
+		C71DD297276E746700ACD297 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71DD296276E746700ACD297 /* Constant.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C72EA744276DF8920072F2A0 /* BecomeVolunteerDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */; };
 		C72EA746276E2BC60072F2A0 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA745276E2BC50072F2A0 /* ActivityIndicator.swift */; };
 		C72EA748276E64B20072F2A0 /* Foundation+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA747276E64B20072F2A0 /* Foundation+Ex.swift */; };
+		C72EA74B276E6C0A0072F2A0 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA74A276E6C0A0072F2A0 /* NotificationDelegate.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
 		C743A7E027566C7200F9D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7DF27566C7200F9D6FC /* Assets.xcassets */; };
 		C743A7E327566C7200F9D6FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7E227566C7200F9D6FC /* Preview Assets.xcassets */; };
@@ -127,11 +129,14 @@
 		C715161C27628F17008B4E35 /* SelectBusDailogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBusDailogue.swift; sourceTree = "<group>"; };
 		C715161E27629652008B4E35 /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
 		C715162027629722008B4E35 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		C71DD296276E746700ACD297 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BecomeVolunteerDailogue.swift; sourceTree = "<group>"; };
 		C72EA745276E2BC50072F2A0 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C72EA747276E64B20072F2A0 /* Foundation+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ex.swift"; sourceTree = "<group>"; };
+		C72EA749276E6BE60072F2A0 /* AUSTTravels.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AUSTTravels.entitlements; sourceTree = "<group>"; };
+		C72EA74A276E6C0A0072F2A0 /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C743A7DD27566C6E00F9D6FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C743A7DF27566C7200F9D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -289,6 +294,7 @@
 			children = (
 				C701D2BF275D306E00A0B1B8 /* LocationManager.swift */,
 				C7CC340D275E1E7800343026 /* PlistReader.swift */,
+				C71DD296276E746700ACD297 /* Constant.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 		C743A7DA27566C6E00F9D6FC /* AUSTTravels */ = {
 			isa = PBXGroup;
 			children = (
+				C72EA749276E6BE60072F2A0 /* AUSTTravels.entitlements */,
 				C701D2BE275D305800A0B1B8 /* Utils */,
 				C701D29C275AA91700A0B1B8 /* ViewModel */,
 				C701D283275AA55000A0B1B8 /* GoogleService-Info.plist */,
@@ -368,6 +375,7 @@
 				C743A8062756797400F9D6FC /* AppDelegate.swift */,
 				C743A8052756797400F9D6FC /* SceneDelegate.swift */,
 				C701D27B275AA20C00A0B1B8 /* AUSTTravel.swift */,
+				C72EA74A276E6C0A0072F2A0 /* NotificationDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -765,6 +773,7 @@
 				C743A81A275682E300F9D6FC /* GenericFont.swift in Sources */,
 				C701D2B9275BF23900A0B1B8 /* HomeViewModel.swift in Sources */,
 				C743A8082756797400F9D6FC /* AppDelegate.swift in Sources */,
+				C72EA74B276E6C0A0072F2A0 /* NotificationDelegate.swift in Sources */,
 				C701D280275AA2E500A0B1B8 /* HomeView.swift in Sources */,
 				C743A8212756847600F9D6FC /* Int+Ex.swift in Sources */,
 				C701D27C275AA20C00A0B1B8 /* AUSTTravel.swift in Sources */,
@@ -785,6 +794,7 @@
 				C701D29E275AA93000A0B1B8 /* AuthViewModel.swift in Sources */,
 				C715161D27628F17008B4E35 /* SelectBusDailogue.swift in Sources */,
 				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
+				C71DD297276E746700ACD297 /* Constant.swift in Sources */,
 				C74728F42767AF7800E618E8 /* WebView.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
 				C74728F22767A51B00E618E8 /* UserSettings.swift in Sources */,
@@ -963,6 +973,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AUSTTravels/AUSTTravels.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AUSTTravels/Preview Content\"";
@@ -996,6 +1007,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AUSTTravels/AUSTTravels.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AUSTTravels/Preview Content\"";

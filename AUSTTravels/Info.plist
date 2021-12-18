@@ -8,8 +8,6 @@
 		<string>comgooglemaps-x-callback</string>
 		<string>googlechromes</string>
 	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Location permission needed for core functionality</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SairaCondensed-Bold.ttf</string>
@@ -38,6 +36,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>

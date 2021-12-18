@@ -112,4 +112,8 @@ class LiveTrackViewModel: ObservableObject {
         print(#function)
         database.reference(withPath: "bus/\(busName)/\(busTime)/location").removeAllObservers()
     }
+    
+    func pingVolunteer(for busName: String, title: String, message: String) async {
+        let status = URLSession.self
+    }
 }
