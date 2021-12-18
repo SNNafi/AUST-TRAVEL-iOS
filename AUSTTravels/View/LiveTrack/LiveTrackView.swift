@@ -20,6 +20,8 @@ struct LiveTrackView: View {
     @State private var busLatestMarker: GMSMarker?
     @State private var busRoutes = [GMSMarker]()
     @State private var mapBinding: MapBinding = .multiple
+    @State private var lastUpdatedDate: Date = Date()
+    @State private var lastUpdatedUser: String = ""
     @State private var mapError: Bool = false
     
     
@@ -140,16 +142,20 @@ struct LiveTrackView: View {
                         RoundedRectangle(cornerRadius: 15.dWidth())
                             .foregroundColor(.white)
                         
-                        VStack {
-                            Text("Starting time: ")
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.black)
-                            Text("Arrival time: ")
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.black)
-                            Text("Departure time: ")
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.black)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Starting time: \(austTravel.selectedBusTime)")
+                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17)
+                                    .foregroundColor(.black)
+                                Text("Last updated: \(lastUpdatedDate.timeAgoString())")
+                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17)
+                                    .foregroundColor(.black)
+                                Text("Last updated by: \(lastUpdatedUser == "" ? "N/A" : lastUpdatedUser)")
+                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17)
+                                    .foregroundColor(.black)
+                            }
+                            .padding(.leading, 12.dWidth())
+                            Spacer()
                         }
                         
                     }
@@ -176,7 +182,9 @@ struct LiveTrackView: View {
                 busRoutes = liveTrackViewModel.createRouteMarkers(routes)
             }
             
-            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker in
+            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker, lastUpdatedDate, lastUpdatedUser in
+                self.lastUpdatedDate = lastUpdatedDate
+                self.lastUpdatedUser = lastUpdatedUser
                 busLatestMarker?.map = nil
                 busLatestMarker = marker
                 mapBinding = .centerToBus

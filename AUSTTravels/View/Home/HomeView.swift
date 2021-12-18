@@ -25,8 +25,16 @@ struct HomeView: View {
     
     // LiveTrackView
     @State private var buses = [Bus]()
-    @State private var selectedBusName: String = ""
-    @State private var selectedBusTime: String = ""
+    @State private var selectedBusName: String = "" {
+        didSet {
+            austTravel.selectedBusName = oldValue
+        }
+    }
+    @State private var selectedBusTime: String = ""  {
+        didSet {
+            austTravel.selectedBusTime = oldValue
+        }
+    }
     @State private var showBusSelect: Bool = false
     
     @State private var selectionError: Bool = false

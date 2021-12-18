@@ -81,16 +81,19 @@ class LiveTrackViewModel: ObservableObject {
         }        
     }
     
-    func observeBusLatestLocation(busName: String, busTime: String, completion: @escaping (GMSMarker) -> ()) {
+    func observeBusLatestLocation(busName: String, busTime: String, completion: @escaping (GMSMarker, Date, String) -> ()) {
         database.reference(withPath: "bus/\(busName)/\(busTime)/location").observe(.value) { [weak self] snapshot in
             guard let dict = snapshot.value as? [String: Any] else {
                 self!.removeObserver(busName: busName, busTime: busTime)
-                completion(self!.initialBusMarker())
+                completion(self!.initialBusMarker(), Date(), "")
                 return
             }
             
             let latitude = dict["lat"] as? String ?? ""
             let longitude = dict["long"] as? String ?? ""
+            let lastUpdatedTime = dict["lastUpdatedTime"] as? String ?? ""
+            let lastUpdatedDate = Date(timeIntervalSince1970: Double(lastUpdatedTime)! / 1000)
+            let lastUpdatedUser = dict["universityId"] as? String ?? ""
             let busCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude) ?? 0, longitude: CLLocationDegrees(longitude) ?? 0)
             
             let marker = GMSMarker(position: busCoordinate)
@@ -101,7 +104,7 @@ class LiveTrackViewModel: ObservableObject {
             marker.iconView?.frame = CGRect(x: 0, y: 0, width: 80.dWidth() , height: 80.dWidth())
             marker.iconView?.backgroundColor = UIColor.clear
             print(#function, busCoordinate)
-            completion(marker)
+            completion(marker, lastUpdatedDate, lastUpdatedUser)
         }
     }
     
