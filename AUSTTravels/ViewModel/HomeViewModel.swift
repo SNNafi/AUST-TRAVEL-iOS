@@ -62,8 +62,8 @@ class HomeViewModel: ObservableObject {
                 volunteer.userInfo = userInfo
                 Defaults[.userInfo] = userInfo
                 
-                self.austTravel.currentUser = userInfo
-                self.austTravel.currentVolunteer = volunteer
+                Defaults[.volunteer] = volunteer
+                Defaults[.userInfo] = userInfo
                 
                 completion(volunteer, nil)
             }

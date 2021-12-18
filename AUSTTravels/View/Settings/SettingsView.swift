@@ -8,20 +8,27 @@
 
 import SwiftUI
 import Defaults
+import SPAlert
 
 struct SettingsView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
     @ObservedObject var settingsViewModel = UIApplication.shared.settingsViewModel
     
-    
+    @Default(.volunteer) var volunteer
     @Default(.pingNotification) var pingNotification
     @Default(.locationNotification) var locationNotification
     @Default(.primaryBus) var primaryBus
     
-    @State var buses = [Bus]()
-    @State var selectedBusTime: String = ""
-    @State var showBusSelect: Bool = false
+    @State private var buses = [Bus]()
+    @State private var selectedBusTime: String = ""
+    @State private var showBusSelect: Bool = false
+    @State private var phoneNumber: String = ""
+    @State private var showbecomeVolunteer: Bool = false
+    @State private var task: Task<Void, Error>? = nil
+    @State private var isLoading: Bool = false
+    @State private var settingsError: Bool = false
+    @State private var settingsErrorMessage: String? = ""
     
     var body: some View {
         ZStack  {
@@ -57,6 +64,29 @@ struct SettingsView: View {
                 GeometryReader { geometry in
                     ScrollView {
                         VStack(alignment: .leading) {
+                            if !volunteer.status {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("Become a volunteer")
+                                            .scaledFont(font: .sairaCondensedBold, dsize: 23)
+                                        Text("Contribute to the community by routinely sharing your location")
+                                            .lineLimit(nil)
+                                            .multilineTextAlignment(.leading)
+                                            .scaledFont(font: .sairaCondensedRegular, dsize: 18)
+                                        
+                                    }
+                                    .foregroundColor(.black)
+                                     Spacer()
+                                }
+                                .clickable {
+                                    showbecomeVolunteer = true
+                                }
+                                .padding(3.dHeight())
+                            
+                                
+                                Divider()
+                                    .foregroundColor(.black)
+                            }
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text("Ping Notification")
@@ -183,7 +213,23 @@ struct SettingsView: View {
                 SelectBusDailogue(buses: $buses, selectedBusName: $primaryBus, selectedBusTime: $selectedBusTime, display: $showBusSelect)
                     .transition(.scale)
             }
+            if showbecomeVolunteer {
+                BecomeVolunteerDailogue(display: $showbecomeVolunteer, buses: $buses, selectedBusName: $primaryBus, phoneNumber: $phoneNumber, isLoading: $isLoading) {
+                    if settingsViewModel.isValidBecomeVolunteer(busName: primaryBus, phonNumber: phoneNumber) {
+                        
+                        Task {
+                            isLoading = true
+                            settingsErrorMessage = await settingsViewModel.createVolunteer(busName: primaryBus, phonNumber: phoneNumber)
+                            isLoading = false
+                            showbecomeVolunteer.toggle()
+                            settingsError = true
+                        }
+                        
+                    }
+                }
+            }
         }
+        .spAlert(isPresent: $settingsError, message: settingsErrorMessage ?? "", duration: 3)
         .edgesIgnoringSafeArea(.all)
         .valueChanged(value: pingNotification) { _ in
             settingsViewModel.updatePingNotificationStatus(pingNotification)

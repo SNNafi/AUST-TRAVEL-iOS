@@ -19,6 +19,7 @@ struct ABTextField: View {
     var validator: String? = nil
     var isSecureField: Bool = false
     var keyboardType: UIKeyboardType = .default
+    var frameWidth = UIScreen.main.bounds.width * 0.85
     @State private var isPasswordHIdden = true
     
     var body: some View {
@@ -64,7 +65,7 @@ struct ABTextField: View {
                 }
                 
             }
-            .frame(width: dWidth * 0.85)
+            .frame(width: frameWidth)
             .padding(10.dHeight())
             .overlay(RoundedRectangle(cornerRadius: 7.dWidth()).stroke(borderColor, lineWidth: 1.dWidth()))
             .padding(.horizontal, 15.dHeight())
@@ -140,6 +141,12 @@ extension ABTextField {
     func keyboardType(_ type: UIKeyboardType) -> ABTextField {
         var view = self
         view.keyboardType = type
+        return view
+    }
+    
+    func width(_ width: CGFloat) -> ABTextField {
+        var view = self
+        view.frameWidth = width
         return view
     }
     

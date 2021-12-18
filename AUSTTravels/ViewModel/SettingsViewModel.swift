@@ -15,6 +15,7 @@ import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     
+    @Published var becomeVolunteerValidator = BecomeVolunteerValidator()
     private var database = Database.database()
     let austTravel = UIApplication.shared.sceneDelegate.austTravel
     
@@ -26,7 +27,7 @@ class SettingsViewModel: ObservableObject {
                 completion(buses)
                 return
             }
-           
+            
             snapshot.children.forEach { dict in
                 let snap = dict as! DataSnapshot
                 var bus = Bus()
@@ -75,7 +76,6 @@ class SettingsViewModel: ObservableObject {
         } catch {
             
         }
-       
     }
     
     func updateLocationNotificationStatus(_ isLocationNotification: Bool) {
@@ -84,6 +84,53 @@ class SettingsViewModel: ObservableObject {
         } catch {
             
         }
-        
     }
+    
+    func isValidBecomeVolunteer(busName: String, phonNumber: String) -> Bool {
+        if busName.isEmpty {
+            becomeVolunteerValidator = BecomeVolunteerValidator(busNameErrorMessage: "Please select a bus name")
+            return false
+        }
+        
+        if phonNumber.isEmpty {
+            becomeVolunteerValidator = BecomeVolunteerValidator(phoneNumberErrorMessage: "Please enter a phone number")
+            return false
+        }
+        
+        becomeVolunteerValidator = BecomeVolunteerValidator()
+        return true
+    }
+    
+    func createVolunteer(busName: String, phonNumber: String) async -> String {
+        do {
+            let snapshot = try await database.reference(withPath: "volunteers/\(austTravel.currentUserUID!)/status").getData()
+            if !snapshot.exists() {
+                var dict = [String: Any]()
+                dict["/volunteers/\(austTravel.currentUserUID!)/status"] = false
+                dict["/users/\(austTravel.currentUserUID!)/settings/primaryBus"] = busName
+                dict["/volunteers/\(austTravel.currentUserUID!)/contact"] = phonNumber
+                try await database.reference().updateChildValues(dict)
+                HapticFeedback.success.provide()
+                return "We've received your request and will shortly review it."
+            } else {
+                if snapshot.value as! Bool {
+                    HapticFeedback.success.provide()
+                    return "You are already a volunteer! What else do you need?"
+                } else {
+                    HapticFeedback.success.provide()
+                    return "Hey, hold your horses. We are reviewing your request!"
+                }
+            }
+            
+        } catch {
+            HapticFeedback.error.provide()
+            return "Something went wrong"
+        }
+    }
+}
+
+
+struct BecomeVolunteerValidator {
+    var busNameErrorMessage: String?
+    var phoneNumberErrorMessage: String?
 }

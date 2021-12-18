@@ -119,3 +119,14 @@ extension UIView {
         }
     }
 } 
+
+
+extension View {
+    func clickable(action: @escaping () -> ()) -> some View {
+        return Button {
+            action()
+        } label: {
+            self
+        }
+    }
+}
