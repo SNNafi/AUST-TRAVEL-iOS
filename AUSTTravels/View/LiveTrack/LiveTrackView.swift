@@ -129,6 +129,9 @@ struct LiveTrackView: View {
                         
                         Spacer()
                         Button {
+                            Task {
+                                await liveTrackViewModel.pingVolunteer(for: austTravel.selectedBusName, message: "A fellow traveler wants to know where your bus, \(austTravel.selectedBusName) of \(austTravel.selectedBusTime) is located. You might wanna help them out!")
+                            }
                         } label: {
                             Text("PING")
                                 .scaledFont(font: .sairaCondensedBold, dsize: 21)

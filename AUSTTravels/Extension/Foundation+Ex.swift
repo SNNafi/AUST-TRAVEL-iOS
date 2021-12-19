@@ -63,3 +63,43 @@ extension Date {
         return self.string()
     }
 }
+
+
+extension URL {
+
+    mutating func appendQueryItem(name: String, value: String?) {
+
+        guard var urlComponents = URLComponents(string: absoluteString) else { return }
+
+        // Create array of existing query items
+        var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
+
+        // Create query item
+        let queryItem = URLQueryItem(name: name, value: value)
+
+        // Append the new query item in the existing query items array
+        queryItems.append(queryItem)
+
+        // Append updated query items array in the url component object
+        urlComponents.queryItems = queryItems
+
+        // Returns the url from new url components
+        self = urlComponents.url!
+    }
+}
+
+extension URLSession {
+    @available(iOS, deprecated: 15.0, message: "This extension is no longer necessary. Use API built into SDK")
+    func data(from url: URL) async throws -> (Data, URLResponse) {
+        try await withCheckedThrowingContinuation { continuation in
+            let task = self.dataTask(with: url) { data, response, error in
+                guard let data = data, let response = response else {
+                    let error = error ?? URLError(.badServerResponse)
+                    return continuation.resume(throwing: error)
+                }
+                continuation.resume(returning: (data, response))
+            } 
+            task.resume()
+        }
+    }
+}

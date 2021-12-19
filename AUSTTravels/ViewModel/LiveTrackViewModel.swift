@@ -113,7 +113,16 @@ class LiveTrackViewModel: ObservableObject {
         database.reference(withPath: "bus/\(busName)/\(busTime)/location").removeAllObservers()
     }
     
-    func pingVolunteer(for busName: String, title: String, message: String) async {
-        let status = URLSession.self
+    @discardableResult
+    func pingVolunteer(for busName: String, message: String) async -> Any {
+        guard var url = URL(string: Constant.sendVolunteer) else { return "" }
+        url.appendQueryItem(name: "bus", value: busName)
+        url.appendQueryItem(name: "title", value: "Somebody needs help")
+        url.appendQueryItem(name: "message", value: message)
+        do {
+            return try await URLSession.shared.data(from: url)
+        } catch { return "" }
+        
+        
     }
 }
