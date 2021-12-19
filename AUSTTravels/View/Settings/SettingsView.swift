@@ -77,13 +77,13 @@ struct SettingsView: View {
                                         
                                     }
                                     .foregroundColor(.black)
-                                     Spacer()
+                                    Spacer()
                                 }
                                 .clickable {
                                     showbecomeVolunteer = true
                                 }
                                 .padding(3.dHeight())
-                            
+                                
                                 
                                 Divider()
                                     .foregroundColor(.black)
@@ -193,7 +193,9 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    austTravel.logOut()
+                                    Task {
+                                        await settingsViewModel.logOut()
+                                    }
                                 } label: {
                                     Text("Log Out")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
@@ -233,13 +235,19 @@ struct SettingsView: View {
         .spAlert(isPresent: $settingsError, message: settingsErrorMessage ?? "", duration: 3)
         .edgesIgnoringSafeArea(.all)
         .valueChanged(value: pingNotification) { _ in
-            settingsViewModel.updatePingNotificationStatus(pingNotification)
+            Task {
+                await settingsViewModel.updatePingNotificationStatus(pingNotification)
+            }
         }
         .valueChanged(value: locationNotification) { _ in
-            settingsViewModel.updateLocationNotificationStatus(locationNotification)
+            Task {
+                await settingsViewModel.updateLocationNotificationStatus(locationNotification)
+            }
         }
         .valueChanged(value: primaryBus) { _ in
-            settingsViewModel.updatePrimaryBus(primaryBus)
+            Task {
+                await settingsViewModel.updatePrimaryBus(primaryBus)
+            }
         }
         .onAppear {
             settingsViewModel.fetchBusInfo { busList in
@@ -256,7 +264,6 @@ struct SettingsView: View {
         .onDisappear {
             task?.cancel()
         }
-        
     }
 }
 

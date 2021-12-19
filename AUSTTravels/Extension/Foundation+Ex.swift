@@ -19,13 +19,13 @@ extension Date {
 extension Date {
     
     func timeAgoDisplay() -> String {
-
+        
         let calendar = Calendar.current
         let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())!
         let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())!
         let dayAgo = calendar.date(byAdding: .day, value: -1, to: Date())!
         let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
-
+        
         if minuteAgo < self {
             let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
             return "\(diff) sec ago"
@@ -44,12 +44,12 @@ extension Date {
     }
     
     func timeAgoString() -> String {
-
+        
         let calendar = Calendar.current
         let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())!
         let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())!
         let dayAgo = calendar.date(byAdding: .day, value: -1, to: Date())!
-
+        
         if minuteAgo < self {
             let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
             return "\(diff) sec ago"
@@ -66,23 +66,23 @@ extension Date {
 
 
 extension URL {
-
+    
     mutating func appendQueryItem(name: String, value: String?) {
-
+        
         guard var urlComponents = URLComponents(string: absoluteString) else { return }
-
+        
         // Create array of existing query items
         var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
-
+        
         // Create query item
         let queryItem = URLQueryItem(name: name, value: value)
-
+        
         // Append the new query item in the existing query items array
         queryItems.append(queryItem)
-
+        
         // Append updated query items array in the url component object
         urlComponents.queryItems = queryItems
-
+        
         // Returns the url from new url components
         self = urlComponents.url!
     }
@@ -98,8 +98,18 @@ extension URLSession {
                     return continuation.resume(throwing: error)
                 }
                 continuation.resume(returning: (data, response))
-            } 
+            }
             task.resume()
         }
+    }
+}
+
+
+extension Date {
+    func isPassedFromCurrentTime(minute: Int) -> Bool {
+        if let diff = Calendar.current.dateComponents([.minute], from: self, to: Date()).minute, diff > minute {
+            return true
+        }
+        return false
     }
 }

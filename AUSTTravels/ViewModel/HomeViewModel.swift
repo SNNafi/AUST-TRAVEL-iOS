@@ -12,6 +12,7 @@ import FirebaseDatabase
 import UIKit
 import Defaults
 import CoreLocation.CLLocation
+import FirebaseMessaging
 
 class HomeViewModel: ObservableObject {
     
@@ -116,7 +117,47 @@ class HomeViewModel: ObservableObject {
             print("totalTimeElapsed", totalTimeElapsed)
             self.database.reference(withPath: "volunteers/\(self.austTravel.currentUserUID!)/totalContribution").setValue(totalTimeElapsed)
         }
-        
+    }
+    
+    func subscribeToPingNotification() async -> Any {
+        do {
+            let snapshot = try await database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings").getData()
+            let userSettings = UserSettings(snapshot: snapshot)
+            Defaults[.userSettings] = userSettings
+            if Defaults[.volunteer].status {
+                
+                try await Messaging.messaging().subscribe(toTopic: userSettings.primaryBus)
+                if Defaults[.isShowAlertAboutPing] {
+                    Defaults[.isShowAlertAboutPing].toggle()
+                    return (true, "You will receive ping notifications from \(userSettings.primaryBus) whenever someone pings you.")
+                }
+                return ""
+            } else {
+                try await Messaging.messaging().unsubscribe(fromTopic: userSettings.primaryBus)
+                return ""
+            }
+        } catch { return ""}
+    }
+    
+    func sendLocationNotification(busName: String, busTime: String) async {
+        do {
+            let primaryBus = Defaults[.userSettings].primaryBus
+            if primaryBus == busName {
+                try await Messaging.messaging().unsubscribe(fromTopic: "\(busName)_USER")
+            }
+            
+            guard var url = URL(string: Constant.sendUser) else { return }
+            url.appendQueryItem(name: "bus", value: busName)
+            url.appendQueryItem(name: "title", value: "\(busName) \(busTime) is now live")
+            url.appendQueryItem(name: "message", value: "\(Defaults[.userInfo].userName) is sharing their location. Track them now to know where the bus is headed!")
+            
+            try await URLSession.shared.data(from: url)
+            
+            if primaryBus == busName {
+                try await Messaging.messaging().subscribe(toTopic: "\(busName)_USER")
+            }
+            
+        } catch { }
     }
 }
 

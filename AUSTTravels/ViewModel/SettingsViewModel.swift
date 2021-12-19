@@ -12,6 +12,8 @@ import FirebaseDatabase
 import UIKit
 import Defaults
 import SwiftUI
+import FirebaseMessaging
+import CollectionConcurrencyKit
 
 class SettingsViewModel: ObservableObject {
     
@@ -61,29 +63,49 @@ class SettingsViewModel: ObservableObject {
         }
     }
     
-    func updatePrimaryBus(_ primaryBus: String) {
-        do {
-            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/primaryBus").setValue(primaryBus)
-        } catch {
-            
-        }
+    func updatePrimaryBus(_ primaryBus: String) async {
+        guard primaryBus != "None" else { return }
         
+        do {
+            try await database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/primaryBus").setValue(primaryBus)
+            
+            // Update subscription after change primary bus
+            try await unsubscribeFromPingBuses()
+            
+            if Defaults[.pingNotification] {
+                try await Messaging.messaging().subscribe(toTopic: primaryBus)
+            }
+            
+        } catch { }
     }
     
-    func updatePingNotificationStatus(_ isPingNotification: Bool) {
+    func updatePingNotificationStatus(_ isPingNotification: Bool) async {
         do {
-            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isPingNotification").setValue(isPingNotification)
-        } catch {
+            try await database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isPingNotification").setValue(isPingNotification)
             
-        }
+            let primaryBus = Defaults[.primaryBus]
+            if isPingNotification && primaryBus != "None" {
+                try await Messaging.messaging().subscribe(toTopic: primaryBus)
+            } else if !isPingNotification && primaryBus != "None" {
+                try await Messaging.messaging().unsubscribe(fromTopic: primaryBus)
+            }
+            
+        } catch { }
     }
     
-    func updateLocationNotificationStatus(_ isLocationNotification: Bool) {
+    func updateLocationNotificationStatus(_ isLocationNotification: Bool) async {
         do {
-            database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isLocationNotification").setValue(isLocationNotification)
-        } catch {
+            try await database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings/isLocationNotification").setValue(isLocationNotification)
             
-        }
+            let primaryBus = Defaults[.primaryBus]
+            
+            if isLocationNotification && primaryBus != "None" {
+                try await Messaging.messaging().subscribe(toTopic: "\(primaryBus)_USER")
+            } else if !isLocationNotification && primaryBus != "None" {
+                try await Messaging.messaging().unsubscribe(fromTopic: "\(primaryBus)_USER")
+            }
+            
+        } catch { }
     }
     
     func isValidBecomeVolunteer(busName: String, phonNumber: String) -> Bool {
@@ -125,6 +147,42 @@ class SettingsViewModel: ObservableObject {
         } catch {
             HapticFeedback.error.provide()
             return "Something went wrong"
+        }
+    }
+    
+    func logOut() async {
+        
+        do {
+            let primaryBus = Defaults[.userSettings].primaryBus
+            try await Messaging.messaging().unsubscribe(fromTopic: primaryBus)
+            try await Messaging.messaging().unsubscribe(fromTopic: "\(primaryBus)_USER")
+            Defaults[.isShowAlertAboutPing] = true
+            austTravel.logOut()
+            
+        } catch { }
+    }
+    
+    private func unsubscribeFromPingBuses() async throws {
+        var buses = [String]()
+        let snapshot = try await database.reference(withPath: "availableBusInfo").getData()
+        snapshot.children.forEach { dict in
+            let snap = dict as! DataSnapshot
+            buses.append(String(snap.key))
+        }
+        try await buses.asyncForEach { bus in
+            try await Messaging.messaging().unsubscribe(fromTopic: bus)
+        }
+    }
+    
+    private func unsubscribeFromLocationBuses() async throws {
+        var buses = [String]()
+        let snapshot = try await database.reference(withPath: "availableBusInfo").getData()
+        snapshot.children.forEach { dict in
+            let snap = dict as! DataSnapshot
+            buses.append(String(snap.key))
+        }
+        try await buses.asyncForEach { bus in
+            try await Messaging.messaging().unsubscribe(fromTopic: "\(bus)_USER")
         }
     }
 }

@@ -17,4 +17,6 @@ extension Defaults.Keys {
     static let pingNotification = Key<Bool>("pingNotification", default: true)
     static let locationNotification = Key<Bool>("locationNotification", default: true)
     static let primaryBus = Key<String>("primaryBus", default: "None")
+    static let lastPingTime = Key<Date?>("lastPingTime", default: nil)
+    static let isShowAlertAboutPing = Key<Bool>("isShowAlertAboutPing", default: true)
 }

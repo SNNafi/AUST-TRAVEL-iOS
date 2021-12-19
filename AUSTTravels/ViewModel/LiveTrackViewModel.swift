@@ -78,7 +78,7 @@ class LiveTrackViewModel: ObservableObject {
             return true
         } else {
             return false
-        }        
+        }
     }
     
     func observeBusLatestLocation(busName: String, busTime: String, completion: @escaping (GMSMarker, Date, String) -> ()) {
@@ -115,14 +115,33 @@ class LiveTrackViewModel: ObservableObject {
     
     @discardableResult
     func pingVolunteer(for busName: String, message: String) async -> Any {
-        guard var url = URL(string: Constant.sendVolunteer) else { return "" }
-        url.appendQueryItem(name: "bus", value: busName)
-        url.appendQueryItem(name: "title", value: "Somebody needs help")
-        url.appendQueryItem(name: "message", value: message)
-        do {
-            return try await URLSession.shared.data(from: url)
-        } catch { return "" }
-        
-        
+        if let date = Defaults[.lastPingTime] {
+            if let diff = Calendar.current.dateComponents([.minute], from: date, to: Date()).minute, diff > 5 {
+                Defaults[.lastPingTime] = Date()
+                guard var url = URL(string: Constant.sendVolunteer) else { return "" }
+                url.appendQueryItem(name: "bus", value: busName)
+                url.appendQueryItem(name: "title", value: "Somebody needs help")
+                url.appendQueryItem(name: "message", value: message)
+                do {
+                    try await URLSession.shared.data(from: url)
+                    return (true, "Hold on! Letting the volunteers know.")
+                } catch { return "" }
+            } else {
+                // FIXME: - add remaining time
+                HapticFeedback.warning.provide()
+                return (true, "Hey! Don't be hasty. Wait few more seconds before sending your next ping !")
+            }
+            
+        } else {
+            Defaults[.lastPingTime] = Date()
+            guard var url = URL(string: Constant.sendVolunteer) else { return "" }
+            url.appendQueryItem(name: "bus", value: busName)
+            url.appendQueryItem(name: "title", value: "Somebody needs help")
+            url.appendQueryItem(name: "message", value: message)
+            do {
+                try await URLSession.shared.data(from: url)
+                return (true, "Hold on! Letting the volunteers know.")
+            } catch { return "" }
+        }
     }
 }

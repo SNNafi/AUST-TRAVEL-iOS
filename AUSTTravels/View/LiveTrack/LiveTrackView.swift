@@ -23,6 +23,8 @@ struct LiveTrackView: View {
     @State private var lastUpdatedDate: Date = Date()
     @State private var lastUpdatedUser: String = ""
     @State private var mapError: Bool = false
+    @State private var pingError: Bool = false
+    @State private var pingErrorMessage: String = ""
     
     
     var body: some View {
@@ -130,7 +132,9 @@ struct LiveTrackView: View {
                         Spacer()
                         Button {
                             Task {
-                                await liveTrackViewModel.pingVolunteer(for: austTravel.selectedBusName, message: "A fellow traveler wants to know where your bus, \(austTravel.selectedBusName) of \(austTravel.selectedBusTime) is located. You might wanna help them out!")
+                                if let (status, message) = await liveTrackViewModel.pingVolunteer(for: austTravel.selectedBusName, message: "A fellow traveler wants to know where your bus, \(austTravel.selectedBusName) of \(austTravel.selectedBusTime) is located. You might wanna help them out!") as? (Bool, String) {
+                                    (pingError, pingErrorMessage) = (status, message)
+                                }  
                             }
                         } label: {
                             Text("PING")
@@ -207,6 +211,7 @@ struct LiveTrackView: View {
                  completion: {
             
         })
+        .spAlert(isPresent: $pingError, message: pingErrorMessage)
     }
 }
 

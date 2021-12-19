@@ -57,6 +57,8 @@ struct HomeView: View {
         progressTime % 60
     }
     
+    @State var pingError: Bool = false
+    @State var pingErrorMessage: String = ""
     
     var body: some View {
         
@@ -159,6 +161,11 @@ struct HomeView: View {
                                 .frame(width: dWidth * 0.9, height: 150.dHeight())
                                 .padding(10.dHeight())
                                 .padding(.horizontal, 15.dHeight())
+                                .onAppear {
+                                    Task {
+                                        await homeViewModel.sendLocationNotification(busName: selectedBusName, busTime: selectedBusTime)
+                                    }
+                                }
                             }
                             
                             ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
@@ -201,6 +208,9 @@ struct HomeView: View {
                         volunteer = austTravel.currentVolunteer
                         print(austTravel.currentVolunteer.status)
                         isUserVolunteer = austTravel.currentVolunteer.status
+                        if let (status, message) = await homeViewModel.subscribeToPingNotification() as? (Bool, String) {
+                            (pingError, pingErrorMessage) = (status, message)
+                        }
                     }
                 }
             }

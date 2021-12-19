@@ -44,6 +44,7 @@
 		C715161F27629652008B4E35 /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715161E27629652008B4E35 /* Bus.swift */; };
 		C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715162027629722008B4E35 /* SettingsViewModel.swift */; };
 		C71DD297276E746700ACD297 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71DD296276E746700ACD297 /* Constant.swift */; };
+		C71DD29A276F7ED800ACD297 /* CollectionConcurrencyKit in Frameworks */ = {isa = PBXBuildFile; productRef = C71DD299276F7ED800ACD297 /* CollectionConcurrencyKit */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C72EA744276DF8920072F2A0 /* BecomeVolunteerDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */; };
@@ -198,6 +199,7 @@
 				C701D28F275AA5FC00A0B1B8 /* FirebaseCrashlytics in Frameworks */,
 				C701D287275AA5FC00A0B1B8 /* FirebaseAnalytics in Frameworks */,
 				C701D293275AA5FC00A0B1B8 /* FirebaseDatabaseSwift-Beta in Frameworks */,
+				C71DD29A276F7ED800ACD297 /* CollectionConcurrencyKit in Frameworks */,
 				C701D28D275AA5FC00A0B1B8 /* FirebaseAuthCombine-Community in Frameworks */,
 				005ABC21D7002BD3340057C8 /* Pods_AUSTTravels.framework in Frameworks */,
 			);
@@ -496,6 +498,7 @@
 				C701D298275AA5FC00A0B1B8 /* FirebasePerformance */,
 				C701D2A0275AA9A600A0B1B8 /* Defaults */,
 				C701D2A3275ABA9A00A0B1B8 /* SPAlert */,
+				C71DD299276F7ED800ACD297 /* CollectionConcurrencyKit */,
 			);
 			productName = AUSTTravels;
 			productReference = C743A7D827566C6E00F9D6FC /* AUSTTravels.app */;
@@ -578,6 +581,7 @@
 				C701D285275AA5FC00A0B1B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C701D29F275AA9A600A0B1B8 /* XCRemoteSwiftPackageReference "Defaults" */,
 				C701D2A2275ABA9A00A0B1B8 /* XCRemoteSwiftPackageReference "SPAlert" */,
+				C71DD298276F7ED800ACD297 /* XCRemoteSwiftPackageReference "CollectionConcurrencyKit" */,
 			);
 			productRefGroup = C743A7D927566C6E00F9D6FC /* Products */;
 			projectDirPath = "";
@@ -1201,6 +1205,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		C71DD298276F7ED800ACD297 /* XCRemoteSwiftPackageReference "CollectionConcurrencyKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/CollectionConcurrencyKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1263,6 +1275,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C701D2A2275ABA9A00A0B1B8 /* XCRemoteSwiftPackageReference "SPAlert" */;
 			productName = SPAlert;
+		};
+		C71DD299276F7ED800ACD297 /* CollectionConcurrencyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C71DD298276F7ED800ACD297 /* XCRemoteSwiftPackageReference "CollectionConcurrencyKit" */;
+			productName = CollectionConcurrencyKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
