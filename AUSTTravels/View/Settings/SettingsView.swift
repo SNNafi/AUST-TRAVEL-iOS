@@ -31,10 +31,17 @@ struct SettingsView: View {
     @State private var loggingOut: Bool = false
     @State private var settingsError: Bool = false
     @State private var settingsErrorMessage: String? = ""
+    @State var isFetching: Bool = true
     
     var body: some View {
         ZStack  {
             Color.white
+            if isFetching {
+                ActivityIndicator(isAnimating: isFetching)
+                    .configure { $0.color = .green }
+                    .frame(width: 50.dWidth(), height: 50.dWidth(), alignment: .center)
+                    .background(Color.white)
+            } else {
             VStack {
                 VStack {
                     Spacer()
@@ -226,6 +233,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            }
             if showBusSelect {
                 SelectBusDailogue(buses: $buses, selectedBusName: $primaryBus, selectedBusTime: $selectedBusTime, display: $showBusSelect)
                     .transition(.scale)
@@ -264,6 +272,7 @@ struct SettingsView: View {
             }
         }
         .onAppear {
+            isFetching = true
             settingsViewModel.fetchBusInfo { busList in
                 buses = busList
             }
@@ -273,6 +282,7 @@ struct SettingsView: View {
                     locationNotification = userSettings.isLocationNotification
                     primaryBus = userSettings.primaryBus
                 }
+                isFetching = false
             }
         }
         .onDisappear {

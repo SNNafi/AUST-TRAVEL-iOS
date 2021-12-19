@@ -61,165 +61,152 @@ struct HomeView: View {
     @State var pingErrorMessage: String = ""
     
     @State private var task: Task<Void, Error>? = nil
+    @State var isFetching: Bool = true
     
     var body: some View {
         
         ZStack {
-            VStack {
-                
-                // MARK: - APP BAR
+            if isFetching {
+                ActivityIndicator(isAnimating: isFetching)
+                    .configure { $0.color = .green }
+                    .frame(width: 50.dWidth(), height: 50.dWidth(), alignment: .center)
+                    .background(Color.white)
+            } else {
                 VStack {
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    HStack {
-                        
-                        Text("AUST TRAVELS")
-                            .scaledFont(font: .sairaCondensedBold, dsize: 20)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 15.dWidth())
+                    
+                    // MARK: - APP BAR
+                    VStack {
                         Spacer()
-                        
-                        Icon(name: "gearshape.fill")
-                            .systemImage()
-                            .iconColor(.white)
-                            .clickable {
-                                withAnimation {
-                                    austTravel.currentPage = .settings
-                                }
-                            }
-                            .padding(.horizontal, 15.dWidth())
-                        
-                        
-                    }
-                    Spacer()
-                }
-                .frame(width: dWidth, height: 92.dHeight())
-                .background(Color.green)
-                
-                GeometryReader { geometry in
-                    ScrollView {
-                        VStack {
+                        Spacer()
+                        Spacer()
+                        HStack {
                             
-                            ABButton(text: "LIVE TRACK BUS", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                                selectionType = .liveTrack
-                                showBusSelect.toggle()
-                            }
-                            .rightIcon(Icon(name: "bus").iconColor(.black))
+                            Text("AUST TRAVELS")
+                                .scaledFont(font: .sairaCondensedBold, dsize: 20)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 15.dWidth())
+                            Spacer()
                             
-                            ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                                
-                            }
-                            .rightIcon(Icon(name: "view-routes").iconColor(.black))
-                            
-                            HStack {
-                                Spacer()
-                                Rectangle()
-                                    .frame(width: dWidth * 0.3, height: 1.dWidth())
-                                
-                                Text("CONTRIBUTE")
-                                    .scaledFont(font: .sairaCondensedLight, dsize: 15)
-                                Rectangle()
-                                    .frame(width: dWidth * 0.3, height: 1.dWidth())
-                                Spacer()
-                            }
-                            .foregroundColor(.black)
-                            .frame(width: dWidth * 0.9)
-                            if isUserVolunteer {
-                                ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
-                                    if !austTravel.isLocationSharing {
-                                        selectionType = .shareLocation
-                                        showBusSelect.toggle()
-                                    } else {
-                                        updateTimer()
-                                        homeViewModel.updateLocationSharing()
+                            Icon(name: "gearshape.fill")
+                                .systemImage()
+                                .iconColor(.white)
+                                .clickable {
+                                    withAnimation {
+                                        austTravel.currentPage = .settings
                                     }
+                                }
+                                .padding(.horizontal, 15.dWidth())
+                            
+                            
+                        }
+                        Spacer()
+                    }
+                    .frame(width: dWidth, height: 92.dHeight())
+                    .background(Color.green)
+                    
+                    GeometryReader { geometry in
+                        ScrollView {
+                            VStack {
+                                
+                                ABButton(text: "LIVE TRACK BUS", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
+                                    selectionType = .liveTrack
+                                    showBusSelect.toggle()
+                                }
+                                .rightIcon(Icon(name: "bus").iconColor(.black))
+                                
+                                ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
                                     
                                 }
-                                .rightIcon(Icon(name: "map-location").iconColor(.black))
-                            }
-                            if austTravel.isLocationSharing {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 20.dHeight())
-                                        .foregroundColor(.deepAsh)
-                                    VStack {
-                                        GeometryReader { gReader in
-                                            VStack {
-                                                Rectangle()
-                                                    .frame(width: gReader.size.width, height: 70.dHeight(), alignment: .center)
-                                                    .foregroundColor(.lightAsh)
-                                                    .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                                    .overlay(Text("You are currently sharing your location for\n \(hour) : \(minute) : \(second)").lineLimit(nil).multilineTextAlignment(.center).scaledFont(font: .sairaCondensedSemiBold, dsize: 19).foregroundColor(.black).fixedSize().padding(5.dHeight()))
-                                                    .offset(y: -3.dHeight())
-                                                Text("Bus: \(selectedBusName)")
-                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
-                                                Text("Time: \(selectedBusTime)")
-                                                    .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
+                                .rightIcon(Icon(name: "view-routes").iconColor(.black))
+                                
+                                HStack {
+                                    Spacer()
+                                    Rectangle()
+                                        .frame(width: dWidth * 0.3, height: 1.dWidth())
+                                    
+                                    Text("CONTRIBUTE")
+                                        .scaledFont(font: .sairaCondensedLight, dsize: 15)
+                                    Rectangle()
+                                        .frame(width: dWidth * 0.3, height: 1.dWidth())
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .frame(width: dWidth * 0.9)
+                                if isUserVolunteer {
+                                    ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
+                                        if !austTravel.isLocationSharing {
+                                            selectionType = .shareLocation
+                                            showBusSelect.toggle()
+                                        } else {
+                                            updateTimer()
+                                            homeViewModel.updateLocationSharing()
+                                        }
+                                        
+                                    }
+                                    .rightIcon(Icon(name: "map-location").iconColor(.black))
+                                }
+                                if austTravel.isLocationSharing {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 20.dHeight())
+                                            .foregroundColor(.deepAsh)
+                                        VStack {
+                                            GeometryReader { gReader in
+                                                VStack {
+                                                    Rectangle()
+                                                        .frame(width: gReader.size.width, height: 70.dHeight(), alignment: .center)
+                                                        .foregroundColor(.lightAsh)
+                                                        .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
+                                                        .overlay(Text("You are currently sharing your location for\n \(hour) : \(minute) : \(second)").lineLimit(nil).multilineTextAlignment(.center).scaledFont(font: .sairaCondensedSemiBold, dsize: 19).foregroundColor(.black).fixedSize().padding(5.dHeight()))
+                                                        .offset(y: -3.dHeight())
+                                                    Text("Bus: \(selectedBusName)")
+                                                        .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
+                                                    Text("Time: \(selectedBusTime)")
+                                                        .scaledFont(font: .sairaCondensedSemiBold, dsize: 17).foregroundColor(.black)
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                .frame(width: dWidth * 0.9, height: 150.dHeight())
-                                .padding(10.dHeight())
-                                .padding(.horizontal, 15.dHeight())
-                                .onAppear {
-                                    task = Task {
-                                        await homeViewModel.sendLocationNotification(busName: selectedBusName, busTime: selectedBusTime)
+                                    .frame(width: dWidth * 0.9, height: 150.dHeight())
+                                    .padding(10.dHeight())
+                                    .padding(.horizontal, 15.dHeight())
+                                    .onAppear {
+                                        task = Task {
+                                            await homeViewModel.sendLocationNotification(busName: selectedBusName, busTime: selectedBusTime)
+                                        }
                                     }
                                 }
-                            }
-                            
-                            ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
                                 
-                            }
-                            .rightIcon(Icon(name: "group").iconColor(.black))
-                            Spacer()
-                            
-                            HStack {
-                                Spacer()
-                                
-                                if let volunteer = volunteer, let urlString = volunteer.userInfo.userImagePNG.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url =  URL(string: urlString) {
+                                ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
                                     
-                                    ABURLImage(imageURL: url)
-                                        .frame(width: 23.dWidth(), height: 23.dWidth(), alignment: .center)
-                                        .padding(.trailing, 3.dWidth())
                                 }
-                                
-                                Text(volunteer?.userInfo.email ?? "")
-                                    .foregroundColor(.black)
-                                    .scaledFont(font: .sairaCondensedBold, dsize: 17)
-                                    .padding(.trailing, 3.dWidth())
+                                .rightIcon(Icon(name: "group").iconColor(.black))
                                 Spacer()
+                                
+                                HStack {
+                                    Spacer()
+                                    
+                                    if let volunteer = volunteer, let urlString = volunteer.userInfo.userImagePNG.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url =  URL(string: urlString) {
+                                        
+                                        ABURLImage(imageURL: url)
+                                            .frame(width: 23.dWidth(), height: 23.dWidth(), alignment: .center)
+                                            .padding(.trailing, 3.dWidth())
+                                    }
+                                    
+                                    Text(volunteer?.userInfo.email ?? "")
+                                        .foregroundColor(.black)
+                                        .scaledFont(font: .sairaCondensedBold, dsize: 17)
+                                        .padding(.trailing, 3.dWidth())
+                                    Spacer()
+                                }
+                                .frame(height: 85.dHeight(), alignment: .center)
+                                .background(Color.gray.opacity(0.3))
                             }
-                            .frame(height: 85.dHeight(), alignment: .center)
-                            .background(Color.gray.opacity(0.3))
-                        }
-                        .frame(width: geometry.size.width, height: geometry.size.height)
-                    }
-                }
-                .onAppear {
-                    print(austTravel.currentUserUID!)
-                    
-                    homeViewModel.fetchBusInfo { busList in
-                        buses = busList
-                    }
-                    
-                    task = Task {
-                        await homeViewModel.getVolunteerInfo()
-                        volunteer = austTravel.currentVolunteer
-                        print(austTravel.currentVolunteer.status)
-                        isUserVolunteer = austTravel.currentVolunteer.status
-                        if let (status, message) = await homeViewModel.subscribeToPingNotification() as? (Bool, String) {
-                            (pingError, pingErrorMessage) = (status, message)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
                         }
                     }
                 }
-                .onDisappear {
-                    austTravel.isLocationSharing = false
-                    task?.cancel()
-                }
+                .background(Color.white)
             }
-            .background(Color.white)
             
             if showBusSelect {
                 SelectBusDailogue(isBusTimeDropDownShown: true, buses: $buses, selectedBusName: $selectedBusName, selectedBusTime: $selectedBusTime, display: $showBusSelect) {
@@ -241,6 +228,29 @@ struct HomeView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            print(austTravel.currentUserUID!)
+            
+            homeViewModel.fetchBusInfo { busList in
+                buses = busList
+            }
+            
+            task = Task {
+                isFetching = true
+                await homeViewModel.getVolunteerInfo()
+                volunteer = austTravel.currentVolunteer
+                print(austTravel.currentVolunteer.status)
+                isUserVolunteer = austTravel.currentVolunteer.status
+                isFetching = false
+                if let (status, message) = await homeViewModel.subscribeToPingNotification() as? (Bool, String) {
+                    (pingError, pingErrorMessage) = (status, message)
+                }
+            }
+        }
+        .onDisappear {
+            austTravel.isLocationSharing = false
+            task?.cancel()
+        }
         .spAlert(isPresent: $selectionError, message: selectionErrorMessage, duration: 1.0, dismissOnTap: true, haptic: .error)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
             print("App in background")
