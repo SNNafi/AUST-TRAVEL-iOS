@@ -152,6 +152,9 @@ struct BecomeVolunteerDailogue: View {
         }
         .frame(width: dWidth, height: dHeight, alignment: .center)
         .edgesIgnoringSafeArea(.all)
+        .onTapGesture {
+            display.toggle()
+        }
     }
 }
 

@@ -147,7 +147,7 @@ class HomeViewModel: ObservableObject {
             }
             
             guard var url = URL(string: Constant.sendUser) else { return }
-            url.appendQueryItem(name: "bus", value: busName)
+            url.appendQueryItem(name: "bus", value: "\(busName)_USER")
             url.appendQueryItem(name: "title", value: "\(busName) \(busTime) is now live")
             url.appendQueryItem(name: "message", value: "\(Defaults[.userInfo].userName) is sharing their location. Track them now to know where the bus is headed!")
             

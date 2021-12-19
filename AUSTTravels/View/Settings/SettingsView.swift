@@ -138,9 +138,7 @@ struct SettingsView: View {
                                 .foregroundColor(.black)
                                 Spacer()
                                 Button {
-                                    withAnimation(.easeIn) {
                                         showBusSelect.toggle()
-                                    }
                                 } label: {
                                     Text("CHANGE")
                                         .scaledFont(font: .sairaCondensedSemiBold, dsize: 20)
