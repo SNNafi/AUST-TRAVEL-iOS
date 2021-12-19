@@ -185,12 +185,12 @@ struct LiveTrackView: View {
             
             busLatestMarker = liveTrackViewModel.initialBusMarker()
             
-            liveTrackViewModel.fetchBusRoutes(busName: "Jamuna", busTime: "6:30AM") { routes in
+            liveTrackViewModel.fetchBusRoutes(busName: austTravel.selectedBusName, busTime: austTravel.selectedBusTime) { routes in
                 routes.forEach { print($0.coordinate) }
                 busRoutes = liveTrackViewModel.createRouteMarkers(routes)
             }
             
-            liveTrackViewModel.observeBusLatestLocation(busName: "Jamuna", busTime: "6:30AM") { marker, lastUpdatedDate, lastUpdatedUser in
+            liveTrackViewModel.observeBusLatestLocation(busName: austTravel.selectedBusName, busTime: austTravel.selectedBusTime) { marker, lastUpdatedDate, lastUpdatedUser in
                 self.lastUpdatedDate = lastUpdatedDate
                 self.lastUpdatedUser = lastUpdatedUser
                 busLatestMarker?.map = nil
