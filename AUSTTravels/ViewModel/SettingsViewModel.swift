@@ -19,7 +19,7 @@ class SettingsViewModel: ObservableObject {
     
     @Published var becomeVolunteerValidator = BecomeVolunteerValidator()
     private var database = Database.database()
-    let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    let austTravel = SceneDelegate.austTravel
     
     func fetchBusInfo(completion: @escaping ([Bus]) -> ()) {
         var buses = [Bus]()
@@ -157,6 +157,14 @@ class SettingsViewModel: ObservableObject {
             try await Messaging.messaging().unsubscribe(fromTopic: primaryBus)
             try await Messaging.messaging().unsubscribe(fromTopic: "\(primaryBus)_USER")
             Defaults[.isShowAlertAboutPing] = true
+            Defaults[.volunteer] = Volunteer()
+            Defaults[.userSettings] = UserSettings()
+            Defaults[.userInfo] = UserInfo()
+            Defaults[.userEmail] = nil
+            Defaults[.userPhotoURL] = nil
+            Defaults[.pingNotification] = false
+            Defaults[.locationNotification] = false
+            Defaults[.primaryBus] = "None"
             austTravel.logOut()
             
         } catch { }

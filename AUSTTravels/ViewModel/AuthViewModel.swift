@@ -21,7 +21,7 @@ class AuthViewModel: ObservableObject {
     @Published var forgetPasswordValidator = ForgetPasswordValidator()
     @Published var signUpValidator = SignUpValidator()
     
-    private let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    private let austTravel = SceneDelegate.austTravel
     private let auth =  Auth.auth()
     
     func isValidSignInInfo(email: String, password: String) -> Bool {

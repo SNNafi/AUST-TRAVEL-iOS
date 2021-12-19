@@ -18,7 +18,7 @@ import SwiftUI
 class LiveTrackViewModel: ObservableObject {
     
     private var database = Database.database()
-    let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    let austTravel = SceneDelegate.austTravel
     
     func fetchBusRoutes(busName: String, busTime: String, completion: @escaping (([Route]) -> ())) {
         var routes = [Route]()

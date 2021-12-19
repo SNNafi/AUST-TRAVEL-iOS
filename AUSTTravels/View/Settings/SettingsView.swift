@@ -28,6 +28,7 @@ struct SettingsView: View {
     
     @State private var task: Task<Void, Error>? = nil
     @State private var isLoading: Bool = false
+    @State private var loggingOut: Bool = false
     @State private var settingsError: Bool = false
     @State private var settingsErrorMessage: String? = ""
     
@@ -191,13 +192,28 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    task = Task {
+                                    Task {
+                                        task?.cancel()
+                                        loggingOut = true
                                         await settingsViewModel.logOut()
+                                        loggingOut = false
                                     }
                                 } label: {
+                                    if loggingOut {
+                                        HStack {
+                                            Spacer()
+                                            ActivityIndicator(isAnimating: loggingOut)
+                                                .configure { $0.color = .green }
+                                                .background(Color.white)
+                                                .padding(15.dWidth())
+                                            Spacer()
+                                        }
+                                        
+                                    } else {
                                     Text("Log Out")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
                                         .foregroundColor(.greenLight)
+                                    }
                                 }
                                 .padding(3.dHeight())
                             }

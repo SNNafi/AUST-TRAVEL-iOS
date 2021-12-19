@@ -17,7 +17,7 @@ import FirebaseMessaging
 class HomeViewModel: ObservableObject {
     
     private var database = Database.database()
-    let austTravel = UIApplication.shared.sceneDelegate.austTravel
+    let austTravel = SceneDelegate.austTravel
     
     @discardableResult
     func updateLocationSharing() -> Bool {

@@ -10,31 +10,23 @@ import UIKit
 
 extension UIApplication {
     
-    var appDelegate: AppDelegate {
-        (UIApplication.shared.delegate as! AppDelegate)
-    }
-    
-    var sceneDelegate: SceneDelegate {
-       UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-    }
-    
     var authViewModel: AuthViewModel {
-        sceneDelegate.austTravel.authViewModel
+        SceneDelegate.austTravel.authViewModel
     }
     
     var homeViewModel: HomeViewModel {
-        sceneDelegate.austTravel.homeViewModel
+        SceneDelegate.austTravel.homeViewModel
     }
     
     var locationManager: LocationManager {
-        sceneDelegate.austTravel.locationManager
+        SceneDelegate.austTravel.locationManager
     }
     
     var liveTrackViewModel: LiveTrackViewModel {
-        sceneDelegate.austTravel.liveTrackViewModel
+        SceneDelegate.austTravel.liveTrackViewModel
     }
     
     var settingsViewModel: SettingsViewModel {
-        sceneDelegate.austTravel.settingsViewModel
+        SceneDelegate.austTravel.settingsViewModel
     }
 }

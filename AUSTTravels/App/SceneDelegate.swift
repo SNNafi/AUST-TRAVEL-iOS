@@ -13,7 +13,7 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let austTravel = AUSTTravel()
+    static let austTravel = AUSTTravel()
     private let networkReachability = NetworkReachability()
     private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
-            .environmentObject(austTravel)
+            .environmentObject(SceneDelegate.austTravel)
             .environmentObject(networkReachability)
             .onReceive(timer) { _ in
                 self.networkReachability.checkConnection()
