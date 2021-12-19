@@ -11,25 +11,30 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var austTravel: AUSTTravel
+    @EnvironmentObject var networkReachability: NetworkReachability
     
     var body: some View {
 
-        if austTravel.currentAuthPage == .none {
-            if austTravel.currentPage == .home {
-                HomeView()
-                    .transition(.move(edge: .trailing))
-            } else  if austTravel.currentPage == .liveTrack {
-                LiveTrackView()
-                    .transition(.move(edge: .trailing))
-            } else  if austTravel.currentPage == .settings {
-                SettingsView()
-                    .transition(.move(edge: .trailing))
-            } else if austTravel.currentPage == .privacyPolicy {
-                PrivacyPolicyView()
-                    .transition(.move(edge: .trailing))
+        if networkReachability.reachable {
+            if austTravel.currentAuthPage == .none {
+                if austTravel.currentPage == .home {
+                    HomeView()
+                        .transition(.move(edge: .trailing))
+                } else  if austTravel.currentPage == .liveTrack {
+                    LiveTrackView()
+                        .transition(.move(edge: .trailing))
+                } else  if austTravel.currentPage == .settings {
+                    SettingsView()
+                        .transition(.move(edge: .trailing))
+                } else if austTravel.currentPage == .privacyPolicy {
+                    PrivacyPolicyView()
+                        .transition(.move(edge: .trailing))
+                }
+            } else {
+                AuthView()
             }
         } else {
-            AuthView()
+            NoNetView()
         }
     }
 }

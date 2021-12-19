@@ -26,6 +26,7 @@ struct LiveTrackView: View {
     @State private var pingError: Bool = false
     @State private var pingErrorMessage: String = ""
     
+    @State private var task: Task<Void, Error>? = nil
     
     var body: some View {
         ZStack {
@@ -131,7 +132,7 @@ struct LiveTrackView: View {
                         
                         Spacer()
                         Button {
-                            Task {
+                            task = Task {
                                 if let (status, message) = await liveTrackViewModel.pingVolunteer(for: austTravel.selectedBusName, message: "A fellow traveler wants to know where your bus, \(austTravel.selectedBusName) of \(austTravel.selectedBusTime) is located. You might wanna help them out!") as? (Bool, String) {
                                     (pingError, pingErrorMessage) = (status, message)
                                 }  
@@ -199,6 +200,7 @@ struct LiveTrackView: View {
         }
         .onDisappear {
             liveTrackViewModel.removeObserver(busName: austTravel.selectedBusName, busTime: austTravel.selectedBusTime)
+            task?.cancel()
         }
         .spAlert(isPresent: $mapError,
                  title: "Cannot open map !",

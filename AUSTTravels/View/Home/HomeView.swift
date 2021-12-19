@@ -60,6 +60,8 @@ struct HomeView: View {
     @State var pingError: Bool = false
     @State var pingErrorMessage: String = ""
     
+    @State private var task: Task<Void, Error>? = nil
+    
     var body: some View {
         
         ZStack {
@@ -137,7 +139,6 @@ struct HomeView: View {
                                 .rightIcon(Icon(name: "map-location").iconColor(.black))
                             }
                             if austTravel.isLocationSharing {
-                                //                                Text("\(locationManager.currentCoordinate.latitude) - \(locationManager.currentCoordinate.longitude)")
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 20.dHeight())
                                         .foregroundColor(.deepAsh)
@@ -162,7 +163,7 @@ struct HomeView: View {
                                 .padding(10.dHeight())
                                 .padding(.horizontal, 15.dHeight())
                                 .onAppear {
-                                    Task {
+                                    task = Task {
                                         await homeViewModel.sendLocationNotification(busName: selectedBusName, busTime: selectedBusTime)
                                     }
                                 }
@@ -203,7 +204,7 @@ struct HomeView: View {
                         buses = busList
                     }
                     
-                    Task {
+                    task = Task {
                         await homeViewModel.getVolunteerInfo()
                         volunteer = austTravel.currentVolunteer
                         print(austTravel.currentVolunteer.status)
@@ -212,6 +213,10 @@ struct HomeView: View {
                             (pingError, pingErrorMessage) = (status, message)
                         }
                     }
+                }
+                .onDisappear {
+                    austTravel.isLocationSharing = false
+                    task?.cancel()
                 }
             }
             .background(Color.white)

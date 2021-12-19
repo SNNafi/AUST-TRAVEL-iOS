@@ -45,6 +45,8 @@
 		C715162127629722008B4E35 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715162027629722008B4E35 /* SettingsViewModel.swift */; };
 		C71DD297276E746700ACD297 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71DD296276E746700ACD297 /* Constant.swift */; };
 		C71DD29A276F7ED800ACD297 /* CollectionConcurrencyKit in Frameworks */ = {isa = PBXBuildFile; productRef = C71DD299276F7ED800ACD297 /* CollectionConcurrencyKit */; };
+		C71DD29C276F8DE800ACD297 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71DD29B276F8DE800ACD297 /* NetworkReachability.swift */; };
+		C71DD29E276F906000ACD297 /* NoNetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71DD29D276F906000ACD297 /* NoNetView.swift */; };
 		C72032F7275A4BBF0046C48D /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F6275A4BBE0046C48D /* DropDown.swift */; };
 		C72032F9275A62E30046C48D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72032F8275A62E30046C48D /* SignUpView.swift */; };
 		C72EA744276DF8920072F2A0 /* BecomeVolunteerDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */; };
@@ -131,6 +133,8 @@
 		C715161E27629652008B4E35 /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
 		C715162027629722008B4E35 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C71DD296276E746700ACD297 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		C71DD29B276F8DE800ACD297 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		C71DD29D276F906000ACD297 /* NoNetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetView.swift; sourceTree = "<group>"; };
 		C72032F6275A4BBE0046C48D /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		C72032F8275A62E30046C48D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BecomeVolunteerDailogue.swift; sourceTree = "<group>"; };
@@ -297,8 +301,17 @@
 				C701D2BF275D306E00A0B1B8 /* LocationManager.swift */,
 				C7CC340D275E1E7800343026 /* PlistReader.swift */,
 				C71DD296276E746700ACD297 /* Constant.swift */,
+				C71DD29B276F8DE800ACD297 /* NetworkReachability.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		C71DD29F276F906600ACD297 /* NoNetView */ = {
+			isa = PBXGroup;
+			children = (
+				C71DD29D276F906000ACD297 /* NoNetView.swift */,
+			);
+			path = NoNetView;
 			sourceTree = "<group>";
 		};
 		C743A7CF27566C6E00F9D6FC = {
@@ -412,6 +425,7 @@
 		C743A82227569C9200F9D6FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C71DD29F276F906600ACD297 /* NoNetView */,
 				C74728F52767AF9400E618E8 /* Settings */,
 				C7CC3406275E198000343026 /* GoogleMap */,
 				C7CC3401275E040000343026 /* LiveTrack */,
@@ -809,6 +823,8 @@
 				C7CC3412275E232800343026 /* LiveTrackViewModel.swift in Sources */,
 				C743A82427569CAA00F9D6FC /* SignInView.swift in Sources */,
 				C743A8072756797400F9D6FC /* SceneDelegate.swift in Sources */,
+				C71DD29E276F906000ACD297 /* NoNetView.swift in Sources */,
+				C71DD29C276F8DE800ACD297 /* NetworkReachability.swift in Sources */,
 				C7CC3410275E22B700343026 /* Route.swift in Sources */,
 				C743A81D275683E500F9D6FC /* Color+Ex.swift in Sources */,
 				C701D2BD275D2C2500A0B1B8 /* SettingsView.swift in Sources */,
@@ -996,7 +1012,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "0.1-beta";
 				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1030,7 +1046,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "0.1-beta";
 				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

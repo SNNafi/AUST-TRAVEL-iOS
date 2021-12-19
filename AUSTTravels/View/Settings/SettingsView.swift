@@ -191,7 +191,7 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    Task {
+                                    task = Task {
                                         await settingsViewModel.logOut()
                                     }
                                 } label: {
@@ -233,17 +233,17 @@ struct SettingsView: View {
         .spAlert(isPresent: $settingsError, message: settingsErrorMessage ?? "", duration: 3)
         .edgesIgnoringSafeArea(.all)
         .valueChanged(value: pingNotification) { _ in
-            Task {
+            task = Task {
                 await settingsViewModel.updatePingNotificationStatus(pingNotification)
             }
         }
         .valueChanged(value: locationNotification) { _ in
-            Task {
+            task = Task {
                 await settingsViewModel.updateLocationNotificationStatus(locationNotification)
             }
         }
         .valueChanged(value: primaryBus) { _ in
-            Task {
+            task = Task {
                 await settingsViewModel.updatePrimaryBus(primaryBus)
             }
         }

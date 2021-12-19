@@ -16,12 +16,13 @@ struct ABButton: View {
     var font: GenericFont.Font
     var action: () -> ()
     var icon: Icon? = nil
+    var frameWidth = UIScreen.main.bounds.width * 0.9
     
     var body: some View {
         Button(action: action) {
             ZStack {
                 RoundedRectangle(cornerRadius: 7.dWidth()).foregroundColor(backgroundColor)
-                    .frame(width: dWidth * 0.9, height: 57.dHeight())
+                    .frame(width: frameWidth, height: 57.dHeight())
                     .padding(10.dHeight())
                     .padding(.horizontal, 15.dHeight())
                 HStack {
@@ -47,6 +48,12 @@ extension ABButton {
     func rightIcon(_ icon: Icon) -> ABButton {
         var view = self
         view.icon = icon
+        return view
+    }
+    
+    func width(_ width: CGFloat) -> ABButton {
+        var view = self
+        view.frameWidth = width
         return view
     }
 }
