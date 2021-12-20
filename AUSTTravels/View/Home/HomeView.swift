@@ -61,7 +61,9 @@ struct HomeView: View {
     @State var pingErrorMessage: String = ""
     
     @State private var task: Task<Void, Error>? = nil
-    @State var isFetching: Bool = true
+    @State private var isFetching: Bool = true
+    
+    @State private var underConstructionError: Bool = false
     
     var body: some View {
         
@@ -115,7 +117,7 @@ struct HomeView: View {
                                 .rightIcon(Icon(name: "bus").iconColor(.black))
                                 
                                 ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                                    
+                                    underConstructionError = true
                                 }
                                 .rightIcon(Icon(name: "view-routes").iconColor(.black))
                                 
@@ -177,7 +179,7 @@ struct HomeView: View {
                                 }
                                 
                                 ABButton(text: "VIEW VOLUNTEERS", textColor: .black, backgroundColor: .greenLight, font: .sairaCondensedRegular) {
-                                    
+                                    underConstructionError = true
                                 }
                                 .rightIcon(Icon(name: "group").iconColor(.black))
                                 Spacer()
@@ -252,6 +254,7 @@ struct HomeView: View {
             task?.cancel()
         }
         .spAlert(isPresent: $selectionError, message: selectionErrorMessage, duration: 1.0, dismissOnTap: true, haptic: .error)
+        .spAlert(isPresent: $underConstructionError, message: "Under construction")
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
             print("App in background")
             // stop sharing location

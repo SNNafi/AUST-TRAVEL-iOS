@@ -31,7 +31,8 @@ struct SettingsView: View {
     @State private var loggingOut: Bool = false
     @State private var settingsError: Bool = false
     @State private var settingsErrorMessage: String? = ""
-    @State var isFetching: Bool = true
+    @State private var isFetching: Bool = true
+    @State private var underConstructionError: Bool = false
     
     var body: some View {
         ZStack  {
@@ -175,7 +176,7 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    
+                                    underConstructionError = true
                                 } label: {
                                     Text("Contributors")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
@@ -187,7 +188,7 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    
+                                    underConstructionError = true
                                 } label: {
                                     Text("Delete Account")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
@@ -255,6 +256,7 @@ struct SettingsView: View {
             }
         }
         .spAlert(isPresent: $settingsError, message: settingsErrorMessage ?? "", duration: 3)
+        .spAlert(isPresent: $underConstructionError, message: "Under construction")
         .edgesIgnoringSafeArea(.all)
         .valueChanged(value: pingNotification) { _ in
             task = Task {
