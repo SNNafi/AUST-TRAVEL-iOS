@@ -116,25 +116,26 @@ struct HomeView: View {
                                 }
                                 .rightIcon(Icon(name: "bus").iconColor(.black))
                                 
-                                ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
-                                    underConstructionError = true
-                                }
-                                .rightIcon(Icon(name: "view-routes").iconColor(.black))
-                                
-                                HStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .frame(width: dWidth * 0.3, height: 1.dWidth())
-                                    
-                                    Text("CONTRIBUTE")
-                                        .scaledFont(font: .sairaCondensedLight, dsize: 15)
-                                    Rectangle()
-                                        .frame(width: dWidth * 0.3, height: 1.dWidth())
-                                    Spacer()
-                                }
-                                .foregroundColor(.black)
-                                .frame(width: dWidth * 0.9)
+                                //                                ABButton(text: "VIEW ROUTES", textColor: .black, backgroundColor: .yellow, font: .sairaCondensedRegular) {
+                                //                                    underConstructionError = true
+                                //                                }
+                                //                                .rightIcon(Icon(name: "view-routes").iconColor(.black))
+                                //                                .hidden()
                                 if isUserVolunteer {
+                                    HStack {
+                                        Spacer()
+                                        Rectangle()
+                                            .frame(width: dWidth * 0.3, height: 1.dWidth())
+                                        
+                                        Text("CONTRIBUTE")
+                                            .scaledFont(font: .sairaCondensedLight, dsize: 15)
+                                        Rectangle()
+                                            .frame(width: dWidth * 0.3, height: 1.dWidth())
+                                        Spacer()
+                                    }
+                                    .foregroundColor(.black)
+                                    .frame(width: dWidth * 0.9)
+                                    
                                     ABButton(text: austTravel.isLocationSharing ? "STOP SHARING LOCATION" : "SHARE LOCATION", textColor: .white, backgroundColor: .redAsh, font: .sairaCondensedRegular) {
                                         if !austTravel.isLocationSharing {
                                             selectionType = .shareLocation
@@ -182,6 +183,7 @@ struct HomeView: View {
                                     underConstructionError = true
                                 }
                                 .rightIcon(Icon(name: "group").iconColor(.black))
+                                .hidden()
                                 Spacer()
                                 
                                 HStack {
@@ -232,13 +234,9 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             print(austTravel.currentUserUID!)
-            
-            homeViewModel.fetchBusInfo { busList in
-                buses = busList
-            }
-            
             task = Task {
                 isFetching = true
+                buses = await homeViewModel.fetchBusInfo()
                 await homeViewModel.getVolunteerInfo()
                 volunteer = austTravel.currentVolunteer
                 print(austTravel.currentVolunteer.status)

@@ -34,6 +34,9 @@ struct SettingsView: View {
     @State private var isFetching: Bool = true
     @State private var underConstructionError: Bool = false
     
+    @State private var showDeleteUser: Bool = false
+    @State private var password: String = ""
+    
     var body: some View {
         ZStack  {
             Color.white
@@ -188,7 +191,7 @@ struct SettingsView: View {
                                     .foregroundColor(.black)
                                 
                                 Button {
-                                    underConstructionError = true
+                                    showDeleteUser = true
                                 } label: {
                                     Text("Delete Account")
                                         .scaledFont(font: .sairaCondensedBold, dsize: 23)
@@ -254,32 +257,45 @@ struct SettingsView: View {
                     }
                 }
             }
+            
+            if showDeleteUser {
+                DeleteUserDailogue(display: $showDeleteUser, password: $password, isLoading: $isLoading) {
+                    if settingsViewModel.isValidDeleteAccount(password: password) {
+                        task = Task {
+                            isLoading = true
+                            settingsErrorMessage = await settingsViewModel.deleteUser(password: password)
+                            isLoading = false
+                            showDeleteUser.toggle()
+                            settingsError = true
+                            austTravel.currentAuthPage = .signIn
+                        }
+                    }
+                }
+            }
         }
         .spAlert(isPresent: $settingsError, message: settingsErrorMessage ?? "", duration: 3)
         .spAlert(isPresent: $underConstructionError, message: "Under construction")
         .edgesIgnoringSafeArea(.all)
         .valueChanged(value: pingNotification) { _ in
-            task = Task {
+            Task {
                 await settingsViewModel.updatePingNotificationStatus(pingNotification)
             }
         }
         .valueChanged(value: locationNotification) { _ in
-            task = Task {
+            Task {
                 await settingsViewModel.updateLocationNotificationStatus(locationNotification)
             }
         }
         .valueChanged(value: primaryBus) { _ in
-            task = Task {
+            Task {
                 await settingsViewModel.updatePrimaryBus(primaryBus)
             }
         }
         .onAppear {
-            isFetching = true
-            settingsViewModel.fetchBusInfo { busList in
-                buses = busList
-            }
-            settingsViewModel.getUserSeetings { userSettings, _ in
-                if let userSettings = userSettings {
+            task = Task {
+                isFetching = true
+                buses = await settingsViewModel.fetchBusInfo()
+                if let userSettings = await settingsViewModel.getUserSeetings() {
                     pingNotification = userSettings.isPingNotification
                     locationNotification = userSettings.isLocationNotification
                     primaryBus = userSettings.primaryBus

@@ -19,6 +19,7 @@ class LocationManager: NSObject, ObservableObject {
         locationManager = CLLocationManager()
         super.init()
         locationManager.delegate = self
+        locationManager.distanceFilter = 5
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.allowsBackgroundLocationUpdates = true
         // locationManager?.requestWhenInUseAuthorization()

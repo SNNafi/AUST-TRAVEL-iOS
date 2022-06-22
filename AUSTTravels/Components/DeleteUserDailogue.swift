@@ -1,22 +1,19 @@
 //
-//  BecomeVolunteerDailogue.swift
+//  DeleteUserDailogue.swift
 //  AUSTTravels
 //
-//  Created by Shahriar Nasim Nafi on 18/12/21.
+//  Created by Shahriar Nasim Nafi on 21/12/21.
 //  Copyright © 2021 Shahriar Nasim Nafi. All rights reserved.
 //
 
 import SwiftUI
 
-struct BecomeVolunteerDailogue: View {
+struct DeleteUserDailogue: View {
     
     
     @ObservedObject var settingsViewModel = UIApplication.shared.settingsViewModel
-    
     @Binding var display: Bool
-    @Binding var buses: [Bus]
-    @Binding var selectedBusName: String
-    @Binding var phoneNumber: String
+    @Binding var password: String
     @Binding var isLoading: Bool
     var action: () -> () = { }
     @State private var frontPage: Bool = true
@@ -37,10 +34,10 @@ struct BecomeVolunteerDailogue: View {
                                     .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
                                     .foregroundColor(.yellowLight)
                                     .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                    .overlay(Text("Become a Volunteer").scaledFont(font: .sairaCondensedSemiBold, dsize: 20).foregroundColor(.black))
-                                
+                                    .overlay(Text("WARNING").scaledFont(font: .sairaCondensedSemiBold, dsize: 20).foregroundColor(.black))
+
                                 VStack {
-                                    Text("By becoming a volunteer, you will be responsible for sharing your location ") + Text("ONLY").fontWeight(.bold) + Text(" when you are on the bus. Your location data will be continuously shared with other relevant users while your location sharing is active.") + Text(" Do you wish to continue?").fontWeight(.bold)
+                                    Text(" Deleting your account will result in all of your personal data being removed from your servers. This action is  ") + Text("irreversible").fontWeight(.bold) + Text(" and we advice you to think twice before deleting the account.")
                                 }
                                 .multilineTextAlignment(.center)
                                 .scaledFont(font: .sairaCondensedRegular, dsize: 17)
@@ -50,13 +47,12 @@ struct BecomeVolunteerDailogue: View {
                                 Button {
                                     frontPage.toggle()
                                 } label: {
-                                    Text("CONTINUE")
+                                    Text("I CONFIRM")
                                         .scaledFont(font: .sairaCondensedRegular, dsize: 16)
                                         .foregroundColor(.white)
                                         .frame(width: gReader.size.width * 0.75, height: 50.dHeight(), alignment: .center)
                                 }
-                                
-                                .background(Color.green)
+                                .background(Color.redAsh)
                                 
                                 HStack {
                                     Spacer()
@@ -82,36 +78,14 @@ struct BecomeVolunteerDailogue: View {
                                     .frame(width: gReader.size.width, height: 60.dHeight(), alignment: .center)
                                     .foregroundColor(.yellowLight)
                                     .cornerRadius(20.dWidth(), corners: [.topLeft, .topRight])
-                                    .overlay(Text("Become a Volunteer").scaledFont(font: .sairaCondensedSemiBold, dsize: 18).foregroundColor(.black))
+                                    .overlay(Text("RE-AUTHENTICATE YOURSELF").scaledFont(font: .sairaCondensedSemiBold, dsize: 18).foregroundColor(.black))
                                 
-                                VStack {
-                                    Text("Choose the ") + Text("primary").fontWeight(.bold) + Text(" bus that you travel in")
-                                }
-                                .multilineTextAlignment(.center)
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.black)
-                                .padding(10.dWidth())
-                                
-                                DropDown(icon: "bus", placeholder: "Select bus name", itemList: buses.map(\.name), selectedItem: $selectedBusName)
-                                    .itemTextColor(.black)
-                                    .selectedBorderColor(.green)
-                                    .width(gReader.size.width * 0.75)
-                                    .expandedList(dheight: 100)
-                                    .addValidator(settingsViewModel.becomeVolunteerValidator.busNameErrorMessage)
-                                
-                                VStack {
-                                    Text("Enter your contact number. ") + Text("We won’t share your contact with anyone.").fontWeight(.bold) + Text(" We’ll use this information only when it’s urgent")
-                                }
-                                .multilineTextAlignment(.center)
-                                .scaledFont(font: .sairaCondensedRegular, dsize: 17)
-                                .foregroundColor(.black)
-                                .padding(10.dWidth())
-                                
-                                ABTextField(placeholder: "Enter your phone", text: $phoneNumber)
+                                ABTextField(placeholder: "Enter your password", text: $password)
                                     .rightIcon(Icon(name: "phone.fill").systemImage().iconColor(.black))
                                     .textColor(.black)
+                                    .secureField(true)
                                     .width(gReader.size.width * 0.75)
-                                    .addValidator(settingsViewModel.becomeVolunteerValidator.phoneNumberErrorMessage)
+                                    .addValidator(settingsViewModel.deleteUserValidator.passwordErrorMessage)
                                 
                                 if isLoading {
                                     ActivityIndicator(isAnimating: isLoading)
@@ -147,7 +121,7 @@ struct BecomeVolunteerDailogue: View {
                     }
                 }
             }
-            .frame(width: dWidth * 0.8, height: dHeight * (frontPage ? 0.46: 0.63))
+            .frame(width: dWidth * 0.8, height: dHeight * 0.28)
             
         }
         .frame(width: dWidth, height: dHeight, alignment: .center)

@@ -54,7 +54,7 @@ class AUSTTravel: ObservableObject {
         Defaults[.volunteer]
     }
     
-    func logOut() {
+    @MainActor func logOut() {
         authViewModel.logOut()
         currentAuthPage = .signIn
     }

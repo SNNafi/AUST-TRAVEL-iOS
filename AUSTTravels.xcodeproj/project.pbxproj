@@ -53,6 +53,7 @@
 		C72EA746276E2BC60072F2A0 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA745276E2BC50072F2A0 /* ActivityIndicator.swift */; };
 		C72EA748276E64B20072F2A0 /* Foundation+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA747276E64B20072F2A0 /* Foundation+Ex.swift */; };
 		C72EA74B276E6C0A0072F2A0 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72EA74A276E6C0A0072F2A0 /* NotificationDelegate.swift */; };
+		C733ACD5286362EF004B8608 /* Defaults+Workaround.swift in Sources */ = {isa = PBXBuildFile; fileRef = C733ACD4286362EF004B8608 /* Defaults+Workaround.swift */; };
 		C743A7DE27566C6E00F9D6FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743A7DD27566C6E00F9D6FC /* ContentView.swift */; };
 		C743A7E027566C7200F9D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7DF27566C7200F9D6FC /* Assets.xcassets */; };
 		C743A7E327566C7200F9D6FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C743A7E227566C7200F9D6FC /* Preview Assets.xcassets */; };
@@ -79,6 +80,7 @@
 		C7478B10276FBA7C007DA4F2 /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7478B0F276FBA7C007DA4F2 /* Shimmer.swift */; };
 		C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F69275E887300CA29EF /* UIImage+Ex.swift */; };
 		C75E5F6C275F9A4700CA29EF /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */; };
+		C7BAF8D6277242E6003CC6D7 /* DeleteUserDailogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BAF8D5277242E6003CC6D7 /* DeleteUserDailogue.swift */; };
 		C7CC3405275E053700343026 /* LiveTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3404275E053700343026 /* LiveTrackView.swift */; };
 		C7CC3408275E199900343026 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3407275E199900343026 /* MapViewController.swift */; };
 		C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC3409275E1A2100343026 /* GoogleMapView.swift */; };
@@ -143,6 +145,7 @@
 		C72EA747276E64B20072F2A0 /* Foundation+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ex.swift"; sourceTree = "<group>"; };
 		C72EA749276E6BE60072F2A0 /* AUSTTravels.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AUSTTravels.entitlements; sourceTree = "<group>"; };
 		C72EA74A276E6C0A0072F2A0 /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		C733ACD4286362EF004B8608 /* Defaults+Workaround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Workaround.swift"; sourceTree = "<group>"; };
 		C743A7D827566C6E00F9D6FC /* AUSTTravels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AUSTTravels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C743A7DD27566C6E00F9D6FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C743A7DF27566C7200F9D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		C7478B0F276FBA7C007DA4F2 /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
 		C75E5F69275E887300CA29EF /* UIImage+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ex.swift"; sourceTree = "<group>"; };
 		C75E5F6B275F9A4700CA29EF /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
+		C7BAF8D5277242E6003CC6D7 /* DeleteUserDailogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserDailogue.swift; sourceTree = "<group>"; };
 		C7CC3404275E053700343026 /* LiveTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTrackView.swift; sourceTree = "<group>"; };
 		C7CC3407275E199900343026 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C7CC3409275E1A2100343026 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 				C71DD296276E746700ACD297 /* Constant.swift */,
 				C71DD29B276F8DE800ACD297 /* NetworkReachability.swift */,
 				C7478B0F276FBA7C007DA4F2 /* Shimmer.swift */,
+				C733ACD4286362EF004B8608 /* Defaults+Workaround.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				C715161C27628F17008B4E35 /* SelectBusDailogue.swift */,
 				C72EA743276DF8910072F2A0 /* BecomeVolunteerDailogue.swift */,
 				C72EA745276E2BC50072F2A0 /* ActivityIndicator.swift */,
+				C7BAF8D5277242E6003CC6D7 /* DeleteUserDailogue.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -809,6 +815,7 @@
 				C701D2B5275BDE3200A0B1B8 /* ABURLImage.swift in Sources */,
 				C7CC340A275E1A2100343026 /* GoogleMapView.swift in Sources */,
 				C7CC3408275E199900343026 /* MapViewController.swift in Sources */,
+				C7BAF8D6277242E6003CC6D7 /* DeleteUserDailogue.swift in Sources */,
 				C75E5F6A275E887300CA29EF /* UIImage+Ex.swift in Sources */,
 				C72EA748276E64B20072F2A0 /* Foundation+Ex.swift in Sources */,
 				C701D2AE275BAACC00A0B1B8 /* HapticFeedback.swift in Sources */,
@@ -817,6 +824,7 @@
 				C701D2B7275BE4AF00A0B1B8 /* Defaults+Ex.swift in Sources */,
 				C71DD297276E746700ACD297 /* Constant.swift in Sources */,
 				C74728F42767AF7800E618E8 /* WebView.swift in Sources */,
+				C733ACD5286362EF004B8608 /* Defaults+Workaround.swift in Sources */,
 				C701D2A6275ABCC200A0B1B8 /* Icon.swift in Sources */,
 				C74728F22767A51B00E618E8 /* UserSettings.swift in Sources */,
 				C7CC3416275E7B1700343026 /* MapInfoView.swift in Sources */,
@@ -999,13 +1007,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AUSTTravels/AUSTTravels.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AUSTTravels/Preview Content\"";
 				DEVELOPMENT_TEAM = J4SV74FUBV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AUSTTravels/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aust Travels";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
@@ -1016,7 +1025,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.1-beta";
+				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1033,13 +1042,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AUSTTravels/AUSTTravels.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AUSTTravels/Preview Content\"";
 				DEVELOPMENT_TEAM = J4SV74FUBV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AUSTTravels/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Aust Travels";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location permission needed for core functionality";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
@@ -1050,7 +1060,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.1-beta";
+				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = snnafi.aust.travels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1213,8 +1223,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
+				kind = exactVersion;
+				version = 6.3.0;
 			};
 		};
 		C701D2A2275ABA9A00A0B1B8 /* XCRemoteSwiftPackageReference "SPAlert" */ = {

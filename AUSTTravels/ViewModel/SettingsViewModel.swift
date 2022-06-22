@@ -18,18 +18,14 @@ import CollectionConcurrencyKit
 class SettingsViewModel: ObservableObject {
     
     @Published var becomeVolunteerValidator = BecomeVolunteerValidator()
+    @Published var deleteUserValidator = DeleteUserValidator()
     private var database = Database.database()
     let austTravel = SceneDelegate.austTravel
     
-    func fetchBusInfo(completion: @escaping ([Bus]) -> ()) {
+    func fetchBusInfo() async -> [Bus] {
         var buses = [Bus]()
-        
-        database.reference(withPath: "availableBusInfo").getData { error, snapshot in
-            if error != nil {
-                completion(buses)
-                return
-            }
-            
+        do {
+            let snapshot = try await  database.reference(withPath: "availableBusInfo").getData()
             snapshot.children.forEach { dict in
                 let snap = dict as! DataSnapshot
                 var bus = Bus()
@@ -39,28 +35,26 @@ class SettingsViewModel: ObservableObject {
                 }
                 buses.append(bus)
             }
-            completion(buses)
-        }
+            return buses
+        } catch { return buses }
     }
     
     func deleteAccount(password: String) {
         
     }
     
-    func getUserSeetings(completion: @escaping (UserSettings?, Error?) -> Void) {
-        database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings").getData { error, snapshot in
-            if error != nil {
-                completion(nil, error)
-                return
-            }
+    func getUserSeetings() async -> UserSettings? {
+        do {
+            
+            let snapshot = try await database.reference(withPath: "users/\(austTravel.currentUserUID!)/settings").getData()
             if snapshot.exists() {
                 let userSettings = UserSettings(snapshot: snapshot)
                 print(userSettings)
                 Defaults[.userSettings] = userSettings
-                completion(userSettings, nil)
-                return
+                return userSettings
             }
-        }
+            return nil
+        } catch { return nil }
     }
     
     func updatePrimaryBus(_ primaryBus: String) async {
@@ -71,9 +65,16 @@ class SettingsViewModel: ObservableObject {
             
             // Update subscription after change primary bus
             try await unsubscribeFromPingBuses()
+            try await unsubscribeFromLocationBuses()
             
+            // Ping Notification
             if Defaults[.pingNotification] {
-                try await Messaging.messaging().subscribe(toTopic: primaryBus)
+                await updatePingNotificationStatus(true)
+            }
+            
+            // Local Notification
+            if Defaults[.locationNotification] {
+                await updateLocationNotificationStatus(true)
             }
             
         } catch { }
@@ -86,8 +87,10 @@ class SettingsViewModel: ObservableObject {
             let primaryBus = Defaults[.primaryBus]
             if isPingNotification && primaryBus != "None" {
                 try await Messaging.messaging().subscribe(toTopic: primaryBus)
+                print(#function, "subscribed", primaryBus)
             } else if !isPingNotification && primaryBus != "None" {
                 try await Messaging.messaging().unsubscribe(fromTopic: primaryBus)
+                print(#function, "unsubscribed", primaryBus)
             }
             
         } catch { }
@@ -101,8 +104,10 @@ class SettingsViewModel: ObservableObject {
             
             if isLocationNotification && primaryBus != "None" {
                 try await Messaging.messaging().subscribe(toTopic: "\(primaryBus)_USER")
+                print(#function, "subscribed", "\(primaryBus)_USER")
             } else if !isLocationNotification && primaryBus != "None" {
                 try await Messaging.messaging().unsubscribe(fromTopic: "\(primaryBus)_USER")
+                print(#function, "unsubscribed", "\(primaryBus)_USER")
             }
             
         } catch { }
@@ -156,18 +161,40 @@ class SettingsViewModel: ObservableObject {
             let primaryBus = Defaults[.userSettings].primaryBus
             try await Messaging.messaging().unsubscribe(fromTopic: primaryBus)
             try await Messaging.messaging().unsubscribe(fromTopic: "\(primaryBus)_USER")
-            Defaults[.isShowAlertAboutPing] = true
-            Defaults[.volunteer] = Volunteer()
-            Defaults[.userSettings] = UserSettings()
-            Defaults[.userInfo] = UserInfo()
-            Defaults[.userEmail] = nil
-            Defaults[.userPhotoURL] = nil
-            Defaults[.pingNotification] = false
-            Defaults[.locationNotification] = false
-            Defaults[.primaryBus] = "None"
-            austTravel.logOut()
+            
+            workUponSigningOUT()
+            
+            await austTravel.logOut()
             
         } catch { }
+    }
+    
+    func isValidDeleteAccount(password: String) -> Bool {
+        if password.isEmpty {
+            deleteUserValidator = DeleteUserValidator(passwordErrorMessage: "Password can not be empty")
+            return false
+        }
+        deleteUserValidator = DeleteUserValidator()
+        return true
+    }
+    
+    func deleteUser(password: String) async -> String {
+        do {
+            let credential = EmailAuthProvider.credential(withEmail: austTravel.currentUser!.email, password: password)
+            let authDataResult = try await Auth.auth().currentUser!.reauthenticate(with: credential)
+            
+            var dict = [String: Any]()
+            dict["/users/\(austTravel.currentUserUID!)"] = nil
+            dict["/volunteers/\(austTravel.currentUserUID!)"] = nil
+            
+            try await database.reference().updateChildValues(dict)
+            try await authDataResult.user.delete()
+            
+            workUponSigningOUT()
+            
+            return "Your account has been deleted!"
+            
+        } catch { return "Couldn't delete your account at the moment. Please try again later" }
     }
     
     private func unsubscribeFromPingBuses() async throws {
@@ -193,10 +220,26 @@ class SettingsViewModel: ObservableObject {
             try await Messaging.messaging().unsubscribe(fromTopic: "\(bus)_USER")
         }
     }
+    
+    private func workUponSigningOUT() {
+        Defaults[.isShowAlertAboutPing] = true
+        Defaults[.volunteer] = Volunteer()
+        Defaults[.userSettings] = UserSettings()
+        Defaults[.userInfo] = UserInfo()
+        Defaults[.userEmail] = nil
+        Defaults[.userPhotoURL] = nil
+        Defaults[.pingNotification] = false
+        Defaults[.locationNotification] = false
+        Defaults[.primaryBus] = "None"
+    }
 }
 
 
 struct BecomeVolunteerValidator {
     var busNameErrorMessage: String?
     var phoneNumberErrorMessage: String?
+}
+
+struct DeleteUserValidator {
+    var passwordErrorMessage: String?
 }

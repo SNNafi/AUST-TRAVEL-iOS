@@ -77,15 +77,10 @@ class HomeViewModel: ObservableObject {
             .setValue(dict)
     }
     
-    func fetchBusInfo(completion: @escaping ([Bus]) -> ()) {
+    func fetchBusInfo() async -> [Bus] {
         var buses = [Bus]()
-        
-        database.reference(withPath: "availableBusInfo").getData { error, snapshot in
-            if error != nil {
-                completion(buses)
-                return
-            }
-            
+        do {
+            let snapshot = try await  database.reference(withPath: "availableBusInfo").getData()
             snapshot.children.forEach { dict in
                 let snap = dict as! DataSnapshot
                 var bus = Bus()
@@ -95,8 +90,8 @@ class HomeViewModel: ObservableObject {
                 }
                 buses.append(bus)
             }
-            completion(buses)
-        }
+            return buses
+        } catch { return buses }
     }
     
     func updateContribution(elapsedTime: Int) {

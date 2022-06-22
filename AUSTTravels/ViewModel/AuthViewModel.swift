@@ -162,6 +162,11 @@ class AuthViewModel: ObservableObject {
     func logOut() {
         try? Auth.auth().signOut()
     }
+    
+    // FIXME: Implement when publishing the app
+    func checkForUpdate() {
+        
+    }
 }
 
 
